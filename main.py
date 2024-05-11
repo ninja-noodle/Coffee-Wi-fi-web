@@ -5,10 +5,10 @@ from sqlalchemy.orm import relationship
 from flask_bootstrap import Bootstrap5
 from Google import Create_Service
 import os
+import io
 from werkzeug.utils import secure_filename
 from PIL import Image
-from googleapiclient.http import MediaFileUpload
-
+from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload
 
 # ====== GOOGLE DRIVE API AUTH =======
 CLIENT_SECRET_FILE = config('GOOGLE_API_CLIENT_SECRETS')
@@ -41,7 +41,7 @@ db.init_app(app)
 class Cafe(db.Model):
     __tablename__ = 'cafe'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), nullable=False)
+    name = db.Column(db.String(250), unique=True, nullable=False)
     map_url = db.Column(db.String(500), nullable=False)
     img_name = db.Column(db.String(500), nullable=False)
     location = db.Column(db.String(250), nullable=False)
@@ -50,9 +50,9 @@ class Cafe(db.Model):
     has_wifi = db.Column(db.Boolean, nullable=False)
     can_take_calls = db.Column(db.Boolean, nullable=False)
     seats = db.Column(db.String(250), nullable=False)
-    coffee_price = db.Column(db.String(250), nullable=True)
+    coffee_price = db.Column(db.String(250), nullable=False)
     contributor_name = db.Column(db.String(250), nullable=False)
-    contributor_email = db.Column(db.String(250), unique=True, nullable=False)
+    contributor_email = db.Column(db.String(250), unique=False, nullable=False)
 
 
 with app.app_context():
@@ -63,27 +63,28 @@ def add_cafe_data(img, name, location, map_url, currency, price, seats_min, seat
                   mysterious, contributor_name, contributor_email):
     folder_id = FOLDER_ID
 
-    def delete_files_in_directory(directory_path):
-        try:
-            files = os.listdir(directory_path)
-            for file in files:
-                file_path = os.path.join(directory_path, file)
-                if os.path.isfile(file_path):
-                    os.remove(file_path)
-        except OSError:
-            pass
+    def image_to_byte_array(image: Image) -> bytes:
+        # BytesIO is a file-like buffer stored in memory
+        imgbytearr = io.BytesIO()
+        # image.save expects a file-like as a argument
+        image.save(imgbytearr, format=image.format)
+        # Turn the BytesIO object back into a bytes object
+        imgbytearr = imgbytearr.getvalue()
+        return imgbytearr
 
     def allowed_file(file_name):
         """ takes the last part of the filename (extension) and checks if it is part of ALLOWED_EXTENSIONS"""
         return '.' in file_name and file_name.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
 
-    def compress_img(image, filepath):
-        size = os.path.getsize(filepath)
-        if size > 3000000:
+    def compress_img(image):
+        print(type(image))
+        print(len(image.fp.read()))
+        if len(image.fp.read()) > 3000000:
             width, height = image.size
             new_size = (width // 2, height // 2)
             compressed_img = image.resize(new_size, resample=1)
-            compressed_img.save(filepath, optimize=True, quality=50)
+            compressed_img.save(io.BytesIO(request_img_content), format=image.format, optimize=True, quality=50)
+        return image
 
     def boolean_to_binary(var):
         if var == 'on':
@@ -102,8 +103,6 @@ def add_cafe_data(img, name, location, map_url, currency, price, seats_min, seat
         return f"{eval(_seat_min.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}-{eval(_seat_max.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}"
 
     filename = secure_filename(img.filename)
-    img.save(os.path.join(app.config['STAGING_FOLDER'], filename))
-    img_path = f"static/assets/img_staging_area/{filename}"
 
     has_wifi = boolean_to_binary(wifi)
     has_sockets = boolean_to_binary(sockets)
@@ -111,19 +110,20 @@ def add_cafe_data(img, name, location, map_url, currency, price, seats_min, seat
     can_take_calls = boolean_to_binary(calls)
 
     if allowed_file(filename):
-        compress_img(Image.open(img_path), img_path)
-        mime_type = mime_type_identify(filename)
-        file_metadata = {
-            'name': filename,
-            'parents': [folder_id]
-        }
-        media_content = MediaFileUpload(img_path, mimetype=mime_type)
-        uploaded = service.files().create(
-            body=file_metadata,
-            media_body=media_content,
-        ).execute()
+        request_img_content = img.read()
+        with Image.open(io.BytesIO(request_img_content), mode='r') as opened_image:
+            request_img_content = image_to_byte_array(compress_img(opened_image))
+            mime_type = mime_type_identify(filename)
+            file_metadata = {
+                'name': filename,
+                'parents': [folder_id]
+            }
+            media_content = MediaIoBaseUpload(io.BytesIO(request_img_content), mimetype=mime_type)
 
-        delete_files_in_directory('static/assets/img_staging_area')
+            uploaded = service.files().create(
+                body=file_metadata,
+                media_body=media_content,
+            ).execute()
 
         new_contributor = 'None'
         new_contributor_email = 'None'

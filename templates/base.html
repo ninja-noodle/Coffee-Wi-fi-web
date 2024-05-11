@@ -264,10 +264,11 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 </script>
 <script>
     var checkbox = document.getElementById("anonymous");
-
     checkbox.addEventListener('change', function(e) {
          if (checkbox.checked) {
+            document.getElementById("contributor-name").value = '';
             document.getElementById("contributor-name").disabled = true;
+            document.getElementById("contributor-email").value = '';
             document.getElementById("contributor-email").disabled = true;
          } else {
             document.getElementById("contributor-name").disabled = false;

@@ -167,3 +167,4 @@ node_modules
 .idea
 client_secret_2.json
 token_drive_v3.pickle
+/static/assets/img_staging_area
