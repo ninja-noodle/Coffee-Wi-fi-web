@@ -1,14 +1,13 @@
-from decouple import config
-from flask import Flask, abort, render_template, redirect, url_for, flash, request
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
-from flask_bootstrap import Bootstrap5
-from Google import Create_Service
-import os
 import io
-from werkzeug.utils import secure_filename
 from PIL import Image
-from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload
+from decouple import config
+from flask import Flask, render_template, redirect, url_for, flash, request
+from flask_bootstrap import Bootstrap5
+from flask_sqlalchemy import SQLAlchemy
+from googleapiclient.http import MediaIoBaseUpload
+from werkzeug.utils import secure_filename
+
+from Google import Create_Service
 
 # ====== GOOGLE DRIVE API AUTH =======
 CLIENT_SECRET_FILE = config('GOOGLE_API_CLIENT_SECRETS')
@@ -28,8 +27,7 @@ service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
 # ====== FLASK APP CONFIG =======
 app = Flask(__name__)
-app.config['SECRET_KET'] = config('SECRET_KEY')
-app.config['STAGING_FOLDER'] = config('STAGING_FOLDER')
+app.config['SECRET_KEY'] = config('SECRET_KEY')
 Bootstrap5(app)
 # ====== DATABASE CONNECTION =======
 app.config['SQLALCHEMY_DATABASE_URI'] = config('DB_URI')
@@ -59,6 +57,13 @@ with app.app_context():
     db.create_all()
 
 
+def check_if_exists(cafe_name):
+    if db.session.execute(db.select(Cafe).where(Cafe.name == cafe_name)).first() is None:
+        return False
+    elif db.session.execute(db.select(Cafe).where(Cafe.name == cafe_name)).first() is not None:
+        return True
+
+
 def add_cafe_data(img, name, location, map_url, currency, price, seats_min, seats_max, wifi, sockets, toilet, calls,
                   mysterious, contributor_name, contributor_email):
     folder_id = FOLDER_ID
@@ -77,13 +82,11 @@ def add_cafe_data(img, name, location, map_url, currency, price, seats_min, seat
         return '.' in file_name and file_name.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
 
     def compress_img(image):
-        print(type(image))
-        print(len(image.fp.read()))
         if len(image.fp.read()) > 3000000:
             width, height = image.size
             new_size = (width // 2, height // 2)
             compressed_img = image.resize(new_size, resample=1)
-            compressed_img.save(io.BytesIO(request_img_content), format=image.format, optimize=True, quality=50)
+            compressed_img.save(io.BytesIO(request_img_content), format=image.format, optimize=True, quality=80)
         return image
 
     def boolean_to_binary(var):
@@ -147,17 +150,15 @@ def add_cafe_data(img, name, location, map_url, currency, price, seats_min, seat
         )
         db.session.add(new_cafe)
         db.session.commit()
+        return True
 
     elif not allowed_file(filename):
-        flash("You need to login or register to comment.", "error")
-        return redirect(url_for('add_cafe'))
+        return False
 
 
 def search_algorithms(search_data, base_data):
     list_search = [*search_data]
-    print(list_search)
     modified_search = [x.lower() for x in [word for word in list_search if word != ' ']]
-    print(modified_search)
     response_data = []
 
     for data in base_data:
@@ -173,15 +174,16 @@ def search_algorithms(search_data, base_data):
     words_list_search = []
     data_index = []
     response_data_index = []
-    for _ in list_search:
+    for _ in list_search[:-1]:
         if _ != " ":
             sub_list.append(_.lower())
-            if list_search.index(_) == len(list_search) - 1:
-                words_list_search.append(sub_list)
-                sub_list = []
         elif _ == " ":
             words_list_search.append(sub_list)
             sub_list = []
+    for _ in list_search[-1:]:
+        sub_list.append(_.lower())
+        words_list_search.append(sub_list)
+        sub_list = []
     for data in base_data:
         for _ in [*data.name]:
             if _ != " ":
@@ -197,12 +199,10 @@ def search_algorithms(search_data, base_data):
         for word in words_list_search:
             if word in _:
                 data_index.append(words_data_base.index(_))
-    print(data_index)
     if len(data_index) > 0:
         [response_data_index.append(x) for x in data_index if x not in response_data_index]
         for _ in response_data_index:
             response_data.append(base_data[_])
-        print(response_data_index)
         return response_data
     elif len(data_index) == 0:
         return response_data
@@ -274,25 +274,31 @@ def add_cafe():
 def cafe_added():
     if request.method == "POST":
         img_file = request.files['img-file']
-        print(request.form.get('contributor-email'))
         if request.form.get('submit') == 'submit':
-            add_cafe_data(img=img_file,
-                          name=request.form.get('cafe-name'),
-                          location=request.form.get('location'),
-                          map_url=request.form.get('map-link'),
-                          currency=request.form.get('currency'),
-                          price=request.form.get('coffee-price'),
-                          seats_min=request.form.get('min-seats'),
-                          seats_max=request.form.get('max-seats'),
-                          wifi=request.form.get('has-wifi'),
-                          sockets=request.form.get('has-sockets'),
-                          toilet=request.form.get('has-toilet'),
-                          calls=request.form.get('can-take-calls'),
-                          mysterious=request.form.get('anonymous'),
-                          contributor_name=request.form.get('contributor-name'),
-                          contributor_email=request.form.get('contributor-email')
-                          )
-    return render_template('base.html', form_id=1, success=1)
+            if check_if_exists(request.form.get('cafe-name')):
+                flash("Cafe already exists (●'◡'●)", "already_exist_error")
+                return redirect(url_for('add_cafe'))
+
+            elif add_cafe_data(img=img_file,
+                               name=request.form.get('cafe-name'),
+                               location=request.form.get('location'),
+                               map_url=request.form.get('map-link'),
+                               currency=request.form.get('currency'),
+                               price=request.form.get('coffee-price'),
+                               seats_min=request.form.get('min-seats'),
+                               seats_max=request.form.get('max-seats'),
+                               wifi=request.form.get('has-wifi'),
+                               sockets=request.form.get('has-sockets'),
+                               toilet=request.form.get('has-toilet'),
+                               calls=request.form.get('can-take-calls'),
+                               mysterious=request.form.get('anonymous'),
+                               contributor_name=request.form.get('contributor-name'),
+                               contributor_email=request.form.get('contributor-email')
+                               ):
+                return render_template('base.html', form_id=1, success=1)
+            else:
+                flash("The file type is not allowed >:(", "file_type_error")
+                return redirect(url_for('add_cafe'))
 
 
 if __name__ == "__main__":

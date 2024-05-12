@@ -1,7 +1,7 @@
 {% if all_cafes|length <= 3 %}
-<div class='content-div show-no-border'>
+<div class='content-div show-no-border' style="margin-left:80px;">
 {% elif all_cafes|length > 3 %}
-<div class='content-div show-border'>
+<div class='content-div show-border' style="margin-left:80px;">
 {% endif %}
     <div class="row gx-1 d-flex justify-content-evenly">
         {% for cafe in all_cafes %}

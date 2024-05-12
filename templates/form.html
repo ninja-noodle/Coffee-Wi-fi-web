@@ -12,7 +12,7 @@
             Welcome Cafe-thusiast
         </div>
         <a id="fake-submit" class="button-wrapper">
-            <button class="button-contribute" name="submit" value="submit" onclick="document.getElementById('real-submit').click()">Let's Submit</button>
+            <button class="button-contribute" name="submit" value="submit" onclick="document.getElementById('real-submit').click();textContent='Submitting...'">Let's Submit</button>
         </a>
         {% endif %}
 
@@ -35,7 +35,22 @@
     </div>
 </nav>
 {% if success == 1 %}
-<div class='content-div show-border'>
+<script>
+  var count = 10;
+  var redirect = "{{ url_for('get_all_cafes')}}";
+
+  function countDown() {
+    var timer = document.getElementById("timer");
+    if (count > 0) {
+      count--;
+      timer.innerHTML = "Redirecting to main page in " + count + " seconds.";
+      setTimeout("countDown()", 1000);
+    } else {
+      window.location.href = redirect;
+    }
+  }
+</script>
+<div class='content-div show-border' style="margin-left:80px;">
     <div class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;">Cafe added successfully!</div>
     <div class="success-msg d-flex justify-content-evenly" style='font-size: 40px; font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; margin-bottom: 20px;'>Thank you for your contribution <3</div>
     <div class="row gx-1 d-flex justify-content-evenly sortable-list">
@@ -55,15 +70,19 @@
             </div>
         </div>
     </div>
+    <div id="timer" class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;">
+        <script>
+          countDown();
+        </script>
+    </div>
 </div>
 {% else %}
-<div class='content-div show-border'>
+<div class='content-div show-border' style="position:fixed;left:80px;height:100%;">
     <form action="{{ url_for('cafe_added')}}" method="post" enctype="multipart/form-data">
         <div class="d-flex justify-content-evenly main-form">
             <a class="button-wrapper" style="display:none;">
                 <button class="button-contribute" type="submit" name="submit" value="submit" id="real-submit">Let's Submit</button>
             </a>
-
             <div class="flex-fill form-container-1" style="display: grid;grid-template-columns: 1fr 2fr;grid-gap: 20px; flex-direction: column">
 
                 <div class="upload-area">
@@ -88,17 +107,26 @@
                         </g>
                     </svg>Clear Image
                     </a>
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                    <ul class=flashes>
-                        {% for category, message in messages %}
-                        <p class="error">{{ message }}</p>
+                    {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
+                    {% if errors %}
+                    <ul class=flashes style="margin:0; padding:0 0;">
+                        {% for message in errors %}
+                        <li>{{ message }}</li>
                         {% endfor %}
                     </ul>
                     {% endif %}
                     {% endwith %}
                 </div>
                 <div class="upload-area" style="cursor: default;">
+                    {% with errors = get_flashed_messages(category_filter=["already_exist_error"]) %}
+                    {% if errors %}
+                    <div class="alert" style="margin:0; padding:0 0;">
+                        {% for msg in errors %}
+                        {{ msg }}
+                        {% endfor -%}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
                     <input class="form-field" type="text" placeholder="Name of cafe" name="cafe-name" required>
                     <input class="form-field" type="text" placeholder="Located City" name="location" required>
                     <input class="form-field" type="url" placeholder="Google Maps Link" name="map-link" required>
@@ -109,7 +137,7 @@
                                 <option value="$">$</option>
                                 <option value="MMK">MMK</option>
                             </select>
-                            <input id="coffee-price-form" type="search" placeholder="Coffee price" name="coffee-price" required>
+                            <input id="coffee-price-form" type="search" placeholder="Coffee price" name="coffee-price" required onfocus="placeholder='00.00'" onfocusout="placeholder='Coffee-price'">
                         </div>
                         <div class="range-container">
                             <div class="slider-value" style="margin-bottom: 5px;">
@@ -146,7 +174,7 @@
                     </label>
                     <label class="form-control">
                         <input type="checkbox" name="has-toilet" />
-                        Have toilets
+                        Has toilet
                     </label>
                     <label class="form-control">
                         <input type="checkbox" name="can-take-calls" />
