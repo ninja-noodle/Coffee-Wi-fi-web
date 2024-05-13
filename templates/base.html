@@ -37,9 +37,9 @@
         <div class='search' id="navbarSupportedContent">
             <form class="d-flex" method="post" role="search">
                 {% if searchvalue|length == 0 %}
-                <input class="search-input" type="search" placeholder="Cafe search" name="search-data">
+                <input class="search-input" type="search" placeholder="Cafe search" name="search-data" required>
                 {% elif searchvalue|length > 0 %}
-                <input class="search-input" type="search" placeholder="Cafe search" name="search-data" value="{{searchvalue}}">
+                <input class="search-input" type="search" placeholder="Cafe search" name="search-data" value="{{searchvalue}}" required>
                 {% endif %}
                 <button class="search-button" type="submit" name="search" value="search"><i class="bi bi-search-heart"></i></button>
             </form>
@@ -76,7 +76,7 @@
             <i class="bi bi-funnel-fill filter-logo"></i>
             <div class='filter-title-text'>Filters</div>
         </div>
-        <form action="/" method ="post" id="form">
+        <form action="/" method="post" id="form">
             {% if filter_id != 1 %}
             <button class="filter" type="submit" name="filter" value="filter-all" style="background-color: transparent; color: #3B3B3B;">
                 <span>
@@ -224,6 +224,21 @@
                 <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='can_take_calls') }}" style="color: #fff;">Can take calls</a>
             </button>
             {% endif %}
+            <button id="seatFilter" class="filter" name="filter" value="filter-seats" style="background-color: transparent; color: #3B3B3B;">
+                <span>
+                    <svg class="filter-svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
+                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                            <path d="M298 2459 c-85 -20 -149 -81 -174 -166 -18 -58 -19 -244 -2 -261 18 -18 56 -14 68 7 5 11 10 65 10 121 0 120 18 164 80 199 35 20 52 21 252 21 207 0 216 -1 248 -22 72 -49 75 -60 75 -251 l0 -172 -46 -6 c-129 -19 -209 -115 -209 -251 l0 -68 -200 0 -200 0 0 129 c0 104 -3 133 -16 145 -8 9 -22 16 -29 16 -7 0 -21 -7 -29 -16 -13 -12 -16 -41 -16 -145 l0 -129 -26 0 c-15 0 -38 -12 -55 -29 -28 -28 -29 -34 -29 -115 0 -103 18 -134 88 -143 l42 -6 0 -88 c0 -56 -4 -89 -11 -89 -6 0 -9 -14 -7 -32 l3 -33 124 -3 c128 -3 151 3 151 38 0 10 -7 23 -15 30 -11 9 -15 34 -15 96 l0 84 120 0 120 0 0 -120 0 -119 -36 -7 c-62 -11 -74 -34 -74 -141 0 -86 2 -96 25 -118 18 -18 35 -25 65 -25 l40 0 0 -86 c0 -63 -4 -89 -15 -100 -19 -20 -19 -39 1 -58 12 -13 38 -16 120 -16 58 0 114 5 125 10 23 13 25 53 4 70 -12 10 -15 31 -13 94 l3 81 168 3 167 2 0 -85 c0 -59 -5 -93 -15 -108 -13 -20 -13 -25 1 -45 14 -20 23 -22 129 -22 90 0 117 3 129 16 20 19 20 38 1 58 -11 11 -15 37 -15 99 l0 85 45 4 c25 2 65 2 90 0 l45 -4 0 -85 c0 -62 -4 -88 -15 -99 -19 -20 -19 -39 1 -58 20 -20 233 -23 252 -4 17 17 15 53 -3 68 -12 10 -15 31 -13 94 l3 81 168 3 167 2 0 -89 c0 -49 -4 -93 -10 -96 -14 -9 -13 -48 2 -63 19 -19 232 -16 252 4 20 19 20 38 1 58 -11 11 -15 37 -15 100 l0 86 40 0 c30 0 47 7 65 25 23 22 25 32 25 118 0 107 -12 130 -74 141 l-36 7 0 119 0 120 120 0 120 0 0 -84 c0 -62 -4 -87 -15 -96 -8 -7 -15 -20 -15 -30 0 -35 23 -41 151 -38 l124 3 3 33 c2 18 -1 32 -7 32 -7 0 -11 33 -11 89 l0 88 42 6 c70 9 88 40 88 143 0 81 -1 87 -29 115 -17 17 -40 29 -55 29 l-26 0 0 129 c0 104 -3 133 -16 145 -8 9 -22 16 -29 16 -7 0 -21 -7 -29 -16 -13 -12 -16 -41 -16 -145 l0 -129 -199 0 -199 0 -3 78 c-3 66 -9 86 -34 128 -37 59 -103 103 -171 112 l-49 7 0 172 c0 191 3 202 75 251 32 21 41 22 248 22 200 0 217 -1 252 -21 63 -35 80 -79 80 -202 0 -112 9 -137 50 -137 30 0 40 32 40 133 0 157 -38 237 -136 287 -47 24 -59 25 -251 28 -123 2 -223 -1 -254 -7 -76 -17 -132 -60 -166 -128 -27 -56 -28 -65 -31 -231 l-4 -173 -61 3 -62 3 -5 175 c-5 170 -6 176 -35 228 -35 64 -93 107 -164 123 -31 6 -131 9 -254 7 -223 -4 -248 -9 -312 -73 -61 -62 -69 -92 -75 -285 l-5 -175 -62 -3 -61 -3 -4 173 c-3 166 -4 175 -31 231 -33 65 -89 110 -158 126 -53 13 -409 12 -461 0z m1453 -102 c18 -12 44 -38 56 -57 22 -32 23 -41 21 -199 l-3 -166 -48 -7 c-87 -12 -164 -75 -196 -161 -6 -16 -11 -57 -11 -93 l0 -64 -70 0 -70 0 0 64 c0 36 -5 77 -11 93 -32 86 -109 149 -196 161 l-48 7 -3 166 c-2 158 -1 167 21 199 12 19 38 45 56 57 33 22 42 23 251 23 209 0 218 -1 251 -23z m-521 -517 c43 -12 93 -62 109 -109 7 -22 11 -139 11 -342 l0 -309 -335 0 -335 0 0 308 c0 180 4 322 10 344 13 45 60 95 103 107 43 12 393 13 437 1z m1012 -20 c73 -49 73 -47 76 -412 l3 -328 -335 0 -336 0 0 308 c0 170 4 323 10 342 12 42 65 97 106 110 16 5 122 8 235 7 200 -2 206 -3 241 -27z m-1642 -355 l0 -55 -255 0 -255 0 0 55 0 55 255 0 255 0 0 -55z m970 0 l0 -55 -70 0 -70 0 0 55 0 55 70 0 70 0 0 -55z m1340 0 l0 -55 -255 0 -255 0 0 55 0 55 255 0 255 0 0 -55z m-2640 -230 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m1300 -35 l0 -119 -35 -7 c-19 -3 -51 -3 -70 0 l-35 7 0 119 0 120 70 0 70 0 0 -120z m1210 35 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m-1322 -302 l-3 -58 -440 0 -440 0 -3 58 -3 57 446 0 446 0 -3 -57z m970 0 l-3 -58 -440 0 -440 0 -3 58 -3 57 446 0 446 0 -3 -57z m-1668 -228 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m560 0 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m410 0 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m560 0 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z"/>
+                        </g>
+                    </svg>
+                </span>
+                {% if filter_id == 6 %}
+                <input class="rangeValue" readonly value="{{seats}}" name="seatAmount">
+                {% else %}
+                <input class="rangeValue" readonly value="0" name="seatAmount">
+                {% endif %}
+                <input id="formRange" type="range" value="" min="0" max="50">
+            </button>
         </form>
     </div>
 </nav>
@@ -257,102 +272,9 @@
 {% endif %}
 {% endif %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>
-<script>
-    var checkbox = document.getElementById("anonymous");
-    checkbox.addEventListener('change', function(e) {
-         if (checkbox.checked) {
-            document.getElementById("contributor-name").value = '';
-            document.getElementById("contributor-name").disabled = true;
-            document.getElementById("contributor-email").value = '';
-            document.getElementById("contributor-email").disabled = true;
-         } else {
-            document.getElementById("contributor-name").disabled = false;
-            document.getElementById("contributor-email").disabled = false;
-        }
-    });
-
-    var titleMin = document.getElementById('title-min');
-    var titleMax = document.getElementById('title-max');
-
-    var inputLeft = document.getElementById('input-left');
-    var inputRight = document.getElementById('input-right');
-
-    var dotLeft = document.getElementById('dot-left');
-    var dotRight = document.getElementById('dot-right');
-
-    var sliderRange = document.getElementById('slider-range');
-
-    function setLeftValue()
-    {
-        let value = this.value;
-        let min = parseInt(this.min);
-        let max = parseInt(this.max);
-
-        value = Math.min(parseInt(value),
-                parseInt(inputRight.value) - 1);
-        let percent = ((value - min) / (max - min)) * 100;
-        sliderRange.style.left = percent + '%';
-        dotLeft.style.left = percent + '%';
-        titleMin.value = value + ' <';
-
-    }
-    function setRightValue()
-    {
-        let value = this.value;
-        let min = parseInt(this.min);
-        let max = parseInt(this.max);
-
-        value = Math.max(parseInt(value),
-                parseInt(inputLeft.value) + 1);
-        let percent = ((value - min) / (max - min)) * 100;
-        sliderRange.style.right = (100 - percent) + '%';
-        dotRight.style.right = (100 - percent) + '%';
-        titleMax.value = '< ' + value;
-    }
-    inputLeft.addEventListener('input', setLeftValue);
-    inputRight.addEventListener('input', setRightValue);
-
-
-    const img = document.querySelector(".image-content");
-    img.classList.add("hide");
-    const fake = document.querySelector(".no-image-content");
-    const upload = document.querySelector(".upload-button");
-    const reset = document.querySelector(".reset-button");
-    reset.classList.add("hide");
-    const input = document.querySelector('input[type=file]');
-    const reader = new FileReader();
-    input.addEventListener('change', function () {
-        if (this.files[0]) {
-            fake.classList.add('hide');
-            img.classList.remove('hide');
-            const file = this.files[0];
-            reader.onload = (event) => {
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-            upload.classList.add('hide');
-            reset.classList.remove('hide');
-        }
-        else{
-            upload.classList.remove('hide');
-            reset.classList.add('hide');
-        }
-    })
-
-    reset.addEventListener('click', function () {
-        img.classList.add("hide");
-        img.src = '';
-        this.classList.add('hide');
-        upload.classList.remove('hide');
-        fake.classList.remove('hide');
-
-    });
-
-</script>
+<script src="{{ url_for('static', filename='js/scripts1.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/scripts2.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/scripts3.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/scripts4.js') }}" defer></script>
 </body>
 </html>
