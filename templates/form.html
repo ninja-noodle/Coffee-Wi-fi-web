@@ -1,256 +1,185 @@
-<nav class="navbar main-nav-container" id="navbar" style="margin-left:80px">
-    <div class="container-fluid">
-        <div class="research-lab">
-            Cafe Research Lab
-        </div>
-        {% if success == 1 %}
-        <a class="button-wrapper" href="{{ url_for('add_cafe')}}" style="cursor: default;">
-            <button class="button-contribute" type="submit" name="contribute" value="contribute" disabled>Submitted!</button>
-        </a>
-        {% else %}
-        <div class="research-lab">
-            Welcome Cafe-thusiast
-        </div>
-        <a id="fake-submit" class="button-wrapper">
-            <button class="button-contribute" name="submit" value="submit" onclick="document.getElementById('real-submit').click();textContent='Submitting...'">Let's Submit</button>
-        </a>
-        {% endif %}
-
-    </div>
-</nav>
-<nav class="nav__cont nav-container border-no-show">
-    <div class="nav right-border">
-        <form action="/" method ="post">
-            <button class="logo-display" type="submit" name="logo-home" value="home">
-                <span>
-                    <svg style='width:30px; height:30px' xmlns="http://www.w3.org/2000/svg" version="1.0" width="900.000000pt" height="900.000000pt" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
-                        <g class='logo' transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M3235 7469 c-27 -11 -64 -31 -81 -44 -18 -14 -637 -630 -1378 -1370 -1045 -1046 -1352 -1358 -1373 -1398 -25 -48 -27 -61 -27 -167 0 -106 2 -119 27 -167 21 -40 328 -352 1383 -1407 745 -745 1369 -1362 1387 -1371 161 -82 327 -60 449 58 67 66 118 181 118 266 0 40 -29 137 -56 190 -9 18 -466 483 -1016 1033 -549 550 -996 1004 -993 1009 4 5 1275 9 3270 9 2403 0 3285 3 3342 11 136 20 223 84 297 219 16 29 19 55 20 150 0 105 -2 119 -26 164 -33 63 -103 134 -166 168 -30 16 -79 31 -127 37 -53 8 -1063 11 -3333 11 -1792 0 -3263 0 -3269 0 -7 0 -13 4 -13 9 0 6 451 461 1003 1013 1145 1147 1062 1051 1062 1228 0 96 -2 110 -30 163 -38 77 -124 156 -199 185 -77 29 -199 30 -271 1z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name logo-text" href="{{ url_for('get_all_cafes') }}">Go back</a>
-            </button>
-            <div class="h-line"></div>
-            <div class="thankful-title">
-                <i class="bi bi-chat-square-heart-fill filter-logo"></i>
-                <div class='filter-title-text'>Appreciation</div>
+{% include "side-bar.html" %}
+<main style="margin-left: 80px;">
+    <nav class="navbar main-nav-container" id="navbar">
+        <div class="container-fluid">
+            <div class="research-lab">
+                Cafe Research Lab
             </div>
-            <div class="sortable-pattern">
-                <div class="pattern-div pattern" style="background-color: #F4DFC8; color: #3B3B3B" draggable="true">
-                    <img class="pattern-img" src="{{ url_for('static', filename='/'.join(['assets', 'pattern.png'])) }}" alt="...">
-                </div>
-                <div class="pattern-div pattern" style="background-color: #F4DFC8; color: #3B3B3B" draggable="true">
-                    <img class="pattern-img" src="{{ url_for('static', filename='/'.join(['assets', 'pattern.png'])) }}" alt="...">
-                </div>
-                <div class="filter pattern" style="background-color: #F4DFC8; color: #3B3B3B" draggable="true">
-                <span>
-                    <svg class="filter-svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                    <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                        <path d="M210 2393 c-1 -120 -2 -486 -3 -813 l-2 -595 -102 -3 -103 -3 0 -63 c0 -230 124 -412 336 -494 l69 -27 1059 -3 c636 -1 1079 1 1110 7 138 25 260 102 332 208 61 90 85 161 91 275 l6 97 -104 3 -104 3 -3 813 -2 812 -1290 0 -1290 0 0 -217z m2410 -688 l0 -725 -105 0 c-58 0 -105 4 -105 8 0 5 7 30 16 56 24 71 15 185 -20 254 -35 70 -95 128 -165 161 l-56 26 -637 3 -638 3 -2 -253 -3 -253 -262 -3 -263 -2 0 725 0 725 1120 0 1120 0 0 -725z m-700 -557 c0 -90 -5 -192 -11 -227 -22 -136 -111 -255 -236 -314 -63 -30 -75 -32 -173 -32 -97 0 -110 2 -173 32 -127 60 -214 176 -236 314 -6 35 -11 137 -11 227 l0 162 420 0 420 0 0 -162z m284 128 c42 -32 71 -101 62 -149 -13 -71 -75 -132 -141 -139 l-30 -3 -3 164 -3 164 41 -6 c22 -3 56 -17 74 -31z m-1255 -506 c7 -23 37 -77 67 -121 l54 -80 -327 3 c-325 3 -328 3 -378 27 -78 39 -147 115 -169 189 l-7 22 374 0 374 0 12 -40z m1855 18 c-22 -74 -90 -149 -169 -188 -50 -25 -52 -25 -378 -28 l-327 -3 54 80 c30 44 60 98 67 121 l12 40 374 0 374 0 -7 -22z"/>
-                        <path d="M1110 2098 c0 -29 -9 -99 -20 -156 -11 -56 -20 -130 -20 -162 l0 -60 84 0 83 0 7 66 c4 37 13 97 21 135 8 37 17 104 21 148 l7 81 -92 0 -91 0 0 -52z"/>
-                        <path d="M1436 2118 c-3 -18 -7 -55 -10 -83 -3 -27 -12 -86 -20 -130 -9 -44 -15 -104 -16 -132 l0 -53 85 0 84 0 5 33 c3 17 7 55 10 82 3 28 12 86 20 130 9 44 15 104 16 133 l0 52 -85 0 -84 0 -5 -32z"/>
-                        <path d="M1760 2123 c0 -16 -11 -95 -25 -177 -14 -83 -25 -167 -25 -188 l0 -38 90 0 90 0 0 48 c0 27 9 97 20 157 11 60 20 135 20 167 l0 58 -85 0 -85 0 0 -27z"/>
-                    </g>
-                    </svg>
-                </span>
-                    <a class="web-name filter-text">We</a>
-                </div>
-                <div class="filter pattern" style="background-color: #F4DFC8; color: #3B3B3B" draggable="true">
-                <span>
-                    <svg class="filter-svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M680 2891 c-395 -84 -680 -437 -680 -840 0 -212 85 -430 228 -583 l43 -46 -30 -43 c-34 -46 -61 -124 -61 -174 0 -48 26 -126 60 -177 35 -53 111 -106 163 -115 33 -5 35 -8 40 -54 17 -138 121 -248 260 -274 30 -6 38 -13 43 -34 30 -144 152 -244 302 -246 l72 -1 26 -52 c51 -103 143 -157 269 -157 106 0 154 26 261 137 80 83 106 131 116 208 3 20 10 26 47 32 94 16 199 109 226 201 8 28 15 59 15 69 0 14 8 18 33 18 89 0 215 108 243 209 8 31 17 62 19 69 3 6 17 12 33 12 45 0 128 48 177 102 45 50 75 122 75 178 0 18 18 43 66 90 75 74 139 160 179 240 259 515 -45 1129 -610 1235 -258 49 -544 -32 -730 -207 l-65 -60 -65 60 c-194 182 -485 260 -755 203z m351 -196 c91 -24 213 -90 278 -151 l56 -53 -118 -118 -117 -119 127 -125 c167 -164 208 -184 368 -184 100 0 116 3 172 28 l61 29 296 -296 c163 -163 301 -309 307 -324 26 -68 -27 -142 -104 -142 -40 0 -46 5 -267 225 -124 124 -230 225 -236 225 -5 0 -38 -29 -74 -65 l-64 -65 224 -225 c124 -124 228 -235 233 -247 24 -65 -32 -138 -106 -138 -40 0 -46 5 -267 225 -124 124 -230 225 -236 225 -5 0 -39 -29 -74 -65 l-65 -65 230 -230 230 -230 0 -46 c0 -39 -5 -50 -33 -75 -46 -41 -95 -40 -153 4 -76 59 -108 70 -200 75 l-86 4 -11 32 c-16 42 -73 109 -119 137 -20 13 -63 30 -96 38 -60 16 -60 16 -72 64 -23 93 -113 186 -201 209 -42 12 -43 13 -49 62 -18 135 -101 227 -235 262 -63 16 -144 9 -192 -17 -20 -11 -27 -7 -76 47 -57 62 -131 203 -150 284 -32 133 -22 279 25 400 126 320 462 491 794 405z m1263 5 c295 -75 516 -353 516 -650 0 -147 -62 -308 -166 -434 l-56 -68 -357 356 c-196 196 -361 356 -367 356 -5 0 -28 -19 -49 -41 -75 -78 -172 -106 -268 -77 -22 7 -64 34 -94 62 l-54 49 143 144 c147 149 224 211 317 258 128 64 294 81 435 45z m-1653 -1341 c23 -25 29 -40 29 -76 0 -41 -5 -50 -62 -109 -76 -79 -120 -97 -169 -68 -18 11 -42 35 -53 53 -29 49 -11 93 68 169 60 58 67 62 111 62 40 0 52 -5 76 -31z m260 -318 c24 -24 29 -38 29 -76 0 -44 -4 -51 -62 -111 -71 -74 -111 -91 -164 -69 -41 17 -66 54 -66 99 0 45 10 62 80 129 56 53 64 57 107 57 38 0 52 -5 76 -29z m300 -280 c24 -24 29 -38 29 -76 0 -44 -4 -51 -61 -110 -73 -76 -111 -93 -162 -71 -44 18 -69 55 -69 100 0 45 10 62 80 129 56 53 64 57 107 57 38 0 52 -5 76 -29z m366 -216 c33 -33 35 -39 30 -81 -4 -39 -13 -55 -58 -101 -85 -86 -126 -100 -185 -64 -41 25 -60 78 -45 124 11 32 96 124 136 145 41 23 85 14 122 -23z"/>
-                        </g>
-                    </svg>
-                </span>
-                    <a class="web-name filter-text">Love</a>
-                </div>
-                <div class="filter pattern" style="background-color: #F4DFC8; color: #3B3B3B" draggable="true">
-                <span>
-                    <svg class="filter-svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M670 2335 l0 -205 90 0 90 0 0 205 0 205 -90 0 -90 0 0 -205z"/>
-                            <path d="M1710 2335 l0 -205 85 0 85 0 0 205 0 205 -85 0 -85 0 0 -205z"/>
-                            <path d="M1120 2285 l0 -155 85 0 85 0 0 155 0 155 -85 0 -85 0 0 -155z"/>
-                            <path d="M2150 2285 l0 -155 90 0 90 0 0 155 0 155 -90 0 -90 0 0 -155z"/>
-                            <path d="M370 1811 l0 -129 -77 -7 c-102 -9 -163 -36 -216 -95 -68 -75 -77 -118 -77 -349 0 -232 9 -274 71 -345 60 -68 124 -97 226 -104 l82 -5 7 -31 c3 -17 14 -48 24 -68 10 -20 15 -39 12 -42 -3 -4 -99 -6 -214 -6 l-208 0 0 -85 0 -85 1500 0 1500 0 0 85 0 85 -208 0 c-115 0 -211 2 -214 6 -3 3 2 22 12 42 10 20 21 51 24 68 l7 31 82 5 c102 7 166 36 226 104 62 71 71 113 71 345 0 227 -10 273 -72 344 -52 60 -124 92 -220 101 l-78 6 0 129 0 129 -1130 0 -1130 0 0 -129z m1040 -140 l0 -100 -31 11 c-112 39 -285 -59 -319 -180 -28 -101 0 -242 67 -345 49 -73 141 -167 220 -223 71 -51 72 -60 11 -129 -60 -68 -95 -75 -369 -75 -258 0 -309 7 -364 52 -76 63 -75 52 -75 601 l0 487 430 0 430 0 0 -99z m1040 -388 c0 -549 1 -538 -75 -601 -55 -45 -106 -52 -364 -52 -274 0 -309 7 -369 75 -61 69 -60 78 11 129 185 132 296 308 297 466 0 84 -13 130 -53 181 -61 80 -195 129 -276 101 l-31 -11 0 100 0 99 430 0 430 0 0 -487z m-2080 -53 l0 -270 -56 0 c-63 0 -106 20 -123 57 -7 15 -11 100 -11 217 0 182 1 195 21 220 28 35 52 45 117 45 l52 1 0 -270z m2421 232 l29 -32 0 -195 c0 -118 -4 -203 -11 -218 -17 -37 -60 -57 -123 -57 l-56 0 0 271 0 271 66 -4 c60 -4 70 -7 95 -36z m-1407 -83 c14 -17 26 -37 26 -45 0 -11 19 -14 89 -14 86 0 89 1 95 25 16 65 99 87 153 41 55 -48 30 -168 -59 -283 -43 -56 -162 -153 -188 -153 -26 0 -145 97 -188 153 -57 74 -85 141 -86 205 -1 47 3 57 27 78 42 36 97 33 131 -7z"/>
-                        </g>
-                    </svg>
-                </span>
-                    <a class="web-name filter-text">Contributors</a>
-                </div>
-                <div class="pattern-div pattern" style="background-color: #F4DFC8; color: #3B3B3B" draggable="true">
-                    <img class="pattern-img" src="{{ url_for('static', filename='/'.join(['assets', 'pattern.png'])) }}" alt="...">
-                </div>
-                <div class="pattern-div pattern" style="background-color: #F4DFC8; color: #3B3B3B" draggable="true">
-                    <img class="pattern-img" src="{{ url_for('static', filename='/'.join(['assets', 'pattern.png'])) }}" alt="...">
-                </div>
-            </div>
-        </form>
-    </div>
-</nav>
-{% if success == 1 %}
-<script>
-  var count = 10;
-  var redirect = "{{ url_for('get_all_cafes')}}";
-
-  function countDown() {
-    var timer = document.getElementById("timer");
-    if (count > 0) {
-      count--;
-      timer.innerHTML = "Redirecting to main page in " + count + " seconds.";
-      setTimeout("countDown()", 1000);
-    } else {
-      window.location.href = redirect;
-    }
-  }
-</script>
-<div class='content-div show-border' style="margin-left:80px;">
-    <div class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;">Cafe added successfully!</div>
-    <div class="success-msg d-flex justify-content-evenly" style='font-size: 40px; font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; margin-bottom: 20px;'>Thank you for your contribution <3</div>
-    <div class="row gx-1 d-flex justify-content-evenly sortable-list">
-        <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-            <div class="error-img-container d-flex">
-                <img class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'cup.png'])) }}" alt="...">
-            </div>
-        </div>
-        <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-            <div class="error-img-container d-flex" draggable="false">
-                <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'check.png'])) }}" alt="...">
-            </div>
-        </div>
-        <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-            <div class="error-img-container d-flex" draggable="false">
-                <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'wifi.png'])) }}" alt="...">
-            </div>
-        </div>
-    </div>
-    <div id="timer" class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;">
-        <script>
-          countDown();
-        </script>
-    </div>
-</div>
-{% else %}
-<div class='content-div show-border' style="position:fixed;left:80px;height:100%;">
-    <form action="{{ url_for('cafe_added')}}" method="post" enctype="multipart/form-data">
-        <div class="d-flex justify-content-evenly main-form">
-            <a class="button-wrapper" style="display:none;">
-                <button class="button-contribute" type="submit" name="submit" value="submit" id="real-submit">Let's Submit</button>
+            {% if success == 1 %}
+            <a class="button-wrapper" href="{{ url_for('add_cafe')}}" style="cursor: default;">
+                <button class="button-contribute" type="submit" name="contribute" value="contribute" disabled>Submitted!</button>
             </a>
-            <div class="flex-fill form-container-1" style="display: grid;grid-template-columns: 1fr 2fr;grid-gap: 20px; flex-direction: column">
+            {% else %}
+            <div class="research-lab">
+                Welcome Cafe-thusiast
+            </div>
+            <a id="fake-submit" class="button-wrapper">
+                <button class="button-contribute" name="submit" value="submit" onclick="document.getElementById('real-submit').click();textContent='Submitting...'">Let's Submit</button>
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+    {% if success == 1 %}
+    <script>
+        var count = 10;
+        var redirect = "{{ url_for('get_all_cafes')}}";
 
-                <div class="upload-area">
-                    <div class="image-area d-flex justify-content-center">
-                        <img class='image image-content' src="">
-                        <div class="no-image-content">
-                            <img src="{{ url_for('static', filename='/'.join(['assets', 'image.png'])) }}" style="width:50px; height:50px">
-                        </div>
-                    </div>
-                    <label for="upload-img" class="upload-button justify-content-evenly" data-bs-toggle='tooltip' data-bs-placement="bottom" title="Supported file format: png, jpeg, jpg">
-                        <svg style='width:30px; height:30px' xmlns="http://www.w3.org/2000/svg" version="1.0" width="900.000000pt" height="900.000000pt" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
-                            <g class='plus-icon' transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                                <path d="M4380 8986 c0 -8 -14 -18 -32 -22 -85 -18 -215 -134 -257 -229 -41 -92 -40 -62 -41 -1960 0 -1403 -3 -1824 -12 -1833 -9 -9 -430 -12 -1832 -12 -1899 -1 -1869 0 -1961 -41 -98 -44 -204 -164 -233 -265 -15 -53 -15 -215 0 -268 29 -101 135 -221 233 -265 92 -41 62 -40 1961 -41 1402 0 1823 -3 1832 -12 9 -9 12 -430 12 -1833 1 -1898 0 -1868 41 -1960 44 -98 164 -204 265 -233 53 -15 215 -15 268 0 101 29 221 135 265 233 41 92 40 62 41 1960 0 1403 3 1824 12 1833 9 9 430 12 1832 12 1899 1 1869 0 1961 41 95 42 211 172 229 257 4 18 14 32 22 32 11 0 14 22 14 110 0 88 -3 110 -14 110 -8 0 -18 14 -22 32 -18 85 -134 215 -229 257 -92 41 -62 40 -1961 41 -1402 0 -1823 3 -1832 12 -9 9 -12 430 -12 1833 -1 1898 0 1868 -41 1960 -42 95 -172 211 -257 229 -18 4 -32 14 -32 22 0 11 -22 14 -110 14 -88 0 -110 -3 -110 -14z"/>
-                            </g>
-                        </svg>Upload Cafe Image
-                    </label>
-
-                    <input id="upload-img" type="file" accept=".png, .jpg, .jpeg" name="img-file" required>
-                    <a class="reset-button justify-content-evenly"><svg style='width:29px; height:29px'  xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g class='reset-icon' transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M135 2988 c-108 -39 -161 -154 -120 -256 11 -26 198 -219 613 -634 l597 -598 -597 -597 c-414 -415 -602 -609 -613 -635 -33 -80 -5 -174 68 -232 48 -38 135 -48 188 -21 19 9 303 285 632 613 l597 597 598 -597 c328 -328 612 -604 631 -613 53 -27 140 -17 188 21 73 58 101 152 68 232 -11 26 -199 220 -613 635 l-597 597 602 603 c484 485 603 609 613 641 48 150 -101 295 -248 241 -40 -15 -130 -100 -645 -614 l-597 -596 -593 592 c-325 325 -607 598 -624 607 -43 22 -111 28 -148 14z"/>
-                        </g>
-                    </svg>Clear Image
-                    </a>
-                    {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
-                    {% if errors %}
-                    <ul class=flashes style="margin:0; padding:0 0;">
-                        {% for message in errors %}
-                        <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    {% endwith %}
+        function countDown() {
+          var timer = document.getElementById("timer");
+          if (count > 0) {
+            count--;
+            timer.innerHTML = "Redirecting to main page in " + count + " seconds.";
+            setTimeout("countDown()", 1000);
+          } else {
+            window.location.href = redirect;
+          }
+        }
+    </script>
+    <div class='content-div show-border'>
+        <div class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;">Cafe added successfully!</div>
+        <div class="success-msg d-flex justify-content-evenly" style='font-size: 40px; font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; margin-bottom: 20px;'>Thank you for your contribution <3</div>
+        <div class="row gx-1 d-flex justify-content-evenly sortable-list">
+            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                <div class="error-img-container d-flex">
+                    <img class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'cup.png'])) }}" alt="...">
                 </div>
-                <div class="upload-area" style="cursor: default;">
-                    {% with errors = get_flashed_messages(category_filter=["already_exist_error"]) %}
-                    {% if errors %}
-                    <div class="alert" style="margin:0; padding:0 0;">
-                        {% for msg in errors %}
-                        {{ msg }}
-                        {% endfor -%}
-                    </div>
-                    {% endif %}
-                    {% endwith %}
-                    <input class="form-field" type="text" placeholder="Name of cafe" name="cafe-name" required>
-                    <input class="form-field" type="text" placeholder="Located City" name="location" required>
-                    <input class="form-field" type="url" placeholder="Google Maps Link" name="map-link" required>
-                    <div style="display: flex; box-sizing: border-box; min-height: 50px; width: 100%; outline: none; margin-top:10px; margin-bottom:10px;">
-                        <div class="d-flex" style="margin-right:10px">
-                            <select name="currency" id="currency">
-                                <option value="£">£</option>
-                                <option value="$">$</option>
-                                <option value="MMK">MMK</option>
-                            </select>
-                            <input id="coffee-price-form" type="search" placeholder="Coffee price" name="coffee-price" required onfocus="placeholder='00.00'" onfocusout="placeholder='Coffee-price'">
+            </div>
+            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                <div class="error-img-container d-flex" draggable="false">
+                    <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'check.png'])) }}" alt="...">
+                </div>
+            </div>
+            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                <div class="error-img-container d-flex" draggable="false">
+                    <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'wifi.png'])) }}" alt="...">
+                </div>
+            </div>
+        </div>
+        <div id="timer" class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;">
+            <script>
+                countDown();
+            </script>
+        </div>
+    </div>
+    {% else %}
+    <div class='content-div show-border' style="height:100%;">
+        <form action="{{ url_for('cafe_added')}}" method="post" enctype="multipart/form-data">
+            <div class="d-flex justify-content-evenly main-form">
+                <a class="button-wrapper" style="display:none;">
+                    <button class="button-contribute" type="submit" name="submit" value="submit" id="real-submit">Let's Submit</button>
+                </a>
+                <div class="flex-fill form-container-1" style="display: grid;grid-template-columns: 1fr 2fr;grid-gap: 20px; flex-direction: column">
+
+                    <div class="upload-area">
+                        <div class="image-area d-flex justify-content-center">
+                            <img class='image image-content' src="">
+                            <div class="no-image-content">
+                                <img src="{{ url_for('static', filename='/'.join(['assets', 'image.png'])) }}" style="width:50px; height:50px">
+                            </div>
                         </div>
-                        <div class="range-container">
-                            <div class="slider-value" style="margin-bottom: 5px;">
-                                <input name="min-seats" id="title-min" class="slider-value-title" readonly  value="0 <" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
-                                <span style="color:  #808080;" class="slider-value-title">
+                        <label for="upload-img" class="upload-button justify-content-evenly" data-bs-toggle='tooltip' data-bs-placement="bottom" title="Supported file format: png, jpeg, jpg">
+                            <svg style='width:30px; height:30px' xmlns="http://www.w3.org/2000/svg" version="1.0" width="900.000000pt" height="900.000000pt" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
+                                <g class='plus-icon' transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                                    <path d="M4380 8986 c0 -8 -14 -18 -32 -22 -85 -18 -215 -134 -257 -229 -41 -92 -40 -62 -41 -1960 0 -1403 -3 -1824 -12 -1833 -9 -9 -430 -12 -1832 -12 -1899 -1 -1869 0 -1961 -41 -98 -44 -204 -164 -233 -265 -15 -53 -15 -215 0 -268 29 -101 135 -221 233 -265 92 -41 62 -40 1961 -41 1402 0 1823 -3 1832 -12 9 -9 12 -430 12 -1833 1 -1898 0 -1868 41 -1960 44 -98 164 -204 265 -233 53 -15 215 -15 268 0 101 29 221 135 265 233 41 92 40 62 41 1960 0 1403 3 1824 12 1833 9 9 430 12 1832 12 1899 1 1869 0 1961 41 95 42 211 172 229 257 4 18 14 32 22 32 11 0 14 22 14 110 0 88 -3 110 -14 110 -8 0 -18 14 -22 32 -18 85 -134 215 -229 257 -92 41 -62 40 -1961 41 -1402 0 -1823 3 -1832 12 -9 9 -12 430 -12 1833 -1 1898 0 1868 -41 1960 -42 95 -172 211 -257 229 -18 4 -32 14 -32 22 0 11 -22 14 -110 14 -88 0 -110 -3 -110 -14z"/>
+                                </g>
+                            </svg>Upload Cafe Image
+                        </label>
+
+                        <input id="upload-img" type="file" accept=".png, .jpg, .jpeg" name="img-file" required>
+                        <a class="reset-button justify-content-evenly"><svg style='width:29px; height:29px'  xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
+                            <g class='reset-icon' transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                                <path d="M135 2988 c-108 -39 -161 -154 -120 -256 11 -26 198 -219 613 -634 l597 -598 -597 -597 c-414 -415 -602 -609 -613 -635 -33 -80 -5 -174 68 -232 48 -38 135 -48 188 -21 19 9 303 285 632 613 l597 597 598 -597 c328 -328 612 -604 631 -613 53 -27 140 -17 188 21 73 58 101 152 68 232 -11 26 -199 220 -613 635 l-597 597 602 603 c484 485 603 609 613 641 48 150 -101 295 -248 241 -40 -15 -130 -100 -645 -614 l-597 -596 -593 592 c-325 325 -607 598 -624 607 -43 22 -111 28 -148 14z"/>
+                            </g>
+                        </svg>Clear Image
+                        </a>
+                        {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
+                        {% if errors %}
+                        <ul class=flashes style="margin:0; padding:0 0;">
+                            {% for message in errors %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="upload-area" style="cursor: default;">
+                        {% with errors = get_flashed_messages(category_filter=["already_exist_error"]) %}
+                        {% if errors %}
+                        <div class="alert" style="margin:0; padding:0 0;">
+                            {% for msg in errors %}
+                            {{ msg }}
+                            {% endfor -%}
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+                        <input class="form-field" type="text" placeholder="Name of cafe" name="cafe-name" required>
+                        <input class="form-field" type="text" placeholder="Located City" name="location" required>
+                        <input class="form-field" type="url" placeholder="Google Maps Link" name="map-link" required>
+                        <div style="display: flex; box-sizing: border-box; min-height: 50px; width: 100%; outline: none; margin-top:10px; margin-bottom:10px;">
+                            <div class="d-flex" style="margin-right:10px">
+                                <select name="currency" id="currency">
+                                    <option value="£">£</option>
+                                    <option value="$">$</option>
+                                    <option value="MMK">MMK</option>
+                                </select>
+                                <input id="coffee-price-form" type="search" placeholder="Coffee price" name="coffee-price" required onfocus="placeholder='00.00'" onfocusout="placeholder='Coffee-price'">
+                            </div>
+                            <div class="range-container">
+                                <div class="slider-value" style="margin-bottom: 5px;">
+                                    <input name="min-seats" id="title-min" class="slider-value-title" readonly  value="0 <" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
+                                    <span style="color:  #808080;" class="slider-value-title">
                                 Seats
                             </span>
-                                <input name="max-seats" id="title-max" class="slider-value-title" readonly  value="< 40" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
-                            </div>
-                            <div class="double-slider">
-                                <div class="double-slider-body">
-                                    <div class="double-slider-track">
-                                        <div id='slider-range' class="double-slider-range"></div>
-                                        <div id="dot-left" class="double-slider-dot double-slider-dot-left"></div>
-                                        <div id="dot-right" class="double-slider-dot double-slider-dot-right"></div>
+                                    <input name="max-seats" id="title-max" class="slider-value-title" readonly  value="< 40" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
+                                </div>
+                                <div class="double-slider">
+                                    <div class="double-slider-body">
+                                        <div class="double-slider-track">
+                                            <div id='slider-range' class="double-slider-range"></div>
+                                            <div id="dot-left" class="double-slider-dot double-slider-dot-left"></div>
+                                            <div id="dot-right" class="double-slider-dot double-slider-dot-right"></div>
+                                        </div>
+                                        <input id='input-left' type="range" min="0" max="50" value="0" class="double-slider-input">
+                                        <input id='input-right' type="range" min="0" max="50" value="40" class="double-slider-input">
                                     </div>
-                                    <input id='input-left' type="range" min="0" max="50" value="0" class="double-slider-input">
-                                    <input id='input-right' type="range" min="0" max="50" value="40" class="double-slider-input">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex-fill form-container-2">
-                <div style="padding: 10px 0">
-                    <label class="form-control">
-                        <input type="checkbox" name="has-wifi" />
-                        Has Wi-Fi
-                    </label>
-                    <label class="form-control">
-                        <input type="checkbox" name="has-sockets" />
-                        Has Sockets
-                    </label>
-                    <label class="form-control">
-                        <input type="checkbox" name="has-toilet" />
-                        Has toilet
-                    </label>
-                    <label class="form-control">
-                        <input type="checkbox" name="can-take-calls" />
-                        Can take calls
-                    </label>
+                <div class="flex-fill form-container-2">
+                    <div style="padding: 10px 0">
+                        <label class="form-control">
+                            <input type="checkbox" name="has-wifi" />
+                            Has Wi-Fi
+                        </label>
+                        <label class="form-control">
+                            <input type="checkbox" name="has-sockets" />
+                            Has Sockets
+                        </label>
+                        <label class="form-control">
+                            <input type="checkbox" name="has-toilet" />
+                            Has toilet
+                        </label>
+                        <label class="form-control">
+                            <input type="checkbox" name="can-take-calls" />
+                            Can take calls
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex form-container-3">
-            <label class="form-field" style="display:grid;  grid-template-columns: 1em auto;  gap: 20px; border: 0; cursor: default;">
-                <input type="checkbox" name="anonymous" id="anonymous"/>
-                        Be a mysterious contributor
-            </label>
-            <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: #3B3B3B;">
+            <div class="d-flex form-container-3">
+                <label class="form-field" style="display:grid;  grid-template-columns: 1em auto;  gap: 20px; border: 0; cursor: default;">
+                    <input type="checkbox" name="anonymous" id="anonymous"/>
+                    Be a mysterious contributor
+                </label>
+                <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: #3B3B3B;">
                 OR
             </span>
-            <input id="contributor-name" class="form-field" style="margin-right: 20px" type="text" placeholder="Your name" name="contributor-name" required>
-            <input id="contributor-email" class="form-field" type="email" placeholder="Your email" name="contributor-email" required>
-
-        </div>
-    </form>
-</div>
-{% endif %}
+                <input id="contributor-name" class="form-field" style="margin-right: 20px" type="text" placeholder="Your name" name="contributor-name" required>
+                <input id="contributor-email" class="form-field" type="email" placeholder="Your email" name="contributor-email" required>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</main>

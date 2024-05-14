@@ -29,248 +29,66 @@
 {% if form_id == 1 %}
 {% include "form.html" %}
 {% else %}
-<nav class="navbar main-nav-container navbar-expand-lg" id="navbar" style="margin-left:80px">
-    <div class="container-fluid">
-        <div style="inline-size:177px; overflow: hidden; overflow-wrap: break-word;">
-            <s class="web-name" style="cursor: default">{{ total_cafe_no }} cafes on site</s>
-        </div>
-        <div class='search' id="navbarSupportedContent">
-            <form class="d-flex" method="post" role="search">
-                {% if searchvalue|length == 0 %}
-                <input class="search-input" type="search" placeholder="Cafe search" name="search-data" required>
-                {% elif searchvalue|length > 0 %}
-                <input class="search-input" type="search" placeholder="Cafe search" name="search-data" value="{{searchvalue}}" required>
-                {% endif %}
-                <button class="search-button" type="submit" name="search" value="search"><i class="bi bi-search-heart"></i></button>
-            </form>
-        </div>
-        <a class="button-wrapper" href="{{ url_for('add_cafe')}}">
-            <button class="button-contribute" type="submit" name="contribute" value="contribute">Let's contribute</button>
-        </a>
-    </div>
-</nav>
-{% if all_cafes|length <= 3 %}
-<nav class="nav__cont nav-container border-show">
-{% elif all_cafes|length > 3 %}
-<nav class="nav__cont nav-container border-no-show">
-{% endif %}
-    <div class="nav right-border">
-        <form action="/" method ="post">
-            <button class="logo-display" type="submit" name="logo-home" value="home">
-            <span>
-                <svg style='width:30px; height:30px' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                    <g class='logo' transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                        <path d="M210 2393 c-1 -120 -2 -486 -3 -813 l-2 -595 -102 -3 -103 -3 0 -63 c0 -230 124 -412 336 -494 l69 -27 1059 -3 c636 -1 1079 1 1110 7 138 25 260 102 332 208 61 90 85 161 91 275 l6 97 -104 3 -104 3 -3 813 -2 812 -1290 0 -1290 0 0 -217z m2410 -688 l0 -725 -105 0 c-58 0 -105 4 -105 8 0 5 7 30 16 56 24 71 15 185 -20 254 -35 70 -95 128 -165 161 l-56 26 -637 3 -638 3 -2 -253 -3 -253 -262 -3 -263 -2 0 725 0 725 1120 0 1120 0 0 -725z m-700 -557 c0 -90 -5 -192 -11 -227 -22 -136 -111 -255 -236 -314 -63 -30 -75 -32 -173 -32 -97 0 -110 2 -173 32 -127 60 -214 176 -236 314 -6 35 -11 137 -11 227 l0 162 420 0 420 0 0 -162z m284 128 c42 -32 71 -101 62 -149 -13 -71 -75 -132 -141 -139 l-30 -3 -3 164 -3 164 41 -6 c22 -3 56 -17 74 -31z m-1255 -506 c7 -23 37 -77 67 -121 l54 -80 -327 3 c-325 3 -328 3 -378 27 -78 39 -147 115 -169 189 l-7 22 374 0 374 0 12 -40z m1855 18 c-22 -74 -90 -149 -169 -188 -50 -25 -52 -25 -378 -28 l-327 -3 54 80 c30 44 60 98 67 121 l12 40 374 0 374 0 -7 -22z"/>
-                        <path d="M1110 2098 c0 -29 -9 -99 -20 -156 -11 -56 -20 -130 -20 -162 l0 -60 84 0 83 0 7 66 c4 37 13 97 21 135 8 37 17 104 21 148 l7 81 -92 0 -91 0 0 -52z"/>
-                        <path d="M1436 2118 c-3 -18 -7 -55 -10 -83 -3 -27 -12 -86 -20 -130 -9 -44 -15 -104 -16 -132 l0 -53 85 0 84 0 5 33 c3 17 7 55 10 82 3 28 12 86 20 130 9 44 15 104 16 133 l0 52 -85 0 -84 0 -5 -32z"/>
-                        <path d="M1760 2123 c0 -16 -11 -95 -25 -177 -14 -83 -25 -167 -25 -188 l0 -38 90 0 90 0 0 48 c0 27 9 97 20 157 11 60 20 135 20 167 l0 58 -85 0 -85 0 0 -27z"/>
-                    </g>
-                </svg>
-            </span>
-                <a class="web-name logo-text" href="{{ url_for('get_all_cafes') }}">Coffee & Wifi</a>
-            </button>
-        </form>
-
-        <div class="h-line"></div>
-        <div class="filter-title">
-            <i class="bi bi-funnel-fill filter-logo"></i>
-            <div class='filter-title-text'>Filters</div>
-        </div>
-        <form action="/" method="post" id="form">
-            {% if filter_id != 1 %}
-            <button class="filter" type="submit" name="filter" value="filter-all" style="background-color: transparent; color: #3B3B3B;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M34 2966 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                            <path d="M1634 2966 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                            <path d="M34 1366 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                            <path d="M1634 1366 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('get_all_cafes') }}">All</a>
-            </button>
-            {% elif filter_id == 1 %}
-            <button class="filter" type="submit" name="filter" value="filter-all" style="background-color: #3B3B3B; color: #fff;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
-                            <path d="M34 2966 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                            <path d="M1634 2966 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                            <path d="M34 1366 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                            <path d="M1634 1366 l-34 -34 0 -632 0 -632 34 -34 34 -34 632 0 632 0 34 34 34 34 0 632 0 632 -34 34 -34 34 -632 0 -632 0 -34 -34z m1166 -666 l0 -500 -500 0 -500 0 0 500 0 500 500 0 500 0 0 -500z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('get_all_cafes') }}" style="color: #fff;">All</a>
-            </button>
-            {% endif %}
-            {% if filter_id != 2 %}
-            <button class="filter" type="submit" name="filter" value="filter-wifi" style="background-color: transparent; color: #3B3B3B;">
-                <span>
-                    <svg class="filter-svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M1322 2579 c-233 -19 -523 -100 -735 -203 -194 -95 -407 -245 -529 -374 -90 -94 -90 -94 95 -279 190 -191 184 -189 308 -77 595 535 1483 535 2078 0 122 -111 119 -111 294 62 139 138 167 173 167 212 0 26 -89 121 -190 203 -325 263 -727 422 -1154 457 -143 11 -184 11 -334 -1z m415 -184 c239 -31 425 -89 643 -201 128 -66 266 -158 355 -238 l50 -44 -64 -66 -64 -65 -56 45 c-325 263 -692 394 -1101 394 -409 0 -776 -131 -1101 -394 l-56 -45 -64 65 -64 66 50 44 c140 125 378 264 575 337 278 103 604 140 897 102z"/>
-                            <path d="M1355 1854 c-317 -49 -535 -145 -753 -334 -81 -69 -99 -105 -78 -153 8 -18 76 -94 153 -169 130 -129 142 -138 178 -138 31 0 49 9 101 54 323 276 765 276 1088 0 52 -45 70 -54 101 -54 36 0 48 9 178 138 151 148 173 181 156 231 -20 57 -216 209 -369 286 -189 95 -349 134 -570 140 -85 2 -168 1 -185 -1z m378 -195 c180 -36 351 -113 482 -216 l58 -45 -66 -65 -65 -66 -89 60 c-342 229 -780 226 -1118 -8 l-76 -52 -66 65 -66 66 58 45 c129 101 301 179 476 216 133 28 336 28 472 0z"/>
-                            <path d="M1345 1116 c-76 -22 -139 -51 -204 -95 -79 -54 -111 -94 -111 -139 0 -33 14 -50 203 -240 111 -112 217 -211 235 -218 27 -12 37 -12 65 0 17 7 123 106 235 218 189 191 202 207 202 241 0 46 -37 89 -123 145 -111 73 -184 95 -327 98 -87 3 -140 -1 -175 -10z m235 -166 c53 -10 170 -58 170 -69 0 -3 -56 -62 -125 -131 l-125 -125 -125 125 c-69 69 -125 128 -125 131 0 10 116 59 162 68 61 12 107 12 168 1z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='has_wifi') }}">Has Wi-fi</a>
-            </button>
-            {% elif filter_id == 2 %}
-            <button class="filter" type="submit" name="filter" value="filter-wifi" style="background-color: #3B3B3B; color: #fff;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
-                            <path d="M1322 2579 c-233 -19 -523 -100 -735 -203 -194 -95 -407 -245 -529 -374 -90 -94 -90 -94 95 -279 190 -191 184 -189 308 -77 595 535 1483 535 2078 0 122 -111 119 -111 294 62 139 138 167 173 167 212 0 26 -89 121 -190 203 -325 263 -727 422 -1154 457 -143 11 -184 11 -334 -1z m415 -184 c239 -31 425 -89 643 -201 128 -66 266 -158 355 -238 l50 -44 -64 -66 -64 -65 -56 45 c-325 263 -692 394 -1101 394 -409 0 -776 -131 -1101 -394 l-56 -45 -64 65 -64 66 50 44 c140 125 378 264 575 337 278 103 604 140 897 102z"/>
-                            <path d="M1355 1854 c-317 -49 -535 -145 -753 -334 -81 -69 -99 -105 -78 -153 8 -18 76 -94 153 -169 130 -129 142 -138 178 -138 31 0 49 9 101 54 323 276 765 276 1088 0 52 -45 70 -54 101 -54 36 0 48 9 178 138 151 148 173 181 156 231 -20 57 -216 209 -369 286 -189 95 -349 134 -570 140 -85 2 -168 1 -185 -1z m378 -195 c180 -36 351 -113 482 -216 l58 -45 -66 -65 -65 -66 -89 60 c-342 229 -780 226 -1118 -8 l-76 -52 -66 65 -66 66 58 45 c129 101 301 179 476 216 133 28 336 28 472 0z"/>
-                            <path d="M1345 1116 c-76 -22 -139 -51 -204 -95 -79 -54 -111 -94 -111 -139 0 -33 14 -50 203 -240 111 -112 217 -211 235 -218 27 -12 37 -12 65 0 17 7 123 106 235 218 189 191 202 207 202 241 0 46 -37 89 -123 145 -111 73 -184 95 -327 98 -87 3 -140 -1 -175 -10z m235 -166 c53 -10 170 -58 170 -69 0 -3 -56 -62 -125 -131 l-125 -125 -125 125 c-69 69 -125 128 -125 131 0 10 116 59 162 68 61 12 107 12 168 1z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='has_wifi') }}" style="color: #fff;">Has Wi-fi</a>
-            </button>
-            {% endif %}
-            {% if filter_id != 3 %}
-            <button class="filter" type="submit" name="filter" value="filter-sockets" style="background-color: transparent; color: #3B3B3B;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M1695 2976 c-54 -25 -100 -71 -122 -123 -17 -41 -19 -965 -2 -1010 21 -56 61 -102 112 -128 l51 -25 510 0 c570 0 554 -1 623 71 64 68 63 60 63 581 l0 473 -24 51 c-13 28 -39 63 -58 77 -76 58 -65 57 -605 57 l-498 0 -50 -24z m1069 -117 c56 -44 56 -40 56 -516 0 -491 0 -491 -70 -525 -32 -16 -77 -18 -503 -18 -517 0 -519 0 -557 62 -19 32 -20 49 -20 483 0 428 1 451 19 479 37 56 26 55 557 56 483 0 492 0 518 -21z"/>
-                            <path d="M2139 2742 c-203 -53 -334 -253 -302 -460 15 -94 47 -157 118 -227 94 -95 197 -133 329 -122 232 20 409 248 367 474 -32 173 -144 293 -318 338 -72 19 -111 18 -194 -3z m231 -132 c61 -30 106 -75 138 -135 36 -69 38 -187 4 -256 -75 -153 -250 -213 -400 -138 -69 34 -104 71 -138 144 -31 66 -33 170 -3 235 34 75 113 146 190 169 54 16 158 7 209 -19z"/>
-                            <path d="M2067 2442 c-24 -26 -24 -173 -1 -196 19 -19 67 -21 82 -3 10 11 15 69 13 149 -2 62 -57 91 -94 50z"/>
-                            <path d="M2336 2438 c-11 -15 -16 -45 -16 -93 0 -84 16 -115 60 -115 47 0 63 34 58 126 -3 60 -7 79 -23 90 -28 21 -62 17 -79 -8z"/>
-                            <path d="M425 2561 c-76 -47 -84 -82 -85 -353 l0 -208 -68 0 c-142 0 -202 -64 -202 -216 0 -77 2 -84 26 -103 18 -14 41 -21 70 -21 l43 0 3 -227 c3 -215 4 -230 26 -271 53 -100 145 -167 243 -179 47 -6 49 -7 49 -37 0 -56 20 -104 56 -135 19 -17 43 -31 53 -31 18 0 19 -14 23 -277 l3 -278 28 -57 c15 -31 45 -72 66 -91 45 -40 135 -77 190 -77 105 0 218 74 262 172 23 51 24 64 29 343 4 205 9 296 17 312 48 82 175 86 229 6 17 -26 19 -55 24 -328 5 -289 6 -302 28 -347 30 -60 90 -112 159 -138 50 -19 78 -20 442 -20 363 0 389 1 404 18 21 23 22 52 3 78 -14 18 -33 19 -413 24 -444 6 -433 4 -483 78 -25 35 -25 37 -30 336 -4 269 -7 305 -24 336 -99 186 -348 185 -449 -3 -21 -40 -22 -55 -27 -343 l-5 -301 -27 -35 c-76 -99 -230 -88 -285 22 -22 43 -23 54 -23 307 0 244 1 263 18 263 31 0 83 40 98 75 8 19 14 55 14 80 0 45 0 45 35 45 97 0 215 84 263 188 26 55 27 64 30 273 l4 217 51 5 c72 6 79 20 75 139 -2 79 -7 102 -24 124 -41 55 -68 67 -159 72 l-85 5 0 227 c0 217 -1 229 -23 270 -50 96 -170 108 -247 25 -25 -27 -25 -27 -30 -273 l-5 -247 -72 -3 -73 -3 0 228 c0 218 -1 231 -22 273 -39 74 -135 103 -203 61z m93 -103 c9 -9 12 -75 12 -235 l0 -223 -35 0 -35 0 0 225 c0 203 2 225 18 234 22 13 26 13 40 -1z m450 0 c9 -9 12 -75 12 -235 l0 -223 -35 0 -35 0 0 225 c0 203 2 225 18 234 22 13 26 13 40 -1z m276 -594 c9 -8 16 -31 16 -50 l0 -34 -83 0 c-100 0 -130 -15 -125 -63 2 -25 10 -35 35 -47 l33 -15 0 -200 c0 -228 -7 -257 -76 -313 -57 -47 -109 -54 -354 -50 -208 3 -217 4 -260 28 -49 28 -84 73 -100 129 -5 20 -10 120 -10 224 l0 187 163 0 c182 0 207 7 207 60 0 56 -19 60 -272 60 l-228 0 0 38 c0 21 5 43 12 50 9 9 138 12 519 12 448 0 509 -2 523 -16z m-447 -900 c3 -9 2 -28 -3 -43 -9 -24 -13 -26 -74 -26 l-65 0 -3 43 -3 42 71 0 c56 0 72 -3 77 -16z"/>
-                            <path d="M831 1754 c-27 -34 -26 -40 4 -70 19 -18 31 -23 48 -19 47 15 61 61 27 95 -27 27 -55 25 -79 -6z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='has_sockets') }}">Has sockets</a>
-            </button>
-            {% elif filter_id == 3 %}
-            <button class="filter" type="submit" name="filter" value="filter-sockets" style="background-color: #3B3B3B; color: #fff;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
-                            <path d="M1695 2976 c-54 -25 -100 -71 -122 -123 -17 -41 -19 -965 -2 -1010 21 -56 61 -102 112 -128 l51 -25 510 0 c570 0 554 -1 623 71 64 68 63 60 63 581 l0 473 -24 51 c-13 28 -39 63 -58 77 -76 58 -65 57 -605 57 l-498 0 -50 -24z m1069 -117 c56 -44 56 -40 56 -516 0 -491 0 -491 -70 -525 -32 -16 -77 -18 -503 -18 -517 0 -519 0 -557 62 -19 32 -20 49 -20 483 0 428 1 451 19 479 37 56 26 55 557 56 483 0 492 0 518 -21z"/>
-                            <path d="M2139 2742 c-203 -53 -334 -253 -302 -460 15 -94 47 -157 118 -227 94 -95 197 -133 329 -122 232 20 409 248 367 474 -32 173 -144 293 -318 338 -72 19 -111 18 -194 -3z m231 -132 c61 -30 106 -75 138 -135 36 -69 38 -187 4 -256 -75 -153 -250 -213 -400 -138 -69 34 -104 71 -138 144 -31 66 -33 170 -3 235 34 75 113 146 190 169 54 16 158 7 209 -19z"/>
-                            <path d="M2067 2442 c-24 -26 -24 -173 -1 -196 19 -19 67 -21 82 -3 10 11 15 69 13 149 -2 62 -57 91 -94 50z"/>
-                            <path d="M2336 2438 c-11 -15 -16 -45 -16 -93 0 -84 16 -115 60 -115 47 0 63 34 58 126 -3 60 -7 79 -23 90 -28 21 -62 17 -79 -8z"/>
-                            <path d="M425 2561 c-76 -47 -84 -82 -85 -353 l0 -208 -68 0 c-142 0 -202 -64 -202 -216 0 -77 2 -84 26 -103 18 -14 41 -21 70 -21 l43 0 3 -227 c3 -215 4 -230 26 -271 53 -100 145 -167 243 -179 47 -6 49 -7 49 -37 0 -56 20 -104 56 -135 19 -17 43 -31 53 -31 18 0 19 -14 23 -277 l3 -278 28 -57 c15 -31 45 -72 66 -91 45 -40 135 -77 190 -77 105 0 218 74 262 172 23 51 24 64 29 343 4 205 9 296 17 312 48 82 175 86 229 6 17 -26 19 -55 24 -328 5 -289 6 -302 28 -347 30 -60 90 -112 159 -138 50 -19 78 -20 442 -20 363 0 389 1 404 18 21 23 22 52 3 78 -14 18 -33 19 -413 24 -444 6 -433 4 -483 78 -25 35 -25 37 -30 336 -4 269 -7 305 -24 336 -99 186 -348 185 -449 -3 -21 -40 -22 -55 -27 -343 l-5 -301 -27 -35 c-76 -99 -230 -88 -285 22 -22 43 -23 54 -23 307 0 244 1 263 18 263 31 0 83 40 98 75 8 19 14 55 14 80 0 45 0 45 35 45 97 0 215 84 263 188 26 55 27 64 30 273 l4 217 51 5 c72 6 79 20 75 139 -2 79 -7 102 -24 124 -41 55 -68 67 -159 72 l-85 5 0 227 c0 217 -1 229 -23 270 -50 96 -170 108 -247 25 -25 -27 -25 -27 -30 -273 l-5 -247 -72 -3 -73 -3 0 228 c0 218 -1 231 -22 273 -39 74 -135 103 -203 61z m93 -103 c9 -9 12 -75 12 -235 l0 -223 -35 0 -35 0 0 225 c0 203 2 225 18 234 22 13 26 13 40 -1z m450 0 c9 -9 12 -75 12 -235 l0 -223 -35 0 -35 0 0 225 c0 203 2 225 18 234 22 13 26 13 40 -1z m276 -594 c9 -8 16 -31 16 -50 l0 -34 -83 0 c-100 0 -130 -15 -125 -63 2 -25 10 -35 35 -47 l33 -15 0 -200 c0 -228 -7 -257 -76 -313 -57 -47 -109 -54 -354 -50 -208 3 -217 4 -260 28 -49 28 -84 73 -100 129 -5 20 -10 120 -10 224 l0 187 163 0 c182 0 207 7 207 60 0 56 -19 60 -272 60 l-228 0 0 38 c0 21 5 43 12 50 9 9 138 12 519 12 448 0 509 -2 523 -16z m-447 -900 c3 -9 2 -28 -3 -43 -9 -24 -13 -26 -74 -26 l-65 0 -3 43 -3 42 71 0 c56 0 72 -3 77 -16z"/>
-                            <path d="M831 1754 c-27 -34 -26 -40 4 -70 19 -18 31 -23 48 -19 47 15 61 61 27 95 -27 27 -55 25 -79 -6z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='has_sockets') }}" style="color: #fff;">Has sockets</a>
-            </button>
-            {% endif %}
-            {% if filter_id != 4 %}
-            <button class="filter" type="submit" name="filter" value="filter-toilet" style="background-color: transparent; color: #3B3B3B;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M1480 1500 l0 -1500 45 0 45 0 0 1500 0 1500 -45 0 -45 0 0 -1500z"/>
-                            <path d="M595 2737 c-65 -22 -99 -43 -138 -86 -53 -59 -70 -98 -75 -177 -6 -100 16 -162 82 -229 126 -128 316 -124 434 10 55 63 76 128 70 219 -5 79 -22 118 -75 177 -72 80 -203 117 -298 86z m160 -106 c160 -72 156 -298 -7 -365 -80 -34 -174 -7 -232 67 -29 36 -31 45 -31 117 0 72 2 81 31 117 60 76 157 102 239 64z"/>
-                            <path d="M2295 2737 c-65 -22 -99 -43 -139 -87 -110 -122 -102 -307 18 -418 50 -46 138 -82 201 -82 100 0 208 66 263 159 24 41 27 56 27 141 0 105 -10 133 -75 203 -71 78 -201 115 -295 84z m160 -106 c57 -26 96 -72 111 -130 42 -165 -127 -305 -276 -228 -63 32 -102 85 -108 146 -7 72 5 117 41 158 61 69 153 91 232 54z"/>
-                            <path d="M442 2037 c-15 -17 -312 -1009 -312 -1041 0 -38 26 -46 144 -46 l106 0 0 -340 c0 -325 1 -340 19 -350 26 -14 526 -14 552 0 18 10 19 25 19 350 l0 340 113 0 c121 0 137 6 137 48 0 45 -300 1026 -317 1040 -24 17 -446 17 -461 -1z m412 -139 c9 -29 69 -231 134 -448 l118 -395 -100 -5 c-56 -3 -107 -9 -113 -13 -10 -6 -13 -87 -13 -348 l0 -339 -80 0 -80 0 0 350 0 350 -45 0 -45 0 -2 -347 -3 -348 -75 0 -75 0 -3 335 c-1 213 -6 338 -13 345 -5 5 -56 12 -113 15 l-104 5 118 390 c64 215 125 416 134 448 l17 57 164 0 164 0 15 -52z"/>
-                            <path d="M2110 2028 c-87 -29 -176 -115 -208 -201 -21 -56 -22 -72 -22 -457 0 -463 -12 -420 119 -420 l81 0 0 -340 c0 -325 1 -340 19 -350 12 -6 118 -10 276 -10 158 0 264 4 276 10 18 10 19 25 19 350 l0 340 81 0 c131 0 119 -43 119 420 0 474 0 471 -105 577 -91 91 -138 103 -394 103 -173 -1 -204 -3 -261 -22z m515 -102 c59 -27 117 -88 136 -142 11 -30 14 -117 14 -384 l0 -345 -52 -3 -53 -3 0 300 0 301 -45 0 -45 0 0 -650 0 -650 -80 0 -80 0 0 350 0 350 -45 0 -45 0 -2 -347 -3 -348 -75 0 -75 0 -3 648 -2 647 -45 0 -45 0 0 -301 0 -300 -52 3 -53 3 0 345 c0 382 2 394 63 462 71 78 102 86 342 87 184 1 198 0 245 -23z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='has_toilet') }}">Has toilets</a>
-            </button>
-            {% elif filter_id == 4 %}
-            <button class="filter" type="submit" name="filter" value="filter-toilet" style="background-color: #3B3B3B; color: #fff;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
-                            <path d="M1480 1500 l0 -1500 45 0 45 0 0 1500 0 1500 -45 0 -45 0 0 -1500z"/>
-                            <path d="M595 2737 c-65 -22 -99 -43 -138 -86 -53 -59 -70 -98 -75 -177 -6 -100 16 -162 82 -229 126 -128 316 -124 434 10 55 63 76 128 70 219 -5 79 -22 118 -75 177 -72 80 -203 117 -298 86z m160 -106 c160 -72 156 -298 -7 -365 -80 -34 -174 -7 -232 67 -29 36 -31 45 -31 117 0 72 2 81 31 117 60 76 157 102 239 64z"/>
-                            <path d="M2295 2737 c-65 -22 -99 -43 -139 -87 -110 -122 -102 -307 18 -418 50 -46 138 -82 201 -82 100 0 208 66 263 159 24 41 27 56 27 141 0 105 -10 133 -75 203 -71 78 -201 115 -295 84z m160 -106 c57 -26 96 -72 111 -130 42 -165 -127 -305 -276 -228 -63 32 -102 85 -108 146 -7 72 5 117 41 158 61 69 153 91 232 54z"/>
-                            <path d="M442 2037 c-15 -17 -312 -1009 -312 -1041 0 -38 26 -46 144 -46 l106 0 0 -340 c0 -325 1 -340 19 -350 26 -14 526 -14 552 0 18 10 19 25 19 350 l0 340 113 0 c121 0 137 6 137 48 0 45 -300 1026 -317 1040 -24 17 -446 17 -461 -1z m412 -139 c9 -29 69 -231 134 -448 l118 -395 -100 -5 c-56 -3 -107 -9 -113 -13 -10 -6 -13 -87 -13 -348 l0 -339 -80 0 -80 0 0 350 0 350 -45 0 -45 0 -2 -347 -3 -348 -75 0 -75 0 -3 335 c-1 213 -6 338 -13 345 -5 5 -56 12 -113 15 l-104 5 118 390 c64 215 125 416 134 448 l17 57 164 0 164 0 15 -52z"/>
-                            <path d="M2110 2028 c-87 -29 -176 -115 -208 -201 -21 -56 -22 -72 -22 -457 0 -463 -12 -420 119 -420 l81 0 0 -340 c0 -325 1 -340 19 -350 12 -6 118 -10 276 -10 158 0 264 4 276 10 18 10 19 25 19 350 l0 340 81 0 c131 0 119 -43 119 420 0 474 0 471 -105 577 -91 91 -138 103 -394 103 -173 -1 -204 -3 -261 -22z m515 -102 c59 -27 117 -88 136 -142 11 -30 14 -117 14 -384 l0 -345 -52 -3 -53 -3 0 300 0 301 -45 0 -45 0 0 -650 0 -650 -80 0 -80 0 0 350 0 350 -45 0 -45 0 -2 -347 -3 -348 -75 0 -75 0 -3 648 -2 647 -45 0 -45 0 0 -301 0 -300 -52 3 -53 3 0 345 c0 382 2 394 63 462 71 78 102 86 342 87 184 1 198 0 245 -23z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='has_toilet') }}" style="color: #fff;">Has toilets</a>
-            </button>
-            {% endif %}
-            {% if filter_id != 5 %}
-            <button class="filter" type="submit" name="filter" value="filter-phone" style="background-color: transparent; color: #3B3B3B;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M1605 2975 c-17 -16 -25 -35 -25 -58 0 -56 24 -76 121 -97 557 -121 981 -542 1114 -1105 26 -108 45 -135 95 -135 31 0 76 31 85 59 15 49 -62 307 -140 467 -213 439 -605 754 -1080 870 -125 30 -140 30 -170 -1z"/>
-                            <path d="M517 2819 c-77 -19 -124 -54 -273 -203 -168 -167 -204 -222 -231 -350 -49 -231 82 -637 327 -1010 337 -513 804 -912 1329 -1135 248 -106 456 -142 609 -106 114 27 156 56 324 224 184 185 208 223 208 336 0 119 -19 146 -268 396 -248 249 -270 264 -387 263 -100 -1 -150 -29 -294 -170 -65 -62 -124 -114 -130 -114 -20 0 -145 76 -229 140 -212 160 -458 437 -542 610 l-21 45 121 123 c144 145 171 193 171 298 0 110 -19 138 -273 391 -234 233 -265 256 -358 267 -25 2 -62 1 -83 -5z m321 -381 c112 -112 210 -217 218 -235 27 -62 12 -87 -136 -233 -75 -74 -142 -145 -148 -157 -20 -37 -13 -86 23 -161 145 -304 499 -663 825 -839 144 -77 151 -75 335 106 156 154 181 168 247 137 50 -24 414 -394 433 -440 27 -64 10 -93 -144 -249 -175 -178 -199 -192 -341 -192 -180 0 -347 55 -625 203 -534 287 -1012 802 -1238 1332 -132 313 -149 518 -53 649 61 82 270 279 307 289 63 16 84 1 297 -210z"/>
-                            <path d="M1598 2441 c-69 -34 -58 -125 17 -148 203 -61 266 -89 355 -158 152 -117 254 -270 299 -447 25 -99 34 -114 71 -126 36 -13 86 1 100 28 35 66 -45 311 -148 455 -125 173 -313 313 -503 374 -109 35 -155 41 -191 22z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='can_take_calls') }}">Can take calls</a>
-            </button>
-            {% elif filter_id == 5 %}
-            <button class="filter" type="submit" name="filter" value="filter-phone" style="background-color: #3B3B3B; color: #fff;">
-                <span>
-                    <svg class='filter-svg' xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
-                            <path d="M1605 2975 c-17 -16 -25 -35 -25 -58 0 -56 24 -76 121 -97 557 -121 981 -542 1114 -1105 26 -108 45 -135 95 -135 31 0 76 31 85 59 15 49 -62 307 -140 467 -213 439 -605 754 -1080 870 -125 30 -140 30 -170 -1z"/>
-                            <path d="M517 2819 c-77 -19 -124 -54 -273 -203 -168 -167 -204 -222 -231 -350 -49 -231 82 -637 327 -1010 337 -513 804 -912 1329 -1135 248 -106 456 -142 609 -106 114 27 156 56 324 224 184 185 208 223 208 336 0 119 -19 146 -268 396 -248 249 -270 264 -387 263 -100 -1 -150 -29 -294 -170 -65 -62 -124 -114 -130 -114 -20 0 -145 76 -229 140 -212 160 -458 437 -542 610 l-21 45 121 123 c144 145 171 193 171 298 0 110 -19 138 -273 391 -234 233 -265 256 -358 267 -25 2 -62 1 -83 -5z m321 -381 c112 -112 210 -217 218 -235 27 -62 12 -87 -136 -233 -75 -74 -142 -145 -148 -157 -20 -37 -13 -86 23 -161 145 -304 499 -663 825 -839 144 -77 151 -75 335 106 156 154 181 168 247 137 50 -24 414 -394 433 -440 27 -64 10 -93 -144 -249 -175 -178 -199 -192 -341 -192 -180 0 -347 55 -625 203 -534 287 -1012 802 -1238 1332 -132 313 -149 518 -53 649 61 82 270 279 307 289 63 16 84 1 297 -210z"/>
-                            <path d="M1598 2441 c-69 -34 -58 -125 17 -148 203 -61 266 -89 355 -158 152 -117 254 -270 299 -447 25 -99 34 -114 71 -126 36 -13 86 1 100 28 35 66 -45 311 -148 455 -125 173 -313 313 -503 374 -109 35 -155 41 -191 22z"/>
-                        </g>
-                    </svg>
-                </span>
-                <a class="web-name filter-text" href="{{ url_for('filter_cafes', filter='can_take_calls') }}" style="color: #fff;">Can take calls</a>
-            </button>
-            {% endif %}
-            <button id="seatFilter" class="filter" name="filter" value="filter-seats" style="background-color: transparent; color: #3B3B3B;">
-                <span>
-                    <svg class="filter-svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-                            <path d="M298 2459 c-85 -20 -149 -81 -174 -166 -18 -58 -19 -244 -2 -261 18 -18 56 -14 68 7 5 11 10 65 10 121 0 120 18 164 80 199 35 20 52 21 252 21 207 0 216 -1 248 -22 72 -49 75 -60 75 -251 l0 -172 -46 -6 c-129 -19 -209 -115 -209 -251 l0 -68 -200 0 -200 0 0 129 c0 104 -3 133 -16 145 -8 9 -22 16 -29 16 -7 0 -21 -7 -29 -16 -13 -12 -16 -41 -16 -145 l0 -129 -26 0 c-15 0 -38 -12 -55 -29 -28 -28 -29 -34 -29 -115 0 -103 18 -134 88 -143 l42 -6 0 -88 c0 -56 -4 -89 -11 -89 -6 0 -9 -14 -7 -32 l3 -33 124 -3 c128 -3 151 3 151 38 0 10 -7 23 -15 30 -11 9 -15 34 -15 96 l0 84 120 0 120 0 0 -120 0 -119 -36 -7 c-62 -11 -74 -34 -74 -141 0 -86 2 -96 25 -118 18 -18 35 -25 65 -25 l40 0 0 -86 c0 -63 -4 -89 -15 -100 -19 -20 -19 -39 1 -58 12 -13 38 -16 120 -16 58 0 114 5 125 10 23 13 25 53 4 70 -12 10 -15 31 -13 94 l3 81 168 3 167 2 0 -85 c0 -59 -5 -93 -15 -108 -13 -20 -13 -25 1 -45 14 -20 23 -22 129 -22 90 0 117 3 129 16 20 19 20 38 1 58 -11 11 -15 37 -15 99 l0 85 45 4 c25 2 65 2 90 0 l45 -4 0 -85 c0 -62 -4 -88 -15 -99 -19 -20 -19 -39 1 -58 20 -20 233 -23 252 -4 17 17 15 53 -3 68 -12 10 -15 31 -13 94 l3 81 168 3 167 2 0 -89 c0 -49 -4 -93 -10 -96 -14 -9 -13 -48 2 -63 19 -19 232 -16 252 4 20 19 20 38 1 58 -11 11 -15 37 -15 100 l0 86 40 0 c30 0 47 7 65 25 23 22 25 32 25 118 0 107 -12 130 -74 141 l-36 7 0 119 0 120 120 0 120 0 0 -84 c0 -62 -4 -87 -15 -96 -8 -7 -15 -20 -15 -30 0 -35 23 -41 151 -38 l124 3 3 33 c2 18 -1 32 -7 32 -7 0 -11 33 -11 89 l0 88 42 6 c70 9 88 40 88 143 0 81 -1 87 -29 115 -17 17 -40 29 -55 29 l-26 0 0 129 c0 104 -3 133 -16 145 -8 9 -22 16 -29 16 -7 0 -21 -7 -29 -16 -13 -12 -16 -41 -16 -145 l0 -129 -199 0 -199 0 -3 78 c-3 66 -9 86 -34 128 -37 59 -103 103 -171 112 l-49 7 0 172 c0 191 3 202 75 251 32 21 41 22 248 22 200 0 217 -1 252 -21 63 -35 80 -79 80 -202 0 -112 9 -137 50 -137 30 0 40 32 40 133 0 157 -38 237 -136 287 -47 24 -59 25 -251 28 -123 2 -223 -1 -254 -7 -76 -17 -132 -60 -166 -128 -27 -56 -28 -65 -31 -231 l-4 -173 -61 3 -62 3 -5 175 c-5 170 -6 176 -35 228 -35 64 -93 107 -164 123 -31 6 -131 9 -254 7 -223 -4 -248 -9 -312 -73 -61 -62 -69 -92 -75 -285 l-5 -175 -62 -3 -61 -3 -4 173 c-3 166 -4 175 -31 231 -33 65 -89 110 -158 126 -53 13 -409 12 -461 0z m1453 -102 c18 -12 44 -38 56 -57 22 -32 23 -41 21 -199 l-3 -166 -48 -7 c-87 -12 -164 -75 -196 -161 -6 -16 -11 -57 -11 -93 l0 -64 -70 0 -70 0 0 64 c0 36 -5 77 -11 93 -32 86 -109 149 -196 161 l-48 7 -3 166 c-2 158 -1 167 21 199 12 19 38 45 56 57 33 22 42 23 251 23 209 0 218 -1 251 -23z m-521 -517 c43 -12 93 -62 109 -109 7 -22 11 -139 11 -342 l0 -309 -335 0 -335 0 0 308 c0 180 4 322 10 344 13 45 60 95 103 107 43 12 393 13 437 1z m1012 -20 c73 -49 73 -47 76 -412 l3 -328 -335 0 -336 0 0 308 c0 170 4 323 10 342 12 42 65 97 106 110 16 5 122 8 235 7 200 -2 206 -3 241 -27z m-1642 -355 l0 -55 -255 0 -255 0 0 55 0 55 255 0 255 0 0 -55z m970 0 l0 -55 -70 0 -70 0 0 55 0 55 70 0 70 0 0 -55z m1340 0 l0 -55 -255 0 -255 0 0 55 0 55 255 0 255 0 0 -55z m-2640 -230 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m1300 -35 l0 -119 -35 -7 c-19 -3 -51 -3 -70 0 l-35 7 0 119 0 120 70 0 70 0 0 -120z m1210 35 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m-1322 -302 l-3 -58 -440 0 -440 0 -3 58 -3 57 446 0 446 0 -3 -57z m970 0 l-3 -58 -440 0 -440 0 -3 58 -3 57 446 0 446 0 -3 -57z m-1668 -228 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m560 0 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m410 0 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z m560 0 c0 -84 0 -85 -25 -85 -25 0 -25 1 -25 85 0 84 0 85 25 85 25 0 25 -1 25 -85z"/>
-                        </g>
-                    </svg>
-                </span>
-                {% if filter_id == 6 %}
-                <input class="rangeValue" readonly value="{{seats}}" name="seatAmount">
-                {% else %}
-                <input class="rangeValue" readonly value="0" name="seatAmount">
-                {% endif %}
-                <input id="formRange" type="range" value="" min="0" max="50">
-            </button>
-        </form>
-    </div>
-</nav>
-{% if no_data == 0 %}
-{% include "index.html" %}
-{% elif no_data == 1 %}
-<div class='content-div' style="margin-left:80px;">
-    <div class="error-msg d-flex justify-content-evenly">Your search is still a coffee-mystery in our site...</div>
-    <div class="row gx-1 d-flex justify-content-evenly sortable-list">
-        <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true" data-bs-toggle='tooltip' data-bs-placement="top" title="Try dragging and moving it to other position!">
-            <div class="error-img-container d-flex">
-                <img class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'no-coffee.png'])) }}" alt="...">
-                <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>4</span>
+{% include "side-bar.html" %}
+<main style="margin-left: 80px;">
+    <nav class="navbar main-nav-container" id="navbar">
+        <div class="container-fluid">
+            <div style="inline-size:177px; overflow: hidden; overflow-wrap: break-word;">
+                <s class="web-name" style="cursor: default">{{ total_cafe_no }} cafes on site</s>
             </div>
-        </div>
-        <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-            <div class="error-img-container d-flex" draggable="false">
-                <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'nothing.png'])) }}" alt="...">
-                <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>0</span>
+            <div class='search' id="navbarSupportedContent">
+                <form class="d-flex" method="post" role="search">
+                    {% if searchvalue|length == 0 %}
+                    <input class="search-input" type="search" placeholder="Cafe search" name="search-data" required>
+                    {% elif searchvalue|length > 0 %}
+                    <input class="search-input" type="search" placeholder="Cafe search" name="search-data" value="{{searchvalue}}" required>
+                    {% endif %}
+                    <button class="search-button" type="submit" name="search" value="search"><i class="bi bi-search-heart"></i></button>
+                </form>
             </div>
+            <a class="button-wrapper" href="{{ url_for('add_cafe')}}">
+                <button class="button-contribute" type="submit" name="contribute" value="contribute">Let's contribute</button>
+            </a>
         </div>
-        <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-            <div class="error-img-container d-flex" draggable="false">
-                <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'no-wifi.png'])) }}" alt="...">
-                <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>4</span>
+    </nav>
+    {% if no_data == 0 %}
+    {% include "index.html" %}
+    {% elif no_data == 1 %}
+    <div class='content-div'>
+        <div class="error-msg d-flex justify-content-evenly">Your search is still a coffee-mystery in our site...</div>
+        <div class="row gx-1 d-flex justify-content-evenly sortable-list">
+            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true" data-bs-toggle='tooltip' data-bs-placement="top" title="Try dragging and moving it to other position!">
+                <div class="error-img-container d-flex">
+                    <img class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'no-coffee.png'])) }}" alt="...">
+                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>4</span>
+                </div>
+            </div>
+            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                <div class="error-img-container d-flex" draggable="false">
+                    <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'nothing.png'])) }}" alt="...">
+                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>0</span>
+                </div>
+            </div>
+            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                <div class="error-img-container d-flex" draggable="false">
+                    <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'no-wifi.png'])) }}" alt="...">
+                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>4</span>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-{% endif %}
-{% endif %}
+    {% endif %}
+    {% endif %}
+    {% if form_id == 1 %}
+    <footer class="main-footer" style="margin-left:80px;">
+    {% elif all_cafes|length <= 3 %}
+    <footer class="main-footer" style="position:fixed;left:80px;">
+    {% elif all_cafes|length > 3 %}
+    <footer class="main-footer" style="left:0px">
+    {% endif %}
+        dddddssssssssssssssssssssssssssssssss
+    </footer>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/scripts1.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/scripts2.js') }}" defer></script>
