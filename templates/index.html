@@ -1,8 +1,4 @@
-{% if all_cafes|length <= 3 %}
-<div class='content-div show-no-border'>
-{% elif all_cafes|length > 3 %}
 <div class='content-div show-border'>
-{% endif %}
     <div class="row d-flex gx-1 gy-4 justify-content-evenly">
         {% for cafe in all_cafes %}
         <div class="card cafe-card" onclick="location.href='#';">

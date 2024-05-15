@@ -1,10 +1,4 @@
-{% if form_id == 1 %}
 <nav class="nav__cont nav-container border-no-show">
-{% elif all_cafes|length <= 3 %}
-<nav class="nav__cont nav-container border-show">
-{% elif all_cafes|length > 3 %}
-<nav class="nav__cont nav-container border-no-show">
-{% endif %}
     <div class="nav right-border">
     {% if form_id == 1 %}
         <form action="/" method ="post">
@@ -263,6 +257,7 @@
         </form>
     {% endif %}
         <form class="about" action="/" method ="post">
+            <div class="h-line" style="margin-bottom:5px;"></div>
             <button class="about-tag" type="submit" name="about" value="about" style="margin-bottom: 10px">
             <span>
                 <svg style="width: 30px; height:30px;" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
