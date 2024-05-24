@@ -102,8 +102,8 @@
         {% elif  form_id == 1 %}
         <div class="container-fluid text-center" style="height: 100%;width:100%;  padding: 0px 0px">
         {% endif %}
-            <div class="row" style="background-color:#fff">
-                <div class="footer-main-text">COFFEE AND WIFI</div>
+            <div class="row" style="background-color:var(--primary)">
+                <div class="footer-main-text" id="footer-main-text">COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI</div>
             </div>
             <div class="row">
                 <div class="col" style="background-color:#fff">
@@ -113,8 +113,6 @@
                     <button></button>
                 </div>
             </div>
-
-
         </div>
     </footer>
 </main>
@@ -123,5 +121,6 @@
 <script src="{{ url_for('static', filename='js/scripts2.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/scripts3.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/scripts4.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/scripts5.js') }}" defer></script>
 </body>
 </html>

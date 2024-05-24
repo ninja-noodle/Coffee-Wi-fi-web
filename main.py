@@ -25,6 +25,7 @@ service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config('SECRET_KEY')
 Bootstrap5(app)
+
 # ====== DATABASE CONNECTION =======
 app.config['SQLALCHEMY_DATABASE_URI'] = config('DB_URI')
 db = SQLAlchemy()

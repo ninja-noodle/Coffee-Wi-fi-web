@@ -292,7 +292,7 @@ body { padding-top: 92px; }
   background: var(--black);
   will-change: transform;
   transition: all 300ms;
-  margin-top: 10px
+  margin-top: 10px;
 
 }
 .filter-title-text {
@@ -399,7 +399,7 @@ body { padding-top: 92px; }
   min-height: 32.75rem;
   width:100%;
   border-bottom: 2px solid var(--border-color);
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
 }
 .show-border {
     border-left: 2px solid var(--border-color);
@@ -1013,7 +1013,12 @@ input[type="checkbox"]:focus {
   font-size: 80px;
   font-weight: 1000;
   letter-spacing: 10px;
+  white-space: nowrap;
+  will-change: transform;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+
 }
+
 .about {
   position: fixed;
   bottom: 0;
