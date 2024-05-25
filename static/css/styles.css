@@ -1015,6 +1015,7 @@ input[type="checkbox"]:focus {
   letter-spacing: 10px;
   white-space: nowrap;
   will-change: transform;
+  opacity: 90%;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 
 }
