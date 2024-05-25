@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <title>Coffee & Wifi</title>
@@ -62,25 +62,25 @@
     {% if no_data == 0 %}
     {% include "index.html" %}
     {% elif no_data == 1 %}
-    <div class='content-div'>
+    <div class='content-div show-border'>
         <div class="error-msg d-flex justify-content-evenly">Your search is still a coffee-mystery in our site...</div>
         <div class="row gx-1 d-flex justify-content-evenly sortable-list">
-            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true" data-bs-toggle='tooltip' data-bs-placement="top" title="Try dragging and moving it to other position!">
+            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true" data-bs-toggle='tooltip' data-bs-placement="top" title="Try dragging & moving it to other position!">
                 <div class="error-img-container d-flex">
                     <img class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'no-coffee.png'])) }}" alt="...">
-                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>4</span>
+                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: var(--contrast);'>4</span>
                 </div>
             </div>
             <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
                 <div class="error-img-container d-flex" draggable="false">
                     <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'nothing.png'])) }}" alt="...">
-                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>0</span>
+                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: var(--contrast);'>0</span>
                 </div>
             </div>
             <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
                 <div class="error-img-container d-flex" draggable="false">
                     <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', '404-img', 'no-wifi.png'])) }}" alt="...">
-                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: #3B3B3B;'>4</span>
+                    <span style='text-decoration: none;appearance: none;background-color: transparent;font-family: "Reddit Mono", monospace;font-size: 25px;color: var(--contrast);'>4</span>
                 </div>
             </div>
         </div>
@@ -96,20 +96,23 @@
     <footer class="main-footer footer" style="left:0px">
     {% endif %}
         {% if all_cafes|length > 3 %}
-        <div class="container-fluid text-center" style="height: 100%;width:100%; margin-left:3rem">
+        <div class="container-fluid" style="height: 100%; width:99%; padding-left:6rem">
         {% elif  all_cafes|length <= 3 %}
-        <div class="container-fluid text-center" style="height: 100%;width:100%;  padding: 0px 0px">
+        <div class="container-fluid" style="height: 100%; width:99%; padding-left: 8px">
         {% elif  form_id == 1 %}
-        <div class="container-fluid text-center" style="height: 100%;width:100%;  padding: 0px 0px">
+        <div class="container-fluid" style="height: 100%; width:99%; padding-left: 8px">
         {% endif %}
             <div class="row" style="background-color:var(--primary)">
-                <div class="footer-main-text" id="footer-main-text">COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI COFFEE AND WIFI</div>
+                <div class="footer-main-text" id="footer-main-text">  COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI</div>
             </div>
-            <div class="row">
-                <div class="col" style="background-color:#fff">
-                    <button></button>
+            <div class="row footer-bottom">
+                <div class="col text-start">
+                    <a class="footer-anchor" href="https://github.com/ninja-noodle/Coffee-Wi-fi-web" target="_blank"><i class="bi bi-github"></i> Git Hub Repo</a>
                 </div>
-                <div class="col" style="background-color:#fff">
+                <div class="col text-center">
+                    © <span id="footer-copyright"></span> Coffee & Wifi by C Tu <a class="footer-anchor" href="https://github.com/ninja-noodle" target="_blank"><i class="bi bi-github"></i></a>
+                </div>
+                <div class="col text-end">
                     <button></button>
                 </div>
             </div>

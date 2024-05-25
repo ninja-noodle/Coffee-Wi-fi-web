@@ -167,5 +167,10 @@ def cafe_added():
                 return redirect(url_for('add_cafe'))
 
 
+@app.route('/cafes/<cafe_name>', methods=['GET', 'POST'])
+def show_cafe(cafe_name):
+    return render_template('cafe.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)

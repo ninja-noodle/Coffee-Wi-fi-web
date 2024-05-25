@@ -79,7 +79,7 @@
                         </div>
                         <label for="upload-img" class="upload-button justify-content-evenly" data-bs-toggle='tooltip' data-bs-placement="bottom" title="Supported file format: png, jpeg, jpg">
                             <svg style='width:30px; height:30px' xmlns="http://www.w3.org/2000/svg" version="1.0" width="900.000000pt" height="900.000000pt" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
-                                <g class='plus-icon' transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                                <g class='plus-icon' transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)" fill="var(--svg-fill)" stroke="none">
                                     <path d="M4380 8986 c0 -8 -14 -18 -32 -22 -85 -18 -215 -134 -257 -229 -41 -92 -40 -62 -41 -1960 0 -1403 -3 -1824 -12 -1833 -9 -9 -430 -12 -1832 -12 -1899 -1 -1869 0 -1961 -41 -98 -44 -204 -164 -233 -265 -15 -53 -15 -215 0 -268 29 -101 135 -221 233 -265 92 -41 62 -40 1961 -41 1402 0 1823 -3 1832 -12 9 -9 12 -430 12 -1833 1 -1898 0 -1868 41 -1960 44 -98 164 -204 265 -233 53 -15 215 -15 268 0 101 29 221 135 265 233 41 92 40 62 41 1960 0 1403 3 1824 12 1833 9 9 430 12 1832 12 1899 1 1869 0 1961 41 95 42 211 172 229 257 4 18 14 32 22 32 11 0 14 22 14 110 0 88 -3 110 -14 110 -8 0 -18 14 -22 32 -18 85 -134 215 -229 257 -92 41 -62 40 -1961 41 -1402 0 -1823 3 -1832 12 -9 9 -12 430 -12 1833 -1 1898 0 1868 -41 1960 -42 95 -172 211 -257 229 -18 4 -32 14 -32 22 0 11 -22 14 -110 14 -88 0 -110 -3 -110 -14z"/>
                                 </g>
                             </svg>Upload Cafe Image
@@ -87,7 +87,7 @@
 
                         <input id="upload-img" type="file" accept=".png, .jpg, .jpeg" name="img-file" required>
                         <a class="reset-button justify-content-evenly"><svg style='width:29px; height:29px'  xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                            <g class='reset-icon' transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                            <g class='reset-icon' transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="var(--svg-fill)" stroke="none">
                                 <path d="M135 2988 c-108 -39 -161 -154 -120 -256 11 -26 198 -219 613 -634 l597 -598 -597 -597 c-414 -415 -602 -609 -613 -635 -33 -80 -5 -174 68 -232 48 -38 135 -48 188 -21 19 9 303 285 632 613 l597 597 598 -597 c328 -328 612 -604 631 -613 53 -27 140 -17 188 21 73 58 101 152 68 232 -11 26 -199 220 -613 635 l-597 597 602 603 c484 485 603 609 613 641 48 150 -101 295 -248 241 -40 -15 -130 -100 -645 -614 l-597 -596 -593 592 c-325 325 -607 598 -624 607 -43 22 -111 28 -148 14z"/>
                             </g>
                         </svg>Clear Image
@@ -128,8 +128,8 @@
                                 <div class="slider-value" style="margin-bottom: 5px;">
                                     <input name="min-seats" id="title-min" class="slider-value-title" readonly  value="0 <" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
                                     <span style="color:  #808080;" class="slider-value-title">
-                                Seats
-                            </span>
+                                        Seats
+                                    </span>
                                     <input name="max-seats" id="title-max" class="slider-value-title" readonly  value="< 40" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
                                 </div>
                                 <div class="double-slider">
@@ -173,7 +173,7 @@
                     <input type="checkbox" name="anonymous" id="anonymous"/>
                     Be a mysterious contributor
                 </label>
-                <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: #3B3B3B;">
+                <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: var(--contrast);">
                 OR
             </span>
                 <input id="contributor-name" class="form-field" style="margin-right: 20px" type="text" placeholder="Your name" name="contributor-name" required>
