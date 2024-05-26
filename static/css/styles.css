@@ -19,6 +19,10 @@
   --svg-fill: #000000;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 [type="search"]::-webkit-search-cancel-button,
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
@@ -427,7 +431,6 @@ body { padding-top: 92px; }
     width: 100%;
     height: 270px;
     border-radius: 15px;
-    border-radius: 15px;
     padding: 10px 10px;
 }
 .cafe-title {
@@ -518,7 +521,7 @@ body { padding-top: 92px; }
   min-height: 50px;
   min-width: 0;
   outline: none;
-  padding: 13px 24px;
+  padding: 16px 24px;
 }
 .main-form {
   margin-left: 30px;
