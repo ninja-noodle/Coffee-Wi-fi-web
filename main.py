@@ -169,7 +169,10 @@ def cafe_added():
 
 @app.route('/cafes/<cafe_name>', methods=['GET', 'POST'])
 def show_cafe(cafe_name):
-    return render_template('cafe.html')
+    cafe_id = request.args['cafe_id']
+    requested_cafe = db.get_or_404(Cafe, cafe_id)
+    if cafe_name == requested_cafe.name:
+        return render_template('base.html', cafe=1, requested_cafe=requested_cafe)
 
 
 if __name__ == "__main__":

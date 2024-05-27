@@ -1111,4 +1111,12 @@ input[type="checkbox"]:focus {
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
+.show-cafe-img {
+    width: 25rem;
+    height: 22rem;
+    border-radius: 15px;
+    border: 2px solid var(--border-color);
+    padding: 10px 10px;
+    margin-right: 1.5rem;
+}
 
