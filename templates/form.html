@@ -117,7 +117,7 @@
                         <input class="form-field" type="url" placeholder="Google Maps Link" name="map-link" required>
                         <div style="display: flex; box-sizing: border-box; min-height: 50px; width: 100%; outline: none; margin-top:10px; margin-bottom:10px;">
                             <div class="d-flex" style="margin-right:10px">
-                                <select name="currency" id="currency">
+                                <select name="currency" id="currency" class="dropdown">
                                     <option value="£">£</option>
                                     <option value="$">$</option>
                                     <option value="MMK">MMK</option>
@@ -149,22 +149,32 @@
                 </div>
                 <div class="flex-fill form-container-2">
                     <div style="padding: 10px 0">
-                        <label class="form-control">
+                        <label class="form-control form-control-hover" style="margin-bottom: 20px;">
                             <input type="checkbox" name="has-wifi" />
                             Has Wi-Fi
                         </label>
-                        <label class="form-control">
+                        <label class="form-control form-control-hover" style="margin-bottom: 20px;">
                             <input type="checkbox" name="has-sockets" />
                             Has Sockets
                         </label>
-                        <label class="form-control">
+                        <label class="form-control form-control-hover" style="margin-bottom: 20px;">
                             <input type="checkbox" name="has-toilet" />
                             Has toilet
                         </label>
-                        <label class="form-control">
-                            <input type="checkbox" name="can-take-calls" />
-                            Can take calls
-                        </label>
+                        <div class="form-control-hover can-take-calls">
+                            <label class="form-control" style="border-top:0px; border-left:0px; border-right:0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+                                <input class="call-checkbox" type="checkbox" name="can-take-calls" />
+                                Can take calls
+                            </label>
+                            <div class="d-flex">
+                                <select class="dropdown" style="border: 0px; border-top-left-radius: 0px;">
+                                    <option value="£">£</option>
+                                    <option value="$">$</option>
+                                    <option value="MMK">MMK</option>
+                                </select>
+                                <input class="form-field" style="margin:0px; border: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px" type="url" placeholder="Phone No." name="map-link" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

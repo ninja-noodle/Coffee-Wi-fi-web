@@ -606,6 +606,7 @@ body { padding-top: 92px; }
   touch-action: manipulation;
   will-change: transform;
 }
+
 .form-field:focus {
   background-color: var(--hover);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
@@ -863,7 +864,7 @@ body { padding-top: 92px; }
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
-#currency {
+.dropdown {
   color: var(--border-color);
   background-color:var(--primary);
   border: 2px solid var(--border-color);
@@ -882,7 +883,7 @@ body { padding-top: 92px; }
   touch-action: manipulation;
   will-change: transform;
 }
-#currency:focus {
+.dropdown:focus {
   background-color: var(--hover);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
@@ -906,14 +907,13 @@ body { padding-top: 92px; }
   border: 2px solid var(--border-color);
   border-radius: 15px;
   gap: 20px;
-  margin-bottom: 20px;
   width: 100%;
   cursor: pointer;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
   will-change: transform;
 }
-.form-control:hover {
+.form-control-hover:hover {
   background-color: var(--hover);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
@@ -954,6 +954,21 @@ input[type="checkbox"]:checked::before {
 input[type="checkbox"]:focus {
   outline: max(2px, 0.15em) solid currentColor;
   outline-offset: max(2px, 0.15em);
+}
+.can-take-calls {
+  border-radius: 15px;
+  border: 2px solid var(--border-color);
+  height:3.5rem;
+  overflow:hidden;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  touch-action: manipulation;
+  will-change: transform;
+}
+&:has(.call-checkbox:checked){
+  .can-take-calls {
+    transition:height .3s ease;
+    height: 100%;
+  }
 }
 .success-msg {
   appearance: none;
