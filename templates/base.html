@@ -19,7 +19,6 @@
             media="(prefers-color-scheme: dark)"
     />
 
-
     <!-- Google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +35,8 @@
 <body>
 {% if form_id == 1 %}
 {% include "form.html" %}
+{% elif cafe == 1 %}
+{% include "cafe.html" %}
 {% else %}
 {% include "side-bar.html" %}
 <main class="main" style="margin-left: 80px;">
@@ -107,13 +108,13 @@
             </div>
             <div class="row footer-bottom">
                 <div class="col text-start">
-                    <a class="footer-anchor" href="https://github.com/ninja-noodle/Coffee-Wi-fi-web" target="_blank"><i class="bi bi-github"></i> Git Hub Repo</a>
+                    <a class="footer-anchor" href="https://github.com/ninja-noodle/Coffee-Wi-fi-web" target="_blank"><i class="bi bi-github"></i> Source code</a>
                 </div>
                 <div class="col text-center">
-                    © <span id="footer-copyright"></span> Coffee & Wifi by C Tu <a class="footer-anchor" href="https://github.com/ninja-noodle" target="_blank"><i class="bi bi-github"></i></a>
+                    © <span id="footer-copyright"></span> Coffee & Wifi by <a class="footer-anchor" href="https://github.com/ninja-noodle" target="_blank">C Tu <i class="bi bi-github"></i></a>
                 </div>
                 <div class="col text-end">
-                    <button></button>
+                    <i class="bi bi-file-earmark-code-fill footer-anchor" data-bs-toggle='tooltip' data-bs-placement="top" title="100% made by a human with passion"></i>
                 </div>
             </div>
         </div>
