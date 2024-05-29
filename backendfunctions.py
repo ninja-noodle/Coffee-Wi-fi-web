@@ -3,7 +3,6 @@ from PIL import Image
 from decouple import config
 from googleapiclient.http import MediaIoBaseUpload
 from werkzeug.utils import secure_filename
-from Google import Create_Service
 
 
 class SeatsFilter:

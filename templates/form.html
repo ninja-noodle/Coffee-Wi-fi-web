@@ -114,7 +114,7 @@
                         {% endwith %}
                         <input class="form-field" type="text" placeholder="Name of cafe" name="cafe-name" required>
                         <div class="d-flex">
-                            <select class="form-field" id="country-dropdown" name="location" style="padding: 0 1rem; cursor:pointer; margin-right: 0.5rem;">
+                            <select class="form-field" id="country-dropdown" name="country" style="padding: 0 1rem; cursor:pointer; margin-right: 0.5rem;">
                                 <option data-display="AF" value="Afghanistan">Afghanistan</option>
                                 <option data-display="AX" value="Aland Islands">Aland Islands</option>
                                 <option data-display="AL" value="Albania">Albania</option>
@@ -360,7 +360,12 @@
                             </select>
                             <input class="form-field" type="text" placeholder="Located City" name="location" required>
                         </div>
-                        <input class="form-field" type="url" placeholder="Google Maps Link" name="map-link" required>
+                        <div class="d-flex">
+                            <input class="form-field address" id="address" type="url" placeholder="Google Maps Link" name="map-link" required>
+                            <label class="form-field form-control-hover" style="max-width: 4.5rem; margin-left: 0.5rem; cursor: pointer;"  data-bs-toggle='tooltip' data-bs-placement="top" title="Check to type in cafe's location address">
+                                <input type="checkbox" name="full-address" id="full-address" style="cursor:pointer;"/>
+                            </label>
+                        </div>
                         <div style="display: flex; box-sizing: border-box; min-height: 50px; width: 100%; outline: none; margin-top:10px; margin-bottom:10px;">
                             <div class="d-flex" style="margin-right:10px">
                                 <select name="currency" id="currency" class="dropdown">
@@ -396,24 +401,24 @@
                 <div class="flex-fill form-container-2">
                     <div style="padding: 10px 0">
                         <label class="form-control form-control-hover" style="margin-bottom: 20px;">
-                            <input type="checkbox" name="has-wifi" />
+                            <input type="checkbox" name="has-wifi" style="cursor:pointer;"/>
                             Has Wi-Fi
                         </label>
                         <label class="form-control form-control-hover" style="margin-bottom: 20px;">
-                            <input type="checkbox" name="has-sockets" />
+                            <input type="checkbox" name="has-sockets" style="cursor:pointer;"/>
                             Has Sockets
                         </label>
                         <label class="form-control form-control-hover" style="margin-bottom: 20px;">
-                            <input type="checkbox" name="has-toilet" />
+                            <input type="checkbox" name="has-toilet" style="cursor:pointer;"/>
                             Has toilet
                         </label>
                         <div class="form-control-hover can-take-calls">
                             <label class="form-control" style="border-top:0px; border-left:0px; border-right:0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                                <input class="call-checkbox" type="checkbox" name="can-take-calls" />
+                                <input class="call-checkbox" type="checkbox" name="can-take-calls" style="cursor:pointer;"/>
                                 Can take calls
                             </label>
                             <div class="d-flex" style="background-color: transparent">
-                                <select class="phone-codes-dropdown" id="phone-codes-dropdown" style="border: 0px; border-top-left-radius: 0px;">
+                                <select name="country-call-code" class="phone-codes-dropdown" id="phone-codes-dropdown" style="border: 0px; border-top-left-radius: 0px;">
                                     <option data-display="+93" value="Afghanistan (+93)">Afghanistan(+93)</option>
                                     <option data-display="+358" value="Aland Islands (+358)">Aland Islands(+358)</option>
                                     <option data-display="+355" value="Albania (+355)">Albania(+355)</option>
