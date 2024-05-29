@@ -1236,15 +1236,23 @@ xhttp.onreadystatechange = function() {
     country_code = country_code[1].split('tls=');
     country_code = country_code[0];
     var filteredArrayValues = countries.filter(item => item.code === country_code);
-    var list = document.getElementById('phone-codes-dropdown');
+    var call_num_list = document.getElementById('phone-codes-dropdown');
+    var country_list = document.getElementById('country-dropdown');
     var i;
-    for (i = 0; i < list.length; i++) {
-        let u = list.options[i]
+    for (i = 0; i < call_num_list.length; i++) {
+        let u = call_num_list.options[i]
         if (u.getAttribute('data-display') == filteredArrayValues[0].dial_code) {
             u.innerText = u.getAttribute('data-display');
             u.setAttribute('selected', true);
-        }
-    }
+        };
+    };
+    var j;
+    for (j = 0; j < country_list.length; j++) {
+        let u = country_list.options[j]
+        if (u.getAttribute('data-display') == filteredArrayValues[0].code) {
+            u.setAttribute('selected', true);
+        };
+    };
   }
 };
 
