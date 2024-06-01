@@ -233,7 +233,6 @@ body { padding-top: 92px; }
     width:260px;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     background: var(--primary)
-
   }
   &:hover .filter {
     width:230px;

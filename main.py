@@ -1,3 +1,5 @@
+import base64
+
 from decouple import config
 from flask import Flask, render_template, redirect, url_for, flash, request, session
 from flask_bootstrap import Bootstrap5
@@ -38,6 +40,7 @@ class Cafe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), unique=True, nullable=False)
     map_url = db.Column(db.String(500), nullable=False)
+    img = db.Column(db.BLOB, unique=True, nullable=False)
     img_name = db.Column(db.String(500), nullable=False)
     location = db.Column(db.String(250), nullable=False)
     has_sockets = db.Column(db.Boolean, nullable=False)
@@ -81,7 +84,8 @@ def get_all_cafes():
             return redirect(url_for('filter_cafes', filter='seats', seat_amount=request.form.get('seatAmount')))
     data = db.session.execute(db.select(Cafe))
     chunks = data.scalars().all()
-    return render_template("base.html", all_cafes=chunks, filter_id=1, no_data=0, total_cafe_no=total_cafe_no)
+    cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+    return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=1, no_data=0, total_cafe_no=total_cafe_no)
 
 
 @app.route('/filtered/<filter>', methods=['GET', 'POST'])
@@ -92,23 +96,28 @@ def filter_cafes(filter):
             return redirect(url_for('search_cafes', search=request.form.get('search-data')))
     if filter == 'has_wifi':
         chunks = Cafe.query.filter_by(has_wifi=1).all()
-        return render_template("base.html", all_cafes=chunks, filter_id=2, no_data=0, total_cafe_no=total_cafe_no)
+        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=2, no_data=0, total_cafe_no=total_cafe_no)
     if filter == 'has_sockets':
         chunks = Cafe.query.filter_by(has_sockets=1).all()
-        return render_template("base.html", all_cafes=chunks, filter_id=3, no_data=0, total_cafe_no=total_cafe_no)
+        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=3, no_data=0, total_cafe_no=total_cafe_no)
     if filter == 'has_toilet':
         chunks = Cafe.query.filter_by(has_toilet=1).all()
-        return render_template("base.html", all_cafes=chunks, filter_id=4, no_data=0, total_cafe_no=total_cafe_no)
+        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=4, no_data=0, total_cafe_no=total_cafe_no)
     if filter == 'can_take_calls':
         chunks = Cafe.query.filter_by(can_take_calls=1).all()
-        return render_template("base.html", all_cafes=chunks, filter_id=5, no_data=0, total_cafe_no=total_cafe_no)
+        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=5, no_data=0, total_cafe_no=total_cafe_no)
     if filter == 'seats':
         seats = int(request.args['seat_amount'])
         if type(seats) is not int:
             seats = int(session['seat_amount'])
         data = db.session.execute(db.select(Cafe))
         chunks = SeatsFilter(seats, data.scalars().all()).seats_filter()
-        return render_template("base.html", all_cafes=chunks, filter_id=6, no_data=0, total_cafe_no=total_cafe_no,
+        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=6, no_data=0, total_cafe_no=total_cafe_no,
                                seats=seats)
 
 
@@ -120,11 +129,12 @@ def search_cafes(search):
             return redirect(url_for('search_cafes', search=request.form.get('search-data')))
     data = db.session.execute(db.select(Cafe))
     chunks = SearchAlgorithm(search_data=search, base_data=data.scalars().all()).search()
+    cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
     if len(chunks) > 0:
-        return render_template("base.html", all_cafes=chunks, filter_id='search', no_data=0,
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id='search', no_data=0,
                                total_cafe_no=total_cafe_no, searchvalue=search)
     elif len(chunks) == 0:
-        return render_template("base.html", all_cafes=chunks, filter_id='search', no_data=1,
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id='search', no_data=1,
                                total_cafe_no=total_cafe_no, searchvalue=search)
 
 
@@ -138,29 +148,27 @@ def cafe_added():
     if request.method == "POST":
         img_file = request.files['img-file']
         if request.form.get('submit') == 'submit':
-            submission = CafeSubmission()
+            new_submission = CafeSubmission()
             if check_if_exists(request.form.get('cafe-name')):
                 flash("Cafe already exists (●'◡'●)", "already_exist_error")
                 return redirect(url_for('add_cafe'))
-
-            elif submission.add_cafe_data(img=img_file,
-                                          name=request.form.get('cafe-name'),
-                                          location=request.form.get('location'),
-                                          map_url=request.form.get('map-link'),
-                                          currency=request.form.get('currency'),
-                                          price=request.form.get('coffee-price'),
-                                          seats_min=request.form.get('min-seats'),
-                                          seats_max=request.form.get('max-seats'),
-                                          wifi=request.form.get('has-wifi'),
-                                          sockets=request.form.get('has-sockets'),
-                                          toilet=request.form.get('has-toilet'),
-                                          calls=request.form.get('can-take-calls'),
-                                          mysterious=request.form.get('anonymous'),
-                                          contributor_name=request.form.get('contributor-name'),
-                                          contributor_email=request.form.get('contributor-email'),
-                                          db=db,
-                                          cafe=Cafe,
-                                          service=service):
+            elif new_submission.add_cafe_data(img=img_file,
+                                              name=request.form.get('cafe-name'),
+                                              location=request.form.get('location'),
+                                              map_url=request.form.get('map-link'),
+                                              currency=request.form.get('currency'),
+                                              price=request.form.get('coffee-price'),
+                                              seats_min=request.form.get('min-seats'),
+                                              seats_max=request.form.get('max-seats'),
+                                              wifi=request.form.get('has-wifi'),
+                                              sockets=request.form.get('has-sockets'),
+                                              toilet=request.form.get('has-toilet'),
+                                              calls=request.form.get('can-take-calls'),
+                                              mysterious=request.form.get('anonymous'),
+                                              contributor_name=request.form.get('contributor-name'),
+                                              contributor_email=request.form.get('contributor-email'),
+                                              db=db,
+                                              cafe=Cafe):
                 return render_template('base.html', form_id=1, success=1)
             else:
                 flash("The file type is not allowed >:(", "file_type_error")

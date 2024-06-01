@@ -1,7 +1,7 @@
 import io
 from PIL import Image
 from decouple import config
-from googleapiclient.http import MediaIoBaseUpload
+# from googleapiclient.http import MediaIoBaseUpload
 from werkzeug.utils import secure_filename
 
 
@@ -74,20 +74,23 @@ class SearchAlgorithm:
         elif len(data_index) == 0:
             return self.response_data
 
+# Used this to convert an image object into a byte (base64) bit file for manipulating purposes
 
-def image_to_byte_array(image: Image) -> bytes:
-    # BytesIO is a file-like buffer stored in memory
-    imgbytearr = io.BytesIO()
-    # image.save expects a file-like as an argument
-    image.save(imgbytearr, format=image.format)
-    # Turn the BytesIO object back into a bytes object
-    imgbytearr = imgbytearr.getvalue()
-    return imgbytearr
+# def image_to_byte_array(image: Image) -> bytes:
+#     # BytesIO is a file-like buffer stored in memory
+#     imgbytearr = io.BytesIO()
+#     # image.save expects a file-like as an argument
+#     image.save(imgbytearr, format=image.format)
+#     # Turn the BytesIO object back into a bytes object
+#     imgbytearr = imgbytearr.getvalue()
+#     return imgbytearr
 
+# Used to check if the uploaded img is in the allowed file in which manipulates the filename which is not a proper way
+# Changed it by using the flask file.mimetype
 
-def allowed_file(filename):
-    """ takes the last part of the filename (extension) and checks if it is part of ALLOWED_EXTENSIONS"""
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
+# def allowed_file(filename):
+#     """ takes the last part of the filename (extension) and checks if it is part of ALLOWED_EXTENSIONS"""
+#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
 
 
 def boolean_to_binary(var):
@@ -108,49 +111,64 @@ def mime_type_identify(file_n):
 def seat_data_format(_seat_min, _seat_max):
     return f"{eval(_seat_min.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}-{eval(_seat_max.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}"
 
+# ====================== Used for cloud storage of cafe images with GOOGLE DRIVE API =========================#
+# #===================== but changed it to storing images in the database as a blob ==========================#
 
-def staging_and_upload(img, filename, folder_id, service):
-    def compress_img(image):
-        if len(image.fp.read()) > 3000000:
-            width, height = image.size
+# def staging_and_upload(img, filename, folder_id, service):
+#     def compress_img(image):
+#         if len(image.fp.read()) > 3000000:
+#             width, height = image.size
+#             new_size = (width // 2, height // 2)
+#             compressed_img = image.resize(new_size, resample=1)
+#             compressed_img.save(io.BytesIO(request_img_content), format=image.format, optimize=True, quality=80)
+#         return image
+#
+#     request_img_content = img.read()
+#     with Image.open(io.BytesIO(request_img_content), mode='r') as opened_image:
+#         request_img_content = image_to_byte_array(compress_img(opened_image))
+#         mime_type = mime_type_identify(filename)
+#         file_metadata = {
+#             'name': filename,
+#             'parents': [folder_id]
+#         }
+#         media_content = MediaIoBaseUpload(io.BytesIO(request_img_content), mimetype=mime_type)
+#
+#         uploaded = service.files().create(
+#             body=file_metadata,
+#             media_body=media_content,
+#         ).execute()
+#         return uploaded
+
+
+def compress_img(image):
+    if len(image) > 3000000:
+        with Image.open(io.BytesIO(image)) as im:
+            width, height = im.size
             new_size = (width // 2, height // 2)
-            compressed_img = image.resize(new_size, resample=1)
-            compressed_img.save(io.BytesIO(request_img_content), format=image.format, optimize=True, quality=80)
-        return image
-
-    request_img_content = img.read()
-    with Image.open(io.BytesIO(request_img_content), mode='r') as opened_image:
-        request_img_content = image_to_byte_array(compress_img(opened_image))
-        mime_type = mime_type_identify(filename)
-        file_metadata = {
-            'name': filename,
-            'parents': [folder_id]
-        }
-        media_content = MediaIoBaseUpload(io.BytesIO(request_img_content), mimetype=mime_type)
-
-        uploaded = service.files().create(
-            body=file_metadata,
-            media_body=media_content,
-        ).execute()
-        return uploaded
+            im.resize(new_size, resample=1)
+            im.save(image, format=image.format, optimize=True, quality=80)
+    return image
 
 
 class CafeSubmission:
     def __init__(self):
+        self.allowed_file_type = ['image/jpg', 'image/jpeg', 'image/png']
         self.folder_id = config('IMG_FOLDER_ID')
 
     def add_cafe_data(self, img, name, location, map_url, currency, price, seats_min, seats_max, wifi, sockets, toilet,
-                      calls, mysterious, contributor_name, contributor_email, db, cafe, service):
+                      calls, mysterious, contributor_name, contributor_email, db, cafe):
 
         filename = secure_filename(img.filename)
+        mimetype = img.mimetype
+        image = compress_img(img.read())
 
         has_wifi = boolean_to_binary(wifi)
         has_sockets = boolean_to_binary(sockets)
         has_toilets = boolean_to_binary(toilet)
         can_take_calls = boolean_to_binary(calls)
 
-        if allowed_file(filename):
-            uploaded = staging_and_upload(img=img, filename=filename, folder_id=self.folder_id, service=service)
+        if mimetype in self.allowed_file_type:
+            # uploaded = staging_and_upload(img=img, filename=filename, folder_id=self.folder_id, service=service)
 
             new_contributor = 'None'
             new_contributor_email = 'None'
@@ -161,7 +179,8 @@ class CafeSubmission:
             new_cafe = cafe(
                 name=name,
                 map_url=map_url,
-                img_name=uploaded['id'],
+                img=image,
+                img_name=filename,
                 location=location,
                 has_sockets=has_sockets,
                 has_toilet=has_toilets,
@@ -176,5 +195,5 @@ class CafeSubmission:
             db.session.commit()
             return True
 
-        elif not allowed_file(filename):
+        else:
             return False
