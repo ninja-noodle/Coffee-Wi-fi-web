@@ -1,19 +1,18 @@
 import base64
-
 from decouple import config
 from flask import Flask, render_template, redirect, url_for, flash, request, session
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
-from Google import Create_Service
+# from Google import Create_Service
 from backendfunctions import SeatsFilter, SearchAlgorithm, CafeSubmission
 
 # ====== GOOGLE DRIVE API AUTH =======
-CLIENT_SECRET_FILE = config('GOOGLE_API_CLIENT_SECRETS')
-API_NAME = 'drive'
-API_VERSION = 'v3'
-SCOPES = ['https://www.googleapis.com/auth/drive']
-FOLDER_ID = config('IMG_FOLDER_ID')
-service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+# CLIENT_SECRET_FILE = config('GOOGLE_API_CLIENT_SECRETS')
+# API_NAME = 'drive'
+# API_VERSION = 'v3'
+# SCOPES = ['https://www.googleapis.com/auth/drive']
+# FOLDER_ID = config('IMG_FOLDER_ID')
+# service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
 # ====== CREATING FOLDER IN GOOGLE DRIVE =======
 # file_metadata = {
@@ -91,34 +90,42 @@ def get_all_cafes():
 @app.route('/filtered/<filter>', methods=['GET', 'POST'])
 def filter_cafes(filter):
     total_cafe_no = len(db.session.execute(db.select(Cafe)).scalars().all())
+    chunks = None
+    filter_id = None
+    seats = None
+    no_data = 0
+
     if request.method == "POST":
         if request.form.get('search') == 'search':
             return redirect(url_for('search_cafes', search=request.form.get('search-data')))
-    if filter == 'has_wifi':
+    elif filter == 'has_wifi':
         chunks = Cafe.query.filter_by(has_wifi=1).all()
-        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=2, no_data=0, total_cafe_no=total_cafe_no)
-    if filter == 'has_sockets':
+        filter_id = 2
+
+    elif filter == 'has_sockets':
         chunks = Cafe.query.filter_by(has_sockets=1).all()
-        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=3, no_data=0, total_cafe_no=total_cafe_no)
-    if filter == 'has_toilet':
+        filter_id = 3
+
+    elif filter == 'has_toilet':
         chunks = Cafe.query.filter_by(has_toilet=1).all()
-        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=4, no_data=0, total_cafe_no=total_cafe_no)
-    if filter == 'can_take_calls':
+        filter_id = 4
+
+    elif filter == 'can_take_calls':
         chunks = Cafe.query.filter_by(can_take_calls=1).all()
-        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=5, no_data=0, total_cafe_no=total_cafe_no)
-    if filter == 'seats':
+        filter_id = 5
+
+    elif filter == 'seats':
         seats = int(request.args['seat_amount'])
         if type(seats) is not int:
             seats = int(session['seat_amount'])
         data = db.session.execute(db.select(Cafe))
         chunks = SeatsFilter(seats, data.scalars().all()).seats_filter()
-        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id=6, no_data=0, total_cafe_no=total_cafe_no,
-                               seats=seats)
+        filter_id = 6
+
+    cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+    return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
+                           filter_id=filter_id, no_data=no_data,
+                           seats=seats, total_cafe_no=total_cafe_no,)
 
 
 @app.route('/search/<search>', methods=['GET', 'POST'])
@@ -131,10 +138,12 @@ def search_cafes(search):
     chunks = SearchAlgorithm(search_data=search, base_data=data.scalars().all()).search()
     cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
     if len(chunks) > 0:
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id='search', no_data=0,
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
+                               filter_id='search', no_data=0,
                                total_cafe_no=total_cafe_no, searchvalue=search)
     elif len(chunks) == 0:
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images, filter_id='search', no_data=1,
+        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
+                               filter_id='search', no_data=1,
                                total_cafe_no=total_cafe_no, searchvalue=search)
 
 
@@ -147,12 +156,14 @@ def add_cafe():
 def cafe_added():
     if request.method == "POST":
         img_file = request.files['img-file']
+        img_size = len(img_file.read())
         if request.form.get('submit') == 'submit':
             new_submission = CafeSubmission()
             if check_if_exists(request.form.get('cafe-name')):
                 flash("Cafe already exists (●'◡'●)", "already_exist_error")
                 return redirect(url_for('add_cafe'))
             elif new_submission.add_cafe_data(img=img_file,
+                                              img_size=img_size,
                                               name=request.form.get('cafe-name'),
                                               location=request.form.get('location'),
                                               map_url=request.form.get('map-link'),

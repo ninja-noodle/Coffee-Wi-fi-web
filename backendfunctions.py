@@ -1,6 +1,7 @@
 import io
 from PIL import Image
 from decouple import config
+# ========= used for img cloud storage
 # from googleapiclient.http import MediaIoBaseUpload
 from werkzeug.utils import secure_filename
 
@@ -74,16 +75,6 @@ class SearchAlgorithm:
         elif len(data_index) == 0:
             return self.response_data
 
-# Used this to convert an image object into a byte (base64) bit file for manipulating purposes
-
-# def image_to_byte_array(image: Image) -> bytes:
-#     # BytesIO is a file-like buffer stored in memory
-#     imgbytearr = io.BytesIO()
-#     # image.save expects a file-like as an argument
-#     image.save(imgbytearr, format=image.format)
-#     # Turn the BytesIO object back into a bytes object
-#     imgbytearr = imgbytearr.getvalue()
-#     return imgbytearr
 
 # Used to check if the uploaded img is in the allowed file in which manipulates the filename which is not a proper way
 # Changed it by using the flask file.mimetype
@@ -98,14 +89,6 @@ def boolean_to_binary(var):
         return 1
     else:
         return 0
-
-
-def mime_type_identify(file_n):
-    file_type = '.' in file_n and file_n.rsplit('.', 1)[1].lower()
-    if file_type == 'jpeg' or file_type == 'jpg':
-        return 'image/jpeg'
-    elif file_type == 'png':
-        return 'image/png'
 
 
 def seat_data_format(_seat_min, _seat_max):
@@ -139,15 +122,33 @@ def seat_data_format(_seat_min, _seat_max):
 #         ).execute()
 #         return uploaded
 
+# ======================= previous version of mime type identifier =========================== #
+# def mime_type_identify(file_n):
+#     file_type = '.' in file_n and file_n.rsplit('.', 1)[1].lower()
+#     if file_type == 'jpeg' or file_type == 'jpg':
+#         return 'image/jpeg'
+#     elif file_type == 'png':
+#         return 'image/png'
 
-def compress_img(image):
-    if len(image) > 3000000:
-        with Image.open(io.BytesIO(image)) as im:
-            width, height = im.size
-            new_size = (width // 2, height // 2)
-            im.resize(new_size, resample=1)
-            im.save(image, format=image.format, optimize=True, quality=80)
-    return image
+# used for converting an filestorage image file to a bytes file =========================== #
+# def image_to_byte_array(image: Image) -> bytes:
+#     # BytesIO is a file-like buffer stored in memory
+#     imgbytearr = io.BytesIO()
+#     # image.save expects a file-like as an argument
+#     image.save(imgbytearr, format=image.format)
+#     # Turn the BytesIO object back into a bytes object
+#     imgbytearr = imgbytearr.getvalue()
+#     return imgbytearr
+
+
+def img_handler(image, img_size):
+    pillow_img = Image.open(image).convert("RGB")
+    fake_file = io.BytesIO()
+    if img_size > 2000000:
+        pillow_img.save(fake_file, format=Image.open(image).format, optimize=True, quality=50)
+    else:
+        pillow_img.save(fake_file, format=Image.open(image).format, optimize=True)
+    return fake_file
 
 
 class CafeSubmission:
@@ -155,12 +156,11 @@ class CafeSubmission:
         self.allowed_file_type = ['image/jpg', 'image/jpeg', 'image/png']
         self.folder_id = config('IMG_FOLDER_ID')
 
-    def add_cafe_data(self, img, name, location, map_url, currency, price, seats_min, seats_max, wifi, sockets, toilet,
+    def add_cafe_data(self, img, img_size, name, location, map_url, currency, price, seats_min, seats_max, wifi, sockets, toilet,
                       calls, mysterious, contributor_name, contributor_email, db, cafe):
-
         filename = secure_filename(img.filename)
         mimetype = img.mimetype
-        image = compress_img(img.read())
+        cafe_img_size = img_size
 
         has_wifi = boolean_to_binary(wifi)
         has_sockets = boolean_to_binary(sockets)
@@ -169,6 +169,7 @@ class CafeSubmission:
 
         if mimetype in self.allowed_file_type:
             # uploaded = staging_and_upload(img=img, filename=filename, folder_id=self.folder_id, service=service)
+            cafe_img = img_handler(img, cafe_img_size).getvalue()
 
             new_contributor = 'None'
             new_contributor_email = 'None'
@@ -179,7 +180,7 @@ class CafeSubmission:
             new_cafe = cafe(
                 name=name,
                 map_url=map_url,
-                img=image,
+                img=cafe_img,
                 img_name=filename,
                 location=location,
                 has_sockets=has_sockets,
