@@ -143,6 +143,7 @@
             </div>
         </form>
     {% else %}
+        {% from "country_lists.html" import country_lists %}
         <form action="/" method ="post">
             <button class="logo-display" type="submit" name="logo-home" value="home">
             <span>
@@ -157,8 +158,8 @@
             </span>
                 <a class="web-name logo-text" href="{{ url_for('get_all_cafes') }}">Coffee & Wifi</a>
             </button>
-        </form>
 
+        </form>
         <div class="h-line"></div>
         <div class="filter-title">
             <i class="bi bi-funnel-fill filter-logo"></i>
@@ -328,9 +329,43 @@
                 <input id="formRange" type="range" value="" min="0" max="50">
             </button>
         </form>
-    {% endif %}
-        <form class="about" action="/" method ="post">
+        {% endif %}
+        <div style="position:fixed; bottom: 0;">
+            {% if form_id == 1 %}
             <div class="h-line" style="margin-bottom:5px;"></div>
+            {% else %}
+            <form name="bottom-form" id="bottom-form" method="post">
+                <div class="filter" style="background-color: transparent; color: var(--contrast); padding: 0 0;margin-bottom: 0px; margin-top: 10px;">
+                <span style="margin-left: 8px; margin-right: 8px;">
+                    <svg class="filter-svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
+                        <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                            <path d="M1274 2824 c-350 -58 -684 -274 -884 -569 -342 -506 -300 -1189 102 -1640 124 -139 243 -230 408 -314 306 -156 678 -185 1008 -80 478 153 837 568 917 1061 19 119 19 317 0 436 -22 134 -80 309 -115 344 -35 34 -85 37 -123 8 -41 -33 -41 -59 2 -188 21 -64 42 -133 45 -152 l6 -36 -157 -38 c-87 -21 -181 -49 -209 -62 -72 -34 -134 -105 -193 -221 -68 -136 -113 -172 -200 -160 -43 5 -142 67 -166 103 -9 14 -40 126 -71 250 -30 124 -64 244 -75 266 -28 54 -94 119 -150 145 -25 12 -106 37 -180 57 -73 20 -145 44 -159 54 -26 19 -212 371 -203 385 8 14 186 99 257 123 85 29 201 51 320 60 75 6 93 10 113 30 33 33 32 96 -2 129 -22 23 -31 25 -117 24 -51 -1 -130 -7 -174 -15z m-470 -642 c123 -243 151 -267 391 -330 205 -55 195 -42 268 -336 32 -125 68 -249 82 -275 32 -64 110 -133 203 -178 69 -35 83 -38 157 -38 71 0 89 4 148 33 84 42 124 88 193 224 33 66 64 114 82 126 23 17 286 92 321 92 12 0 7 -75 -11 -195 -34 -230 -179 -496 -356 -655 -153 -138 -345 -238 -535 -280 -65 -14 -246 -32 -256 -25 -5 2 5 51 22 107 27 89 32 118 32 214 0 110 0 111 -42 195 -31 60 -71 116 -140 193 -164 184 -225 215 -443 226 -79 4 -148 13 -165 21 -17 8 -115 66 -218 129 l-186 115 -1 46 c-1 158 90 413 205 574 40 56 152 185 161 185 2 0 42 -76 88 -168z m-204 -1009 c102 -59 155 -74 290 -80 126 -5 167 -14 221 -50 33 -22 161 -163 205 -228 56 -80 59 -170 10 -335 -39 -133 -28 -128 -171 -83 -156 49 -314 141 -443 257 -162 147 -313 419 -347 624 l-7 43 83 -52 c46 -29 118 -72 159 -96z"/>
+                            <path d="M2005 2827 c-222 -74 -352 -296 -295 -507 28 -105 127 -260 272 -428 115 -132 155 -141 242 -49 157 167 284 358 316 477 51 190 -50 395 -239 483 -57 27 -79 32 -161 34 -59 2 -110 -2 -135 -10z m238 -205 c58 -31 103 -91 118 -159 16 -69 -6 -137 -77 -243 -68 -103 -145 -199 -159 -199 -14 0 -91 96 -159 199 -71 105 -93 175 -77 242 37 163 207 240 354 160z"/>
+                        </g>
+                    </svg>
+                </span>
+                    <select name="country-filter" id="country-filter" onchange="country-select()">
+                        <option data-display="all" value="all">Show All</option>
+                        {% for country in country_select %}
+                        <option  data-display="{{ country }}"  value="{{ country }}">{{ country }}</option>
+                        {% endfor %}
+                    </select>
+                    <script>
+                        const selectCountry = document.getElementById('country-filter');
+                        const storedValue = sessionStorage.getItem('selectedCountry');
+
+                        if (storedValue) {
+                            selectCountry.value = storedValue;
+                        }
+
+                        selectCountry.addEventListener('change', function() {
+                            sessionStorage.setItem('selectedCountry', this.value);
+                        });
+                    </script>
+                </div>
+                <div class="h-line" style="margin-bottom:5px;"></div>
+            </form>
+            {% endif %}
             <button class="about-tag" type="submit" name="about" value="about" style="margin-bottom: 10px">
             <span>
                 <svg style="width: 30px; height:30px;" xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
@@ -344,6 +379,6 @@
             </span>
                 <a class="web-name filter-text" href="{{ url_for('get_all_cafes') }}">What & Why?</a>
             </button>
-        </form>
+        </div>
     </div>
 </nav>

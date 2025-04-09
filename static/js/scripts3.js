@@ -13,3 +13,10 @@ slider.addEventListener('input', function(){
     value.value = this.value;
 })
 calcValue()
+
+let countryFilter = document.getElementById("country-filter");
+function countryChange(){
+    document.getElementById("bottom-form").submit();
+    countryFilter.options[countryFilter.selectedIndex].setAttribute('selected', true);
+};
+countryFilter.addEventListener('change', countryChange);
