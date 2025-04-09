@@ -1,5 +1,6 @@
-import base64
-from decouple import config
+import base64 # for image processing
+import werkzeug # for data and exception handling
+from decouple import config # for retrieving secrets from .env
 from flask import Flask, render_template, redirect, url_for, flash, request, session
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
