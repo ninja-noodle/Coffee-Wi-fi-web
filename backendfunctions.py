@@ -6,6 +6,48 @@ from decouple import config
 from werkzeug.utils import secure_filename
 
 
+class DataBaseHandler:
+    def __init__(self):
+        self.db = []
+        self.initial_db = []
+
+    # def code_to_name(self):
+    #     with open('static/assets/countries_list.json') as js:
+    #         for i in json.load(js)['countries']:
+    #             if i['code'] == self.country_code:
+    #                 self.country = i['name']
+    #
+    def filter(self, filter_type):
+        response = []
+        if filter_type == 'has_wifi':
+            for cafe in self.db:
+                if cafe.has_wifi == 1:
+                    response.append(cafe)
+        elif filter_type == 'has_sockets':
+            for cafe in self.db:
+                if cafe.has_sockets == 1:
+                    response.append(cafe)
+        elif filter_type == 'has_toilet':
+            for cafe in self.db:
+                if cafe.has_toilet == 1:
+                    response.append(cafe)
+        elif filter_type == 'can_take_calls':
+            for cafe in self.db:
+                if cafe.can_take_calls == 1:
+                    response.append(cafe)
+        return response
+
+    def country_list_generator(self):
+        response = []
+        for cafe in self.initial_db:
+            if cafe.country not in response:
+                response.append(cafe.country)
+        return response
+    #
+    # def data_var(self, db):
+    #     self.db_data = db
+
+
 class SeatsFilter:
     def __init__(self, seats, base_data):
         self.seats = seats
@@ -154,9 +196,9 @@ def img_handler(image, img_size):
 class CafeSubmission:
     def __init__(self):
         self.allowed_file_type = ['image/jpg', 'image/jpeg', 'image/png']
-        self.folder_id = config('IMG_FOLDER_ID')
 
-    def add_cafe_data(self, img, img_size, name, location, map_url, currency, price, seats_min, seats_max, wifi, sockets, toilet,
+    def add_cafe_data(self, img, img_size, name, country, location, map_url, currency, price, seats_min, seats_max,
+                      wifi, sockets, toilet,
                       calls, mysterious, contributor_name, contributor_email, db, cafe):
         filename = secure_filename(img.filename)
         mimetype = img.mimetype
@@ -182,6 +224,7 @@ class CafeSubmission:
                 map_url=map_url,
                 img=cafe_img,
                 img_name=filename,
+                country=country,
                 location=location,
                 has_sockets=has_sockets,
                 has_toilet=has_toilets,

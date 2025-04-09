@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request, ses
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 # from Google import Create_Service
-from backendfunctions import SeatsFilter, SearchAlgorithm, CafeSubmission
+from backendfunctions import SeatsFilter, SearchAlgorithm, CafeSubmission, DataBaseHandler
 
 # ====== GOOGLE DRIVE API AUTH =======
 # CLIENT_SECRET_FILE = config('GOOGLE_API_CLIENT_SECRETS')
