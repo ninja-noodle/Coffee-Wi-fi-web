@@ -3,7 +3,7 @@
         {% for cafe in all_cafes %}
         <div class="card cafe-card" onclick="location.href='{{ url_for('show_cafe', cafe_name=cafe.name, cafe_id=cafe.id) }}';">
             <div class="card-img">
-                <img crossorigin="anonymous" class='image' src="https://drive.lienuc.com/uc?id={{cafe.img_name}}">
+                <img crossorigin="anonymous" class='image' src="data:;base64,{{cafe_images[all_cafes.index(cafe)]}}">
             </div>
             <div class="card-body" style="margin: 0px; padding: 0px 14px;">
                 {% if cafe.name|length > 26 %}

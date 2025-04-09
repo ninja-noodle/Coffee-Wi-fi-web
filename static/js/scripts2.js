@@ -10,6 +10,17 @@ var checkbox = document.getElementById("anonymous");
             document.getElementById("contributor-email").disabled = false;
         }
     });
+var full_address = document.getElementById("full-address");
+    full_address.addEventListener('change', function(e) {
+        let address_input = document.getElementById("address");
+         if (full_address.checked) {
+            address_input.type = 'text';
+            address_input.placeholder = 'Cafe Address';
+         } else {
+            address_input.type = 'url';
+            address_input.placeholder = 'Google Maps Link';
+        }
+    });
 
     var titleMin = document.getElementById('title-min');
     var titleMax = document.getElementById('title-max');

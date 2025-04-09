@@ -1,0 +1,64 @@
+<body class="d-flex flex-column align-items-center justify-content-center" style="background: var(--primary)">
+<script>
+
+  var redirect = "{{ url_for('get_all_cafes')}}";
+
+  function permission() {
+    var loading_text = document.getElementById("text");
+    var status_text = document.getElementById("status-text");
+    var permission = document.getElementById("permission");
+    loading_text.setAttribute("style", "display:none;");
+    status_text.setAttribute("style", "display:none;");
+    permission.removeAttribute("style");
+    permission.setAttribute("style", "margin-top: 1em");
+  }
+
+  function initialize() {
+    setTimeout(permission, 5000);
+  }
+
+  function access() {
+    var loading_text = document.getElementById("text");
+    var status_text = document.getElementById("status-text");
+    var permission = document.getElementById("permission");
+
+    loading_text.removeAttribute("style", "display:none;");
+    status_text.removeAttribute("style", "display:none;");
+
+    permission.setAttribute("style", "display:none;");
+
+    $.getJSON('https://ipapi.co/json/', function(data) {
+      var n = JSON.stringify(data, null, 2);
+      var country = JSON.parse(n).country_name;
+      sessionStorage.setItem('shown', true);
+      sessionStorage.setItem('access', true);
+      window.location.href = "{{ url_for("loader", country='COUNTRY') }}".replace("COUNTRY", country);
+    });
+  }
+
+  function no_access() {
+    sessionStorage.setItem('shown', true);
+    window.location.href = "{{ url_for("loader", country='NA') }}";
+  }
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div class="terminal-loader d-flex flex-column">
+  <div class="terminal-header">
+    <div class="terminal-title">Coffee & Wifi.exe</div>
+    <div class="terminal-controls">
+      <div class="control close"></div>
+      <div class="control minimize"></div>
+      <div class="control maximize"></div>
+    </div>
+  </div>
+  <span id="status-text" style="margin-top: 1em">Status:</span>
+  <div class="text" id="text">Loading...</div>
+  <div class="permission" id="permission" style="display:none;">
+    Allow location access for personalized data?
+    <button onclick="access()">yes</button>
+    <button onclick="no_access()">no</button>
+  </div>
+</div>
+<script>initialize();</script>
+</body>
