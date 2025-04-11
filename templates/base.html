@@ -102,22 +102,21 @@
         </div>
     </div>
     {% endif %}
-{% endif %}
-
+    {% endif %}
     <div class="footer-placeholder"></div>
     {% if form_id == 1 %}
-    <footer class="main-footer footer" style="position:fixed;left:80px;">
+    <footer class="main-footer footer" style="position:fixed;">
     {% elif all_cafes|length <= 3 %}
-    <footer class="main-footer footer" style="position:fixed;left:80px;">
+    <footer class="main-footer footer" style="position:fixed;">
     {% elif all_cafes|length > 3 %}
-    <footer class="main-footer footer" style="left:0px">
+    <footer class="main-footer footer" style="position:fixed;">
     {% endif %}
         {% if all_cafes|length > 3 %}
-        <div class="container-fluid" style="height: 100%; width:99%; padding-left:6rem">
+        <div class="container-fluid" style="height: 100%;">
         {% elif  all_cafes|length <= 3 %}
-        <div class="container-fluid" style="height: 100%; width:99%; padding-left: 8px">
+        <div class="container-fluid" style="height: 100%;">
         {% elif  form_id == 1 %}
-        <div class="container-fluid" style="height: 100%; width:99%; padding-left: 8px">
+        <div class="container-fluid" style="height: 100%;">
         {% endif %}
             <div class="row" style="background-color:var(--primary)">
                 <div class="footer-main-text" id="footer-main-text">  COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI</div>

@@ -1189,16 +1189,15 @@ input[type="checkbox"]:focus {
 .main-footer {
   position:fixed;
   bottom:0;
-  right:0;
   background-color: var(--primary);
   padding: 0px 0px;
   background: var(--primary);
   overflow:hidden;
   z-index: 1030;
   height:170px;
+  width:100%;
 }
 .footer-placeholder {
-  position:relative;
   z-index: 1000;
   height: 170px; /* same as footer height */
 }
@@ -1208,11 +1207,13 @@ input[type="checkbox"]:focus {
   font-weight: 1000;
   letter-spacing: -1px;
   white-space: nowrap;
+  text-align: justify;
   will-change: transform;
   opacity: 90%;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 }
 .footer-bottom{
+  display: flex;
   font-family: "Reddit Mono", monospace;
   font-size: 15px;
   padding: 5px 0px;
