@@ -6,12 +6,12 @@
 
 // finding out the country code of the user's current location for auto-filling the country phone code of cafe phone number
 function auto_select() {
-    $.getJSON('https://ipapi.co/json/', function(data) {
-      var n = JSON.stringify(data, null, 2);
-      var country = JSON.parse(n).country_name;
-      var country_code = JSON.parse(n).country;
-      var dial_code = JSON.parse(n).country_calling_code;
-      var call_num_list = document.getElementById('phone-codes-dropdown');
+    $.getJSON('http://ip-api.com/json/', function(data) {
+        var n = JSON.stringify(data, null, 2);
+        var country = JSON.parse(n).country;
+        var country_code = JSON.parse(n).countryCode;
+//        var dial_code = JSON.parse(n).country_calling_code;
+        var call_num_list = document.getElementById('phone-codes-dropdown');
         var country_list = document.getElementById('country-dropdown');
         var country_filter_list = document.getElementById('country-filter');
 
@@ -19,7 +19,7 @@ function auto_select() {
             var j;
             for (j = 0; j < call_num_list.length; j++) {
                 let u = call_num_list.options[j]
-                if (u.getAttribute('data-display') == dial_code) {
+                if (u.getAttribute('id') == country) {
                     u.innerText = u.getAttribute('data-display');
                     u.setAttribute('selected', true);
                 };
@@ -33,12 +33,14 @@ function auto_select() {
             };
         } else {
             var i;
-            for (i = 0; i < country_filter_list.length; i++) {
-                let u = country_filter_list.options[i]
-                if (u.getAttribute('data-display') == country) {
-                    u.setAttribute('selected', true);
+            document.getElementById('country-filter').addEventListener('change', function() {
+                for (i = 0; i < country_filter_list.length; i++) {
+                    let u = country_filter_list.options[i]
+                    if (u.getAttribute('data-display') == country) {
+                        u.setAttribute('selected', true);
+                    };
                 };
-            };
+            })
         }
     });
 }

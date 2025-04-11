@@ -14,10 +14,11 @@
   }
 
   function initialize() {
-    setTimeout(permission, 5000);
+    setTimeout(permission, 1500);
   }
 
   function access() {
+
     var loading_text = document.getElementById("text");
     var status_text = document.getElementById("status-text");
     var permission = document.getElementById("permission");
@@ -27,9 +28,9 @@
 
     permission.setAttribute("style", "display:none;");
 
-    $.getJSON('https://ipapi.co/json/', function(data) {
+    $.getJSON('http://ip-api.com/json/', function(data) {
       var n = JSON.stringify(data, null, 2);
-      var country = JSON.parse(n).country_name;
+      var country = JSON.parse(n).country;
       sessionStorage.setItem('shown', true);
       sessionStorage.setItem('access', true);
       window.location.href = "{{ url_for("loader", country='COUNTRY') }}".replace("COUNTRY", country);
