@@ -26,6 +26,18 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 })
 
+const menuBtn = document.getElementById('menu');
+const sideMenu = document.getElementById("side-menu");
+const hitBox = document.getElementById("hitBox");
+menuBtn.addEventListener("click", (event) => {
+  sideMenu.style.width='20em';
+  hitBox.style.display='block';
+});
+hitBox.addEventListener("click", (event) => {
+  sideMenu.style.width='0';
+  hitBox.style.display='none';
+});
+
 const sortableList = document.querySelector(".sortable-list");
 const items = sortableList.querySelectorAll(".item");
 

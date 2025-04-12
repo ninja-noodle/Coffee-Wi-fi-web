@@ -225,6 +225,19 @@ option {
   box-shadow: none;
   transform: translateY(0);
 }
+.menu {
+  border-right: 2px solid var(--border-color);
+  border-left: 0;
+  border-top: 0;
+  border-bottom: 0;
+  background-color: transparent;
+}
+
+.webLogo {
+  background-color: transparent;
+  border: 0;
+}
+
 .search-input {
   background-color: transparent;
   border: 2px solid var(--border-color);
@@ -298,6 +311,26 @@ option {
   -webkit-user-select: none;
   touch-action: manipulation;
   will-change: transform;
+}
+
+.side-menu {
+  position: fixed;
+  top:0;
+  width: 0;
+  height: 100%;
+  z-index: 2000;
+  background-color: var(--primary);
+  transition:width .3s ease;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+}
+
+.hitBox {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1900;
+  display: none;
 }
 
 .nav__cont {
@@ -581,7 +614,6 @@ option {
   margin-bottom: 30px;
   width: 23rem;
   border-radius: 15px;
-  padding: 0 0;
   border: 2px solid var(--border-color);
   color: var(--contrast);
   cursor: pointer;

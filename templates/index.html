@@ -1,5 +1,5 @@
 <div class='content-div show-border'>
-    <div class="row d-flex gx-1 gy-4 justify-content-evenly">
+    <div class="gy-4" style="display:flex; flex-wrap: wrap; place-content: space-evenly; padding: 40px 0px">
         {% for cafe in all_cafes %}
         <div class="card cafe-card" onclick="location.href='{{ url_for('show_cafe', cafe_name=cafe.name, cafe_id=cafe.id) }}';">
             <div class="card-img">
