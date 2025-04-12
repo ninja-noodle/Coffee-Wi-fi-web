@@ -1,4 +1,22 @@
-<body class="d-flex flex-column align-items-center justify-content-center" style="background: var(--primary)">
+<body style="background: var(--primary);">
+<div class="terminal-loader d-flex flex-column">
+  <div class="terminal-header">
+    <div class="terminal-title">Coffee & Wifi.exe</div>
+    <div class="terminal-controls">
+      <div class="control close"></div>
+      <div class="control minimize"></div>
+      <div class="control maximize"></div>
+    </div>
+  </div>
+  <span id="status-text" style="margin-top: 1em">Status:</span>
+  <div class="text" id="text">Loading...</div>
+  <div class="permission" id="permission" style="display:none;">
+    Allow location access for personalized data?
+
+  </div>
+  <button id="btnConfirmed" onclick="access()" style="display:none;">Yes</button>
+  <button id="btnDenied" onclick="no_access()" style="display:none;">No</button>
+</div>
 <script>
 
   var redirect = "{{ url_for('get_all_cafes')}}";
@@ -7,10 +25,16 @@
     var loading_text = document.getElementById("text");
     var status_text = document.getElementById("status-text");
     var permission = document.getElementById("permission");
+    var confirmed = document.getElementById("btnConfirmed");
+    var denied = document.getElementById("btnDenied");
     loading_text.setAttribute("style", "display:none;");
     status_text.setAttribute("style", "display:none;");
     permission.removeAttribute("style");
     permission.setAttribute("style", "margin-top: 1em");
+    confirmed.removeAttribute("style");
+    confirmed.setAttribute("style", "margin-top: 1em");
+    denied.removeAttribute("style");
+    denied.setAttribute("style", "margin-top: 1em");
   }
 
   function initialize() {
@@ -44,22 +68,5 @@
 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<div class="terminal-loader d-flex flex-column">
-  <div class="terminal-header">
-    <div class="terminal-title">Coffee & Wifi.exe</div>
-    <div class="terminal-controls">
-      <div class="control close"></div>
-      <div class="control minimize"></div>
-      <div class="control maximize"></div>
-    </div>
-  </div>
-  <span id="status-text" style="margin-top: 1em">Status:</span>
-  <div class="text" id="text">Loading...</div>
-  <div class="permission" id="permission" style="display:none;">
-    Allow location access for personalized data?
-    <button onclick="access()">yes</button>
-    <button onclick="no_access()">no</button>
-  </div>
-</div>
 <script>initialize();</script>
 </body>

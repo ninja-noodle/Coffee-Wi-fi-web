@@ -80,14 +80,15 @@ option {
 }
 
 .terminal-loader {
+  position: relative;
   border: 0.1em solid #333;
   background-color: #1a1a1a;
   color: var(--primary);
   font-family: "Reddit Mono", monospace;
   font-size: 1em;
   padding: 1.5em 1em;
-  width: 20em;
-  margin: 100px auto;
+  width: 30%;
+  margin: 15% auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   position: relative;
