@@ -104,32 +104,20 @@
     {% endif %}
     {% endif %}
     <div class="footer-placeholder"></div>
-    {% if form_id == 1 %}
-    <footer class="main-footer footer" style="position:fixed;">
-    {% elif all_cafes|length <= 3 %}
-    <footer class="main-footer footer" style="position:fixed;">
-    {% elif all_cafes|length > 3 %}
-    <footer class="main-footer footer" style="position:fixed;">
-    {% endif %}
-        {% if all_cafes|length > 3 %}
-        <div class="container-fluid" style="height: 100%;">
-        {% elif  all_cafes|length <= 3 %}
-        <div class="container-fluid" style="height: 100%;">
-        {% elif  form_id == 1 %}
-        <div class="container-fluid" style="height: 100%;">
-        {% endif %}
-            <div class="row" style="background-color:var(--primary)">
+    <footer class="main-footer">
+        <div class="container-fluid" style="height:100%; width:100%;box-sizing: border-box;">
+            <div class="row" style="background-color:var(--primary); width:100%;">
                 <div class="footer-main-text" id="footer-main-text">  COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI & COFFEE & WIFI</div>
             </div>
-            <div class="row footer-bottom">
-                <div class="col text-start">
-                    <a class="footer-anchor" href="https://github.com/ninja-noodle/Coffee-Wi-fi-web" target="_blank"><i class="bi bi-github"></i> Source code</a>
+            <div class="footer-bottom">
+                <div class="">
+                    <span><i class="bi bi-shop"></i> {{ total_cafe_no }} cafes on site</span>
                 </div>
-                <div class="col text-center">
+                <div class="">
                     © <span id="footer-copyright"></span> Coffee & Wifi by <a class="footer-anchor" href="https://github.com/ninja-noodle" target="_blank">C Tu <i class="bi bi-github"></i></a>
                 </div>
-                <div class="col text-end">
-                    <i class="bi bi-file-earmark-code-fill footer-anchor" data-bs-toggle='tooltip' title="100% human-made with passion"></i>
+                <div class="">
+                    <a class="footer-anchor" href="https://github.com/ninja-noodle/Coffee-Wi-fi-web" target="_blank">Source code <i class="bi bi-github"></i></a>
                 </div>
             </div>
         </div>

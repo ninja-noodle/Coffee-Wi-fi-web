@@ -11,9 +11,9 @@ window.addEventListener('DOMContentLoaded', () => {
             // Scrolling Up
             if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
                 mainNav.classList.add('is-visible');
+                mainNav.classList.add('main-nav-container-shadow');
             } else {
-                console.log(123);
-                mainNav.classList.remove('is-visible', 'is-fixed');
+                mainNav.classList.remove('is-visible', 'is-fixed', 'main-nav-container-shadow');
             }
         } else {
             // Scrolling Down
