@@ -60,8 +60,8 @@
 
     </div>
     <nav class="navbar main-nav-container" id="navbar">
-        <div class="container-fluid">
-            <div style="overflow: hidden; overflow-wrap: break-word; border-radius:15px; border: 2px solid var(--border-color);">
+        <div class="container-fluid" style="place-content: center;">
+            <div style="position:fixed; left:12px; overflow: hidden; overflow-wrap: break-word; border-radius:15px; border: 2px solid var(--border-color);">
                 <button class="menu" id="menu">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="40px" height="40px"
                          viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet" style="margin-top:6px; margin-bottom:6px; margin-left:6px; max-height: 40px; min-height: 40px;  padding: 8px 0px;">
@@ -103,7 +103,7 @@
                     <button class="search-button" type="submit" name="search" value="search"><i class="bi bi-search-heart"></i></button>
                 </form>
             </div>
-            <a class="button-wrapper" href="{{ url_for('add_cafe')}}">
+            <a class="button-wrapper" href="{{ url_for('add_cafe')}}" style="position:fixed; right: 12px;">
                 <button class="button-contribute" type="submit" name="contribute" value="contribute">Let's contribute</button>
             </a>
         </div>
