@@ -1,3 +1,14 @@
+let countryFilter = document.getElementById('country-filter');
+let storedValue = sessionStorage.getItem('selectedCountry');
+if (storedValue) {
+  countryFilter.value = storedValue;
+}
+function countryChange(){
+    sessionStorage.setItem('selectedCountry', this.value);
+    document.getElementById('bottom-form').submit();
+};
+countryFilter.addEventListener('change', countryChange);
+
 let slider = document.getElementById("formRange")
 let value = document.querySelector(".rangeValue");
 
@@ -13,10 +24,3 @@ slider.addEventListener('input', function(){
     value.value = this.value;
 })
 calcValue()
-
-let countryFilter = document.getElementById("country-filter");
-function countryChange(){
-    document.getElementById("bottom-form").submit();
-    countryFilter.options[countryFilter.selectedIndex].setAttribute('selected', true);
-};
-countryFilter.addEventListener('change', countryChange);

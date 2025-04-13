@@ -32,7 +32,7 @@ main {
   -webkit-appearance: none;
   appearance: none;
 }
-body { padding-top: 92px; }
+
 
 option {
   font-family: "Reddit Mono", monospace;
@@ -138,7 +138,8 @@ option {
 
 .main-nav-container{
   display:block;
-  padding: 17px 0px;
+  padding: 17px 12px;
+  max-height: 92px;
   background: var(--primary);
   position: absolute;
   top:0;
@@ -162,7 +163,7 @@ option {
   #navbar.is-fixed {
     /* when the user scrolls down, we hide the header right above the viewport */
     position: fixed;
-    top: -95px;
+    top: -92px;
     transition: transform 0.2s;
     background-color: var(--primary);
     opacity:98%;
@@ -172,14 +173,14 @@ option {
     transform: translate3d(0, 100%, 0);
   }
 }
-.web-name {
+.filter-text {
   appearance: none;
   background-color: transparent;
-  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 22px;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--contrast);
+  color: #757575;
   text-decoration: none;
+  margin-left: 5px;
 }
 
 .button-contribute {
@@ -196,7 +197,7 @@ option {
   font-weight: 600;
   line-height: normal;
   margin: 0;
-  min-height: 50px;
+  height: 100%;
   min-width: 0;
   outline: none;
   padding: 16px 24px;
@@ -233,26 +234,41 @@ option {
   background-color: transparent;
 }
 
-.webLogo {
+.homeLogo {
+  display:flex;
+  place-items:center;
   background-color: transparent;
-  border: 0;
+  border-radius:15px;
+  border: 2px solid var(--border-color);
+  margin-right: 5px;
+}
+.homeText {
+  appearance: none;
+  background-color: transparent;
+  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--contrast);
+  text-decoration: none;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 6px;
+  padding: 5px 5px;
 }
 
 .search-input {
   background-color: transparent;
   border: 2px solid var(--border-color);
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 15px;
+  border-radius: 15px 0px 0px 15px;
   font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 16px;
   font-weight: 600;
-  box-sizing: border-box;
   color: var(--contrast);
   padding: 15px 20px;
-  min-height: 50px;
+  height: 100%;
+  width: 100%;
   text-decoration: none;
   cursor: text;
-  min-width: 0;
   font-size: 16px;
   outline: none;
   border-right: 2px solid var(--border-color);
@@ -261,7 +277,12 @@ option {
   will-change: transform;
 }
 .search {
+  display:flex;
+  width: 25%;
   border-radius: 15px;
+  transition:transform .3s ease;
+  touch-action: manipulation;
+  will-change: transform;
 }
 &:has(.search-input:focus)
   .search {
@@ -270,11 +291,9 @@ option {
 }
 &:has(.search-input:focus)
   .search-input {
-    background-color: var(--hover)
 }
 &:has(.search-input:focus)
   .search-button {
-    background-color: var(--hover)
 }
 &:has(.search-input:focus)
   .search-button:hover {
@@ -283,12 +302,7 @@ option {
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
-.search{
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  touch-action: manipulation;
-  will-change: transform;
 
-}
 .search-button {
   appearance: none;
   background-color: transparent;
@@ -313,37 +327,16 @@ option {
   will-change: transform;
 }
 
-.side-menu {
-  position: fixed;
-  top:0;
-  width: 0;
-  height: 100%;
-  z-index: 2000;
-  background-color: var(--primary);
-  transition:width .3s ease;
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-}
-
-.hitBox {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  z-index: 1900;
-  display: none;
-}
-
 .nav__cont {
   position: fixed;
-  width: 80px;
   top:0;
-  height: 100vh;
+  width: 20vw;
+  height: 100%;
   z-index: 2000;
   background-color: var(--primary);
-  overflow:hidden;
   transition:width .3s ease;
   &:hover {
-    width:260px;
+    width:30vw;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     background: var(--primary)
   }
@@ -396,41 +389,56 @@ option {
     padding-right: 15px;
   }
 }
-.filter {
-  appearance: none;
-  border-left: 2px solid var(--border-color);
-  border-top: 2px solid var(--border-color);
-  border-right: 2px solid var(--border-color);
-  border-bottom: 2px solid var(--border-color);
+
+.filters {
+  display:flex;
+  place-content: space-evenly;
+  padding-right: 5px;
+  margin: 0px 5px;
+  border: 2px solid var(--border-color);
   border-radius: 15px;
-  box-sizing: border-box;
-  padding: 0px 8px;
-  min-height: 50px;
-  min-width: 0px;
+  background-color: var(--primary);
+}
+
+.filter {
+  display:flex;
+  appearance: none;
+  place-items: center;
   outline: none;
-  display: flex;
-  align-items: center;
   cursor: pointer;
-  overflow:hidden;
-  width: 50px; /** I'm animating max-width because width needs to be auto, and auto can't be animated **/
-  -webkit-transition: width 0.3s;
-  transition: width 0.3s;
-  margin-bottom: 10px;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  border: 0;
+  border-radius: 12px;
+}
+.filter .filter-svg {
+  width: 25px;
+  height: 25px;
+}
+
+.country-filter {
+  display: flex;
+  place-items: center;
+  appearance: none;
+  background-color: transparent;
+  border: 15px 0px 0px 15px;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
   touch-action: manipulation;
   will-change: transform;
 }
-.filter:hover {
-  background-color: var(--hover);
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
+.country-filter .filter-svg {
+  width: 25px;
+  height: 25px;
 }
+
 #country-filter {
-  appearance:none;
   background-color:transparent;
-  height: 46px;
+  width: 80%;
+  height:100%;
   border: 0;
-  padding: 0px 8px;
+  margin-right: 10px;
   font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 22px;
   font-weight: 600;
@@ -447,20 +455,14 @@ option {
   transform: translateY(-2px);
 }
 
-.filter-text {
-  white-space: nowrap;
-  padding-right: 0px;
-  padding-left: 15px
-}
-
 .h-line {
-  width:100%;
   height:2px;
+  margin: 0px 12px;
   background: var(--contrast);
   will-change: transform;
   transition: all 300ms;
   margin-top: 10px;
-
+  opacity: 50%;
 }
 .filter-title-text {
   text-decoration: none;
@@ -470,7 +472,6 @@ option {
   font-size: 15px;
   color: var(--contrast);
   cursor: default;
-  margin-left: 5px;
 }
 .logo-display {
   appearance: none;
@@ -561,7 +562,8 @@ option {
 .content-wrapper {
   padding: 0px 12px;
   background: var(--primary);
-  z-index: 1050;position: relative;
+  z-index: 1050;
+  position: relative;
 }
 .content-div {
   background-color: var(--main-bg);
@@ -622,16 +624,12 @@ option {
   will-change: transform;
 }
 
-
 .cafe-card:hover {
   background-color: var(--hover);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
-.filter .filter-svg {
- width: 30px;
-  height: 30px;
-}
+
 .error-image {
   height: 100%;
   width: 100%;
@@ -1209,8 +1207,9 @@ input[type="checkbox"]:focus {
 .main-footer {
   position:fixed;
   bottom:0;
+  left:0;
+  right:0;
   background-color: var(--primary);
-  padding: 0px 0px;
   background: var(--primary);
   overflow:hidden;
   z-index: 1030;
