@@ -55,8 +55,14 @@
     $.getJSON('http://ip-api.com/json/', function(data) {
       var n = JSON.stringify(data, null, 2);
       var country = JSON.parse(n).country;
+      var country_code = JSON.parse(n).countryCode;
+      sessionStorage.setItem('country', country);
+      sessionStorage.setItem('country_code', country_code);
+
       sessionStorage.setItem('shown', true);
-      sessionStorage.setItem('access', true);
+      sessionStorage.setItem('access_inForm', true);
+      sessionStorage.setItem('access_inMain', true);
+
       window.location.href = "{{ url_for("loader", country='COUNTRY') }}".replace("COUNTRY", country);
     });
   }

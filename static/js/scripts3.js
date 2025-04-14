@@ -1,14 +1,3 @@
-let countryFilter = document.getElementById('country-filter');
-let storedValue = sessionStorage.getItem('selectedCountry');
-if (storedValue) {
-  countryFilter.value = storedValue;
-}
-function countryChange(){
-    sessionStorage.setItem('selectedCountry', this.value);
-    document.getElementById('bottom-form').submit();
-};
-countryFilter.addEventListener('change', countryChange);
-
 let slider = document.getElementById("formRange")
 let value = document.querySelector(".rangeValue");
 
