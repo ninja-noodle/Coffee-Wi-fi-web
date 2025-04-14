@@ -140,6 +140,7 @@ option {
   display:block;
   padding: 17px 12px;
   max-height: 92px;
+  height: 100%;
   background: var(--primary);
   position: absolute;
   top:0;
@@ -226,13 +227,6 @@ option {
   box-shadow: none;
   transform: translateY(0);
 }
-.menu {
-  border-right: 2px solid var(--border-color);
-  border-left: 0;
-  border-top: 0;
-  border-bottom: 0;
-  background-color: transparent;
-}
 
 .homeLogo {
   display:flex;
@@ -240,7 +234,6 @@ option {
   background-color: transparent;
   border-radius:15px;
   border: 2px solid var(--border-color);
-  margin-right: 5px;
 }
 .homeText {
   appearance: none;
@@ -258,13 +251,12 @@ option {
 
 .search-input {
   background-color: transparent;
-  border: 2px solid var(--border-color);
-  border-radius: 15px 0px 0px 15px;
   font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 16px;
   font-weight: 600;
   color: var(--contrast);
-  padding: 15px 20px;
+  border: 0;
+  border-radius: 15px 0px 0px 15px;
   height: 100%;
   width: 100%;
   text-decoration: none;
@@ -291,40 +283,6 @@ option {
 }
 &:has(.search-input:focus)
   .search-input {
-}
-&:has(.search-input:focus)
-  .search-button {
-}
-&:has(.search-input:focus)
-  .search-button:hover {
-  color: var(--contrast-hover);
-  background-color: var(--contrast);
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-
-.search-button {
-  appearance: none;
-  background-color: transparent;
-  border-left: 0;
-  border-top: 2px solid var(--border-color);
-  border-right: 2px solid var(--border-color);
-  border-bottom: 2px solid var(--border-color);
-  border-bottom-right-radius: 15px;
-  border-top-right-radius: 15px;
-  box-sizing: border-box;
-  color: var(--contrast);
-  display: inline-block;
-  padding: 15px 20px;
-  min-height: 50px;
-  min-width: 0;
-  outline: none;
-  border-right: 2px solid var(--border-color);
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  will-change: transform;
 }
 
 .nav__cont {
@@ -394,7 +352,6 @@ option {
   display:flex;
   place-content: space-evenly;
   padding-right: 5px;
-  margin: 0px 5px;
   border: 2px solid var(--border-color);
   border-radius: 15px;
   background-color: var(--primary);
@@ -404,6 +361,7 @@ option {
   display:flex;
   appearance: none;
   place-items: center;
+  background:transparent;
   outline: none;
   cursor: pointer;
   border: 0;
