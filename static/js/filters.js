@@ -3,7 +3,7 @@ var price = document.getElementById('price');
 var outlets = document.getElementById('outlets');
 var toilets = document.getElementById('toilets');
 var calls = document.getElementById('calls');
-//const seats = document.getElementById('seats');
+var seats = document.getElementById('seats');
 //const clear = document.getElementById('clear');
 
 function filter() {
@@ -122,55 +122,61 @@ function clicked_calls() {
 //////////////////////////////////////////////
 ////////////////// FOR PRICE /////////////////
 function clicked_price() {
-    var old_span_id;
-    var new_span_id;
+    const price_neutral = document.querySelector("#price #price-neutral");
+    const price_lowtohigh = document.querySelector("#price #price-lowtohigh");
+    const price_hightolow = document.querySelector("#price #price-hightolow");
     const text = document.querySelector("#price .filter-text");
+    const icon = document.querySelector("#price #price-neutral .filter-svg g");
 
-    if (document.querySelector("#price #price-lowtohigh").hidden &&
-        document.querySelector("#price #price-hightolow").hidden) {
-        old_span_id = "price-neutral";
-        new_span_id = "price-lowtohigh";
-    };
-    if (document.querySelector("#price #price-neutral").hidden &&
-        document.querySelector("#price #price-hightolow").hidden) {
-        old_span_id = "price-lowtohigh";
-        new_span_id = "price-hightolow";
-    };
-    if (document.querySelector("#price #price-neutral").hidden &&
-        document.querySelector("#price #price-lowtohigh").hidden) {
-        old_span_id = "price-hightolow";
-        new_span_id = "price-neutral";
-    };
-
-    if (old_span_id == "price-neutral" && new_span_id == "price-lowtohigh") {
-        document.querySelector("#price #" + old_span_id).setAttributeNS(null,"hidden", true);
-        document.querySelector("#price #" + new_span_id).removeAttribute("hidden");
+    if (price_lowtohigh.hidden && price_hightolow.hidden) {
+        price_neutral.setAttributeNS(null,"hidden", true);
+        price_lowtohigh.removeAttribute("hidden");
         text.style.color = "var(--contrast-hover)";
         price.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
-    };
-    if (old_span_id == "price-lowtohigh" && new_span_id == "price-hightolow") {
-        document.querySelector("#price #" + old_span_id).setAttributeNS(null,"hidden", true);
-        document.querySelector("#price #" + new_span_id).removeAttribute("hidden");
+        rearrange();
+    } else if (price_neutral.hidden && price_hightolow.hidden) {
+        price_lowtohigh.setAttributeNS(null,"hidden", true);
+        price_hightolow.removeAttribute("hidden");
         text.style.color = "var(--contrast-hover)";
         price.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
+    } else {
+        if (price_neutral.hidden && price_lowtohigh.hidden) {
+            price_hightolow.setAttributeNS(null,"hidden", true);
+            price_neutral.removeAttribute("hidden");
+            icon.setAttributeNS(null,"fill", "#757575");
+            text.style.color = "#757575";
+            price.removeAttribute("style");
+        };
     };
-    if (old_span_id == "price-hightolow" && new_span_id == "price-neutral") {
-        document.querySelector("#price #" + old_span_id).setAttributeNS(null,"hidden", true);
-        document.querySelector("#price #" + new_span_id).removeAttribute("hidden");
-        const icon = document.querySelector("#price #" + new_span_id + " .filter-svg g");
-        icon.setAttributeNS(null,"fill", "#757575");
-        text.style.color = "#757575";
-        price.removeAttribute("style");
+};
+//////////////////////////////////////////////
+////////////////// FOR SEATS /////////////////
+function clicked_seats() {
+    const seats_neutral = document.querySelector("#seats #seats-neutral");
+    const seats_lowtohigh = document.querySelector("#seats #seats-lowtohigh");
+    const seats_hightolow = document.querySelector("#seats #seats-hightolow");
+    const text = document.querySelector("#seats .filter-text");
+    const icon = document.querySelector("#seats #seats-neutral .filter-svg g");
+
+    if (seats_lowtohigh.hidden && seats_hightolow.hidden) {
+        seats_neutral.setAttributeNS(null,"hidden", true);
+        seats_lowtohigh.removeAttribute("hidden");
+        text.style.color = "var(--contrast-hover)";
+        seats.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
+    } else if (seats_neutral.hidden && seats_hightolow.hidden) {
+        seats_lowtohigh.setAttributeNS(null,"hidden", true);
+        seats_hightolow.removeAttribute("hidden");
+        text.style.color = "var(--contrast-hover)";
+        seats.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
+    } else {
+        if (seats_neutral.hidden && seats_lowtohigh.hidden) {
+            seats_hightolow.setAttributeNS(null,"hidden", true);
+            seats_neutral.removeAttribute("hidden");
+            icon.setAttributeNS(null,"fill", "#757575");
+            text.style.color = "#757575";
+            seats.removeAttribute("style");
+        };
     };
-//
-//    if (price.getAttribute("style")) {
-//
-//
-//    } else {
-//        icon.setAttributeNS(null,"fill", "var(--contrast-hover)");
-//        text.style.color = "var(--contrast-hover)";
-//        price.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
-//    };
 };
 
 
@@ -179,4 +185,4 @@ price.addEventListener('click', clicked_price);
 outlets.addEventListener('click', clicked_outlets);
 toilets.addEventListener('click', clicked_toilets);
 calls.addEventListener('click', clicked_calls);
-
+seats.addEventListener('click', clicked_seats);
