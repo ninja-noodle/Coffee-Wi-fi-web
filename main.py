@@ -1,11 +1,11 @@
-import base64 # for image processing
-import werkzeug # for data and exception handling
-from decouple import config # for retrieving secrets from .env
-from flask import Flask, render_template, redirect, url_for, flash, request, session
+import base64  # for image processing
+import werkzeug  # for data and exception handling
+from decouple import config  # for retrieving secrets from .env
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 # from Google import Create_Service
-from backendfunctions import SeatsFilter, SearchAlgorithm, CafeSubmission, DataBaseHandler
+from backendfunctions import SearchAlgorithm, CafeSubmission, DataBaseHandler
 
 # ====== GOOGLE DRIVE API AUTH =======
 # CLIENT_SECRET_FILE = config('GOOGLE_API_CLIENT_SECRETS')
@@ -94,7 +94,6 @@ def loader():
 
 @app.route('/', methods=['GET', 'POST'])
 def get_all_cafes():
-
     # if initial_handler.cafe_no is None:
     #     initial_handler.data_var(db.session.execute(db.select(Cafe)).scalars().all())
 

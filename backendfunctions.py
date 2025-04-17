@@ -1,6 +1,6 @@
 import io
 from PIL import Image
-from decouple import config
+# from decouple import config
 # ========= used for img cloud storage
 # from googleapiclient.http import MediaIoBaseUpload
 from werkzeug.utils import secure_filename
@@ -42,7 +42,7 @@ class DataBaseHandler:
         for cafe in self.initial_db:
             if cafe.country not in response:
                 response.append(cafe.country)
-        return response
+        return sorted(response)
     #
     # def data_var(self, db):
     #     self.db_data = db
