@@ -133,44 +133,44 @@ def get_all_cafes():
                            )
 
 
-@app.route('/filtered/<filter>', methods=['GET', 'POST'])
-def filter_cafes(filter):
-    total_cafe_no = len(db.session.execute(db.select(Cafe)).scalars().all())
-    chunks = None
-    filter_id = None
-    seats = None
-    no_data = 0
-
-    if request.method == "POST":
-        if request.form.get('search') == 'search':
-            return redirect(url_for('search_cafes', search=request.form.get('search-data')))
-    elif filter == 'has_wifi':
-        chunks = handler.filter('has_wifi')
-        filter_id = 2
-
-    elif filter == 'has_sockets':
-        chunks = handler.filter('has_sockets')
-        filter_id = 3
-
-    elif filter == 'has_toilet':
-        chunks = handler.filter('has_toilet')
-        filter_id = 4
-
-    elif filter == 'can_take_calls':
-        chunks = handler.filter('can_take_calls')
-        filter_id = 5
-
-    elif filter == 'seats':
-        seats = int(request.args['seat_amount'])
-        if type(seats) is not int:
-            seats = int(session['seat_amount'])
-        chunks = SeatsFilter(seats, handler.db).seats_filter()
-        filter_id = 6
-
-    cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-    return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
-                           filter_id=filter_id, no_data=no_data,
-                           seats=seats, total_cafe_no=total_cafe_no)
+# @app.route('/filtered/<filter>', methods=['GET', 'POST'])
+# def filter_cafes(filter):
+#     total_cafe_no = len(db.session.execute(db.select(Cafe)).scalars().all())
+#     chunks = None
+#     filter_id = None
+#     seats = None
+#     no_data = 0
+#
+#     if request.method == "POST":
+#         if request.form.get('search') == 'search':
+#             return redirect(url_for('search_cafes', search=request.form.get('search-data')))
+#     elif filter == 'has_wifi':
+#         chunks = handler.filter('has_wifi')
+#         filter_id = 2
+#
+#     elif filter == 'has_sockets':
+#         chunks = handler.filter('has_sockets')
+#         filter_id = 3
+#
+#     elif filter == 'has_toilet':
+#         chunks = handler.filter('has_toilet')
+#         filter_id = 4
+#
+#     elif filter == 'can_take_calls':
+#         chunks = handler.filter('can_take_calls')
+#         filter_id = 5
+#
+#     elif filter == 'seats':
+#         seats = int(request.args['seat_amount'])
+#         if type(seats) is not int:
+#             seats = int(session['seat_amount'])
+#         chunks = SeatsFilter(seats, handler.db).seats_filter()
+#         filter_id = 6
+#
+#     cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+#     return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
+#                            filter_id=filter_id, no_data=no_data,
+#                            seats=seats, total_cafe_no=total_cafe_no)
 
 
 @app.route('/search/<search>', methods=['GET', 'POST'])
