@@ -263,15 +263,15 @@ option {
   cursor: text;
   font-size: 16px;
   outline: none;
-  border-right: 2px solid var(--border-color);
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
   will-change: transform;
 }
 .search {
   display:flex;
-  width: 25%;
+  place-items: center;
   border-radius: 15px;
+  border: 2px solid var(--border-color);
   transition:transform .3s ease;
   touch-action: manipulation;
   will-change: transform;
@@ -525,12 +525,23 @@ option {
 }
 .content-div {
   background-color: var(--main-bg);
-  min-height: 32.75rem;
+  height: 100%;
   width:100%;
   border-top: 2px solid var(--border-color);
   border-bottom: 2px solid var(--border-color);
   box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
 }
+
+.form-content-div {
+  background-color: var(--main-bg);
+  place-items: center;
+  height: 100%;
+  width:100%;
+  padding: 30px 0px;
+  border: 2px solid var(--border-color);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
+}
+
 .show-border {
     border-left: 2px solid var(--border-color);
     border-right: 2px solid var(--border-color);
@@ -538,8 +549,8 @@ option {
 .image {
     height: 100%;
     width: 100%;
-    border-radius: 15px;
-    border-radius: 15px;
+    border-radius: 10px;
+    border-radius: 10px;
     object-fit: cover;
 }
 .card-img {
@@ -635,33 +646,58 @@ option {
   padding: 16px 24px;
 }
 .main-form {
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-top: 10px;
-  margin-bottom: 15px;
-  padding: 10px 20px;
+  display:grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  gap: 25px;
 }
 .form-container-1 {
+  display:grid;
+  grid-template-columns: 1fr 2fr;
+  max-width: 70vw;
+  gap: 15px;
   padding: 30px 30px;
   border-radius: 15px;
   border: 2px solid var(--border-color);
   cursor: default;
   background-color: var(--primary);
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  will-change: transform;
 }
-
 .form-container-2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
   padding: 30px 30px;
   border-radius: 15px;
   border: 2px solid var(--border-color);
   cursor: default;
   background-color: var(--primary);
-  margin-left: 25px;
-  min-width: 270px;
+  width: 70vw;
 }
-
 .form-container-3 {
+  display: grid;
+  grid-template-areas:
+    "wifi outlets toilets"
+    "calls calls calls";
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 30px 30px;
+  border-radius: 15px;
+  border: 2px solid var(--border-color);
+  cursor: default;
+  background-color: var(--primary);
+  width: 70vw;
+  transition: height 0.3s;
+}
+.form-container-4 {
+  display:flex;
+  place-content: space-evenly;
+  border-radius: 15px;
+  border: 2px solid var(--border-color);
+  cursor: default;
+  background-color: var(--primary);
+  width: 70vw;
+}
+.form-container-5 {
   padding: 0px 30px;
   border-radius: 15px;
   border: 2px solid var(--border-color);
@@ -672,7 +708,35 @@ option {
   margin-top:0;
   min-width: 270px;
 }
+@media (max-width: 1130px) {
+  .form-container-1 {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .form-container-2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .form-container-3 {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    "wifi"
+    "outlets"
+    "toilets"
+    "calls";
+  }
+  .can-take-calls-wrapper {
+    grid-column-start: 0;
+    grid-column-end: 0;
+  }
+  .can-take-calls {
+    width: 100%;
+  }
+}
 .form-field {
+  display:flex;
+  place-content:start;
+  align-items:center;
   background-color: transparent;
   border: 2px solid var(--border-color);
   border-radius: 15px;
@@ -681,14 +745,12 @@ option {
   font-weight: 600;
   box-sizing: border-box;
   color: var(--contrast);
-  padding: 15px 20px;
+  padding: 15px 15px;
   min-height: 50px;
   width: 100%;
   text-decoration: none;
   cursor: text;
   outline: none;
-  margin-top:10px;
-  margin-bottom: 10px;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
   will-change: transform;
@@ -700,24 +762,32 @@ option {
   transform: translateY(-2px);
 }
 #upload-img {
-  opacity: 0;
-   position: absolute;
-   z-index: -1;
-   cursor: default;
+  position: absolute;
+  z-index: -1;
+  cursor: default;
 }
 .upload-area {
-  box-sizing: border-box;
+  display:flex;
+  place-content: center;
+  align-items: center;
   color: var(--contrast);
   height:100%;
   width: 100%;
   text-decoration: none;
-  cursor: pointer;
   outline: none;
-  justify-content: evenly;
-
+}
+.form-area {
+  display:grid;
+  gap: 10px;
+  grid-template-rows: 1fr 1fr 1.5fr;
+  color: var(--contrast);
+  text-decoration: none;
+  outline: none;
+  cursor: default;
 }
 .upload-button {
   display:flex;
+  place-content: center;
   cursor: pointer;
   background-color: transparent;
   border: 2px solid var(--border-color);
@@ -791,18 +861,35 @@ option {
 }
 
 .image-area {
+  display:flex;
+  place-content: center;
   background-color: transparent;
   border: 2px solid var(--border-color);
   border-radius: 15px;
+  height: 250px;
+  width: 300px;
   color: var(--contrast);
-  width:100%;
-  height:235px;
-  margin-bottom: 15px;
-  margin-top:10px;
   align-items: center;
-  cursor: default;
-  padding: 10px;
+  cursor: pointer;
+  padding: 5px 5px;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 }
+.image-area:hover {
+  background-color: var(--hover);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+.image-svg {
+  width: 50px;
+  height: 50px;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+&:has(.image-area:hover)
+  .image-svg {
+    width: 60px;
+    height: 60px;
+  };
+
 .hide{
   display: none;
   z-index: -1;
@@ -822,30 +909,47 @@ option {
   transform: translateY(-2px);
 }
 .slider-value {
-  width:100%;
   display:flex;
-  justify-content: space-between;
+  place-content: center;
 }
 .slider-value-title {
   color: var(--contrast);
   font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 20px;
   font-weight: 600;
+  background-color: transparent;
+  border: 0;
+  width:100%;
+  cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.double-slider {
+.slider {
   position: relative;
-  height:100%;
   width: 100%;
   background-color: transparent;
 }
-.double-slider-body {
+.slider-title {
+  color: var(--contrast);
+  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 20px;
+  font-weight: 600;
+  background-color: transparent;
+  border: 0;
+  cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.slider-body {
   position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.double-slider-input {
+.slider-input {
   position: absolute;
   width: 100%;
   background-color: var(--border-color);
@@ -855,7 +959,7 @@ option {
   opacity: 0;
   z-index:4;
 }
-.double-slider-input::-webkit-slider-thumb
+.slider-input::-webkit-slider-thumb
 {
   pointer-events:all;
   width:20px;
@@ -865,7 +969,7 @@ option {
   display:block;
   background-color: red;
 }
-.double-slider-input::-moz-range-thumb
+.slider-input::-moz-range-thumb
 {
   pointer-events:all;
   width:20px;
@@ -875,7 +979,7 @@ option {
   display:block;
   background-color: red;
 }
-.double-slider-input::-ms-thumb
+.slider-input::-ms-thumb
 {
   pointer-events:all;
   width:20px;
@@ -885,11 +989,11 @@ option {
   display:block;
   background-color: red;
 }
-.double-slider-input::-webkit-slider-runnable-track
+.slider-input::-webkit-slider-runnable-track
 {
   pointer-events: none;
 }
-.double-slider-track {
+.slider-track {
   position: relative;
   width:100%;
   height: 10px;
@@ -898,31 +1002,24 @@ option {
   background-color: var(--slider-background);
   align-items: center;
 }
-.double-slider-range {
+.slider-range {
   position: absolute;
   left: 0%;
-  right: 21%;
   top: 0;
   bottom: 0;
   background-color: var(--border-color);
   z-index: 2;
   border-radius: 10px;
 }
-.double-slider-dot{
-  position: absolute;
-  width: 20px;
-  height: 20px;
+.slider-dot{
+  position: relative;
+  left: 0%;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   background-color: var(--border-color);
   z-index: 3;
-}
-.double-slider-dot-left{
-  left: 0%;
   transform: translateX(-50%);
-}
-.double-slider-dot-right{
-  right: 21%;
-  transform: translateX(50%);
 }
 #coffee-price-form {
   background-color: transparent;
@@ -944,33 +1041,31 @@ option {
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
   will-change: transform;
-
 }
 #coffee-price-form:focus {
   background-color: var(--hover);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
-.dropdown {
+#currency {
   color: var(--border-color);
   background-color:var(--primary);
   border: 2px solid var(--border-color);
   font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 16px;
   font-weight: 600;
+  padding-left: 10px;
   border-right: 0;
   border-top: 2px solid var(--border-color);
   border-left: 2px solid var(--border-color);
   border-bottom: 2px solid var(--border-color);
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 15px;
-  cursor: pointer;
+  border-radius: 15px 0px 0px 15px;
   width:70px;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
   will-change: transform;
 }
-.dropdown:focus {
+#currency:focus {
   background-color: var(--hover);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
@@ -983,18 +1078,17 @@ option {
 }
 
 .form-control {
- font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  display:flex;
+  width: 100%;
+  gap: 10px;
+  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 16px;
   font-weight: 600;
   color: var(--contrast);
-  display: grid;
   background-color:transparent;
-  grid-template-columns: 1em auto;
-  padding: 13px 20px;
+  padding: 15px 20px;
   border: 2px solid var(--border-color);
   border-radius: 15px;
-  gap: 20px;
-  width: 100%;
   cursor: pointer;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
@@ -1033,16 +1127,12 @@ option {
 input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
-  margin: 0;
   font: inherit;
   width: 28px;
   height: 28px;
   border: 3px solid var(--border-color);
   border-radius: 8px;
   transform: translateY(-0.075em);
-
-  display: grid;
-  place-content: center;
 }
 
 input[type="checkbox"]::before {
@@ -1069,7 +1159,7 @@ input[type="checkbox"]:focus {
 .can-take-calls {
   border-radius: 15px;
   border: 2px solid var(--border-color);
-  height:3.5rem;
+  height:62px;
   overflow:hidden;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
@@ -1083,6 +1173,12 @@ input[type="checkbox"]:focus {
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
     height: 100%;
   }
+}
+.can-take-calls-wrapper {
+  place-items:center;
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 .success-msg {
   appearance: none;

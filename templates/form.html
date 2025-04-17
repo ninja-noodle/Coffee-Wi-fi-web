@@ -1,7 +1,6 @@
-{% include "side-bar.html" %}
-<main style="margin-left: 80px;">
+<main>
     <nav class="navbar main-nav-container" id="navbar">
-        <div class="container-fluid">
+        <div style="display:flex;place-content: space-around;">
             <div class="research-lab">
                 Cafe Research Lab
             </div>
@@ -19,186 +18,361 @@
             {% endif %}
         </div>
     </nav>
-    {% if success == 1 %}
-    <script>
-        var count = 10;
-        var redirect = "{{ url_for('get_all_cafes')}}";
+    <div class="content-wrapper">
+        {% if success == 1 %}
+        <script>
+            var count = 10;
+            var redirect = "{{ url_for('get_all_cafes')}}";
 
-        function countDown() {
-          var timer = document.getElementById("timer");
-          if (count > 0) {
-            count--;
-            timer.innerHTML = "Redirecting to main page in " + count + " seconds.";
-            setTimeout("countDown()", 1000);
-          } else {
-            window.location.href = redirect;
-          }
-        }
-    </script>
-    <div class='content-div show-border'>
-        <div class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;">Cafe added successfully!</div>
-        <div class="success-msg d-flex justify-content-evenly" style='font-size: 40px; font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; margin-bottom: 20px;'>Thank you for your contribution <3</div>
-        <div class="row gx-1 d-flex justify-content-evenly sortable-list">
-            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-                <div class="error-img-container d-flex">
-                    <img class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'cup.png'])) }}" alt="...">
+            function countDown() {
+              var timer = document.getElementById("timer");
+              if (count > 0) {
+                count--;
+                timer.innerHTML = "Redirecting to main page in " + count + " seconds.";
+                setTimeout("countDown()", 1000);
+              } else {
+                window.location.href = redirect;
+              }
+            }
+        </script>
+        <div class='form-content-div'>
+            <div class="success-msg d-flex justify-content-evenly"
+                 style="font-family: 'Reddit Mono', monospace;font-size: 25px;">Cafe added successfully!
+            </div>
+            <div class="success-msg d-flex justify-content-evenly"
+                 style='font-size: 40px; font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; margin-bottom: 20px;'>
+                Thank you for your contribution <3
+            </div>
+            <div class="row gx-1 d-flex justify-content-evenly sortable-list">
+                <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                    <div class="error-img-container d-flex">
+                        <img class='error-image'
+                             src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'cup.png'])) }}"
+                             alt="...">
+                    </div>
+                </div>
+                <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                    <div class="error-img-container d-flex" draggable="false">
+                        <img draggable="false" class='error-image'
+                             src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'check.png'])) }}"
+                             alt="...">
+                    </div>
+                </div>
+                <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
+                    <div class="error-img-container d-flex" draggable="false">
+                        <img draggable="false" class='error-image'
+                             src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'wifi.png'])) }}"
+                             alt="...">
+                    </div>
                 </div>
             </div>
-            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-                <div class="error-img-container d-flex" draggable="false">
-                    <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'check.png'])) }}" alt="...">
-                </div>
-            </div>
-            <div class="card cafe-card item" style="height:50vh; width: 50vh;" draggable="true">
-                <div class="error-img-container d-flex" draggable="false">
-                    <img draggable="false" class='error-image' src="{{ url_for('static', filename='/'.join(['assets', 'success-img', 'wifi.png'])) }}" alt="...">
-                </div>
+            <div id="timer" class="success-msg d-flex justify-content-evenly"
+                 style="font-family: 'Reddit Mono', monospace;font-size: 25px;margin-top: 25px;">
+                <script>
+                    countDown();
+                </script>
             </div>
         </div>
-        <div id="timer" class="success-msg d-flex justify-content-evenly" style="font-family: 'Reddit Mono', monospace;font-size: 25px;margin-top: 25px;">
-            <script>
-                countDown();
-            </script>
-        </div>
-    </div>
-    {% else %}
-    <div class='content-div show-border' style="height:100%;">
-        {% from "country_lists.html" import country_lists %}
-        <form action="{{ url_for('cafe_added')}}" method="post" enctype="multipart/form-data">
-            <div class="d-flex justify-content-evenly main-form">
-                <a class="button-wrapper" style="display:none;">
-                    <button class="button-contribute" type="submit" name="submit" value="submit" id="real-submit">Let's Submit</button>
-                </a>
-                <div class="flex-fill form-container-1" style="display: grid;grid-template-columns: 1fr 2fr;grid-gap: 20px; flex-direction: column">
-
-                    <div class="upload-area">
-                        <div class="image-area d-flex justify-content-center">
-                            <img class='image image-content' src="">
-                            <div class="no-image-content">
-                                <img src="{{ url_for('static', filename='/'.join(['assets', 'image.png'])) }}" style="width:50px; height:50px">
+        {% else %}
+        <div class='form-content-div'>
+            {% from "country_lists.html" import country_lists %}
+            <form action="{{ url_for('cafe_added')}}" method="post" enctype="multipart/form-data">
+                <div class="main-form">
+                    <a class="button-wrapper" hidden>
+                        <button class="button-contribute" type="submit" name="submit" value="submit" id="real-submit">
+                            Let's Submit
+                        </button>
+                    </a>
+                    <div>
+                        <label style="position:relative; left: 2%;opacity: 70%; color:red; font-family: 'Reddit Mono', monospace;font-size: 12px;">
+                            Required
+                        </label>
+                        <div class="form-container-1">
+                            <div class="upload-area" data-bs-toggle='tooltip' data-bs-placement="left"
+                                 title="Supported file format: png, jpeg, jpg">
+                                <div class="image-area" id="image-area">
+                                    <img class='image image-content' hidden src="">
+                                    <div class="no-image-content">
+                                        <svg class="image-svg" xmlns="http://www.w3.org/2000/svg" version="1.0"
+                                             viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
+                                               fill="#000000" stroke="none">
+                                                <path d="M2055 8510 c-113 -9 -279 -43 -367 -76 -141 -52 -160 -60 -228 -93 -233 -112 -469 -303 -630 -513 -22 -29 -44 -58 -49 -64 -48 -59 -170 -284 -192 -354 -4 -14 -17 -50 -29 -80 -48 -124 -76 -253 -90 -426 -16 -183 -8 -4884 8 -4944 7 -25 17 -70 22 -100 12 -68 32 -138 60 -210 12 -30 25 -66 29 -80 22 -70 161 -326 190 -350 3 -3 20 -25 36 -50 17 -25 93 -108 170 -185 200 -200 378 -317 625 -410 25 -9 60 -23 78 -31 18 -8 40 -14 50 -14 9 0 37 -6 62 -14 25 -8 88 -23 140 -33 90 -17 215 -18 2555 -18 2336 0 2464 1 2545 18 210 45 304 76 470 155 316 151 566 382 767 707 23 38 102 201 116 240 54 152 76 230 101 365 14 76 16 262 16 1721 0 1603 -1 1638 -20 1681 -24 55 -78 111 -133 140 -64 34 -186 31 -247 -5 -52 -30 -87 -65 -121 -122 l-24 -40 -3 -1152 c-2 -972 -5 -1153 -16 -1153 -12 0 -85 80 -299 329 -27 31 -66 74 -86 96 -20 22 -93 105 -161 184 -286 329 -394 453 -464 531 -18 19 -77 87 -131 150 -55 63 -102 117 -105 120 -6 5 -100 113 -209 240 -198 229 -298 303 -536 392 -81 30 -243 58 -340 58 -100 0 -261 -28 -345 -61 -30 -11 -64 -23 -74 -26 -29 -9 -124 -61 -186 -102 -61 -40 -175 -149 -267 -256 -33 -38 -93 -108 -134 -154 -109 -124 -234 -268 -293 -336 -29 -33 -86 -98 -127 -144 -41 -46 -108 -123 -149 -171 -185 -213 -262 -299 -273 -303 -7 -3 -54 45 -107 111 -52 63 -111 134 -130 157 -19 23 -63 76 -98 118 -159 192 -334 304 -582 374 -94 26 -377 26 -470 -1 -177 -50 -306 -114 -421 -210 -65 -53 -139 -134 -269 -292 -36 -43 -69 -84 -75 -90 -5 -6 -35 -42 -65 -79 -30 -37 -140 -169 -243 -294 -103 -124 -204 -245 -223 -268 -69 -85 -64 -240 -64 1830 0 1597 2 1887 15 1977 17 123 52 255 84 317 40 81 52 102 70 133 11 19 24 42 27 50 11 24 115 151 164 200 49 49 176 153 200 164 8 3 31 16 50 27 31 18 52 30 133 70 45 23 191 66 277 82 34 6 669 12 1670 16 l1615 6 45 27 c51 30 87 66 121 123 20 33 23 53 23 125 0 72 -3 92 -23 125 -34 56 -78 101 -125 128 l-41 22 -1595 1 c-877 0 -1631 -2 -1675 -6z m3715 -3976 c25 -10 52 -24 61 -31 8 -7 19 -13 24 -13 17 0 98 -74 167 -153 39 -45 99 -113 133 -152 117 -133 210 -239 284 -324 40 -47 76 -88 80 -91 3 -3 35 -39 71 -80 35 -41 85 -98 110 -125 25 -28 72 -81 105 -119 57 -66 119 -138 189 -216 17 -19 76 -87 131 -150 55 -63 105 -119 111 -125 5 -5 39 -44 75 -85 35 -41 102 -118 149 -171 47 -52 99 -111 116 -131 49 -58 228 -263 234 -268 46 -43 120 -142 120 -160 0 -34 -19 -147 -37 -215 -36 -142 -114 -300 -209 -425 -73 -97 -244 -256 -304 -283 -8 -4 -31 -17 -50 -28 -139 -85 -267 -128 -450 -154 -90 -13 -429 -15 -2395 -15 -2414 0 -2405 0 -2561 44 -332 93 -615 328 -774 643 -62 121 -108 279 -112 384 l-3 64 75 90 c41 49 86 103 100 121 14 17 50 62 82 100 178 217 273 334 303 369 139 169 195 237 230 280 22 28 44 55 50 61 20 23 52 61 91 110 88 111 271 330 297 355 35 35 122 91 167 108 96 37 246 35 350 -4 43 -16 180 -110 180 -123 0 -4 15 -23 33 -43 17 -20 57 -67 87 -104 153 -187 427 -515 459 -548 56 -59 118 -87 195 -87 125 0 180 43 431 335 38 44 71 82 75 85 3 3 48 55 100 115 52 61 101 117 109 126 26 27 61 67 161 184 52 61 97 112 101 115 4 3 55 62 115 131 410 476 464 533 539 571 102 52 131 58 260 53 63 -2 117 -10 145 -21z"/>
+                                                <path d="M7045 8511 c-77 -20 -146 -77 -182 -149 l-28 -57 -3 -452 -3 -453 -439 0 c-419 0 -442 -1 -491 -21 -74 -29 -102 -51 -145 -116 -38 -57 -38 -60 -38 -148 0 -80 3 -95 26 -131 38 -59 86 -103 137 -128 45 -20 61 -21 498 -24 l452 -3 3 -452 c3 -437 4 -453 24 -498 25 -51 69 -99 128 -137 36 -23 51 -26 131 -26 80 0 95 3 131 26 59 38 103 86 128 137 20 45 21 61 24 498 l3 452 452 3 c442 3 453 3 499 25 56 26 110 79 141 137 28 55 30 184 3 236 -35 66 -77 109 -134 137 l-57 28 -450 5 -450 5 -5 450 -5 450 -29 58 c-30 58 -72 99 -134 131 -37 19 -143 29 -187 17z"/>
+                                                <path d="M2445 7381 c-183 -37 -320 -96 -445 -192 -229 -175 -353 -385 -406 -683 -41 -234 33 -537 179 -736 130 -176 334 -327 522 -385 88 -27 248 -55 316 -55 79 0 252 31 334 60 33 12 69 24 80 27 11 4 42 19 68 35 26 15 50 28 53 28 12 0 152 111 197 157 108 107 210 273 252 408 25 81 55 254 55 319 0 68 -30 245 -54 321 -62 193 -208 391 -386 522 -205 151 -523 223 -765 174z m324 -576 c89 -35 162 -86 208 -147 78 -102 103 -175 103 -294 0 -206 -138 -390 -336 -448 -82 -24 -216 -19 -296 13 -117 46 -223 152 -270 270 -33 84 -37 220 -8 305 47 143 149 249 292 302 91 33 221 33 307 -1z"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="upload-img" hidden type="file" accept=".png, .jpg, .jpeg" name="img-file"
+                                       required>
+                                {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
+                                {% if errors %}
+                                <ul class=flashes style="margin:0; padding:0 0;">
+                                    {% for message in errors %}
+                                    <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="form-area">
+                                {% with errors = get_flashed_messages(category_filter=["already_exist_error"]) %}
+                                {% if errors %}
+                                <div class="alert">
+                                    {% for msg in errors %}
+                                    {{ msg }}
+                                    {% endfor -%}
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                                <input class="form-field" type="text" placeholder="Name of cafe" name="cafe-name"
+                                       required>
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <select class="form-field" id="country-dropdown" name="country"
+                                            style="padding: 0 10px; cursor:pointer;">
+                                        {{ country_lists("country_name") }}
+                                    </select>
+                                    <input id="located-city" class="form-field" type="text" placeholder="Located City"
+                                           name="location"
+                                           required>
+                                </div>
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <input class="form-field address" id="address" type="url"
+                                           placeholder="Google Maps Link"
+                                           name="map-link" required>
+                                    <label class="form-field form-control-hover" style="cursor: pointer;">
+                                        <input type="checkbox" name="full-address" id="full-address"
+                                               style="cursor:pointer;"/>
+                                        Use physical address
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <label for="upload-img" class="upload-button justify-content-evenly" data-bs-toggle='tooltip' data-bs-placement="bottom" title="Supported file format: png, jpeg, jpg">
-                            <svg style='width:30px; height:30px' xmlns="http://www.w3.org/2000/svg" version="1.0" width="900.000000pt" height="900.000000pt" viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
-                                <g class='plus-icon' transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)" fill="var(--svg-fill)" stroke="none">
-                                    <path d="M4380 8986 c0 -8 -14 -18 -32 -22 -85 -18 -215 -134 -257 -229 -41 -92 -40 -62 -41 -1960 0 -1403 -3 -1824 -12 -1833 -9 -9 -430 -12 -1832 -12 -1899 -1 -1869 0 -1961 -41 -98 -44 -204 -164 -233 -265 -15 -53 -15 -215 0 -268 29 -101 135 -221 233 -265 92 -41 62 -40 1961 -41 1402 0 1823 -3 1832 -12 9 -9 12 -430 12 -1833 1 -1898 0 -1868 41 -1960 44 -98 164 -204 265 -233 53 -15 215 -15 268 0 101 29 221 135 265 233 41 92 40 62 41 1960 0 1403 3 1824 12 1833 9 9 430 12 1832 12 1899 1 1869 0 1961 41 95 42 211 172 229 257 4 18 14 32 22 32 11 0 14 22 14 110 0 88 -3 110 -14 110 -8 0 -18 14 -22 32 -18 85 -134 215 -229 257 -92 41 -62 40 -1961 41 -1402 0 -1823 3 -1832 12 -9 9 -12 430 -12 1833 -1 1898 0 1868 -41 1960 -42 95 -172 211 -257 229 -18 4 -32 14 -32 22 0 11 -22 14 -110 14 -88 0 -110 -3 -110 -14z"/>
-                                </g>
-                            </svg>Upload Cafe Image
-                        </label>
-
-                        <input id="upload-img" type="file" accept=".png, .jpg, .jpeg" name="img-file" required>
-                        <a class="reset-button justify-content-evenly"><svg style='width:29px; height:29px'  xmlns="http://www.w3.org/2000/svg" version="1.0" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-                            <g class='reset-icon' transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="var(--svg-fill)" stroke="none">
-                                <path d="M135 2988 c-108 -39 -161 -154 -120 -256 11 -26 198 -219 613 -634 l597 -598 -597 -597 c-414 -415 -602 -609 -613 -635 -33 -80 -5 -174 68 -232 48 -38 135 -48 188 -21 19 9 303 285 632 613 l597 597 598 -597 c328 -328 612 -604 631 -613 53 -27 140 -17 188 21 73 58 101 152 68 232 -11 26 -199 220 -613 635 l-597 597 602 603 c484 485 603 609 613 641 48 150 -101 295 -248 241 -40 -15 -130 -100 -645 -614 l-597 -596 -593 592 c-325 325 -607 598 -624 607 -43 22 -111 28 -148 14z"/>
-                            </g>
-                        </svg>Clear Image
-                        </a>
-                        {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
-                        {% if errors %}
-                        <ul class=flashes style="margin:0; padding:0 0;">
-                            {% for message in errors %}
-                            <li>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        {% endwith %}
                     </div>
-                    <div class="upload-area" style="cursor: default;">
-                        {% with errors = get_flashed_messages(category_filter=["already_exist_error"]) %}
-                        {% if errors %}
-                        <div class="alert" style="margin:0; padding:0 0;">
-                            {% for msg in errors %}
-                            {{ msg }}
-                            {% endfor -%}
-                        </div>
-                        {% endif %}
-                        {% endwith %}
-                        <input class="form-field" type="text" placeholder="Name of cafe" name="cafe-name" required>
-                        <div class="d-flex">
-                            <select class="form-field" id="country-dropdown" name="country" style="padding: 0 1rem; cursor:pointer; margin-right: 0.5rem;">
-                                {{ country_lists("country_name") }}
-                            </select>
-                            <input class="form-field" type="text" placeholder="Located City" name="location" required>
-                        </div>
-                        <div class="d-flex">
-                            <input class="form-field address" id="address" type="url" placeholder="Google Maps Link" name="map-link" required>
-                            <label class="form-field form-control-hover" style="max-width: 4.5rem; margin-left: 0.5rem; cursor: pointer;"  data-bs-toggle='tooltip' data-bs-placement="top" title="Check to enter cafe's address">
-                                <input type="checkbox" name="full-address" id="full-address" style="cursor:pointer;"/>
-                            </label>
-                        </div>
-                        <div style="display: flex; box-sizing: border-box; min-height: 50px; width: 100%; outline: none; margin-top:10px; margin-bottom:10px;">
-                            <div class="d-flex" style="margin-right:10px">
-                                <select name="currency" id="currency" class="dropdown">
-                                    <option value="£">£</option>
-                                    <option value="$">$</option>
-                                    <option value="MMK">MMK</option>
-                                </select>
-                                <input id="coffee-price-form" type="search" placeholder="Coffee price" name="coffee-price" required onfocus="placeholder='00.00'" onfocusout="placeholder='Coffee-price'">
+                    <div>
+                        <label style="position:relative; left: 2%;opacity: 70%; color:red; font-family: 'Reddit Mono', monospace;font-size: 12px;">
+                            Required
+                        </label>
+                        <div class="form-container-2">
+                            <div style="display:grid;grid-template-columns:0fr 1fr;">
+                                <input id="currency" name="currency" placeholder="cur." required
+                                data-bs-toggle='tooltip' data-bs-placement="left" title="Currency symbol or name">
+                                <input id="coffee-price-form" placeholder="Coffee price"
+                                       name="coffee-price" required onfocus="placeholder='00.00'"
+                                       onfocusout="placeholder='Coffee price'">
                             </div>
                             <div class="range-container">
-                                <div class="slider-value" style="margin-bottom: 5px;">
-                                    <input name="min-seats" id="title-min" class="slider-value-title" readonly  value="0 <" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
-                                    <span style="color:  #808080;" class="slider-value-title">
+                                <div class="slider-value">
+                                    <span style="color:  #808080;" class="slider-title">
                                         Seats
                                     </span>
-                                    <input name="max-seats" id="title-max" class="slider-value-title" readonly  value="< 40" style="background-color: transparent;border: 0; width: 50px; cursor: default;">
+                                    <input name="seats" id="title" class="slider-value-title" readonly value="~0">
                                 </div>
-                                <div class="double-slider">
-                                    <div class="double-slider-body">
-                                        <div class="double-slider-track">
-                                            <div id='slider-range' class="double-slider-range"></div>
-                                            <div id="dot-left" class="double-slider-dot double-slider-dot-left"></div>
-                                            <div id="dot-right" class="double-slider-dot double-slider-dot-right"></div>
+                                <div class="slider">
+                                    <div class="slider-body">
+                                        <div class="slider-track">
+                                            <div id='slider-range' class="slider-range"></div>
+                                            <div id="dot" class="slider-dot"></div>
                                         </div>
-                                        <input id='input-left' type="range" min="0" max="50" value="0" class="double-slider-input">
-                                        <input id='input-right' type="range" min="0" max="50" value="40" class="double-slider-input">
+                                        <input id='input' type="range" min="0" max="51" value="0"
+                                               class="slider-input">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex-fill form-container-2">
-                    <div style="padding: 10px 0">
-                        <label class="form-control form-control-hover" style="margin-bottom: 20px;">
-                            <input type="checkbox" name="has-wifi" style="cursor:pointer;"/>
-                            Has Wi-Fi
+                    <div>
+                        <label style="position:relative; left: 2%;opacity: 70%; color:red; font-family: 'Reddit Mono', monospace;font-size: 12px;">
+                            Required
                         </label>
-                        <label class="form-control form-control-hover" style="margin-bottom: 20px;">
-                            <input type="checkbox" name="has-sockets" style="cursor:pointer;"/>
-                            Has Sockets
-                        </label>
-                        <label class="form-control form-control-hover" style="margin-bottom: 20px;">
-                            <input type="checkbox" name="has-toilet" style="cursor:pointer;"/>
-                            Has toilet
-                        </label>
-                        <div class="form-control-hover can-take-calls">
-                            <label class="form-control" style="border-top:0px; border-left:0px; border-right:0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
-                                <input class="call-checkbox" type="checkbox" name="can-take-calls" style="cursor:pointer;"/>
-                                Can take calls
-                            </label>
-                            <div class="d-flex" style="background-color: transparent">
-                                <select name="country-call-code" class="phone-codes-dropdown" id="phone-codes-dropdown" style="border: 0px; border-top-left-radius: 0px;">
-                                    {{ country_lists("country_ph_no") }}
-                                </select>
-                                <input class="form-field" style="background-color:transparent; transform: none; box-shadow: none; margin:0px; border: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; padding: 15px 0px;" type="tel" placeholder="Call No." name="map-link" >
+                        <div class="form-container-3">
+                            <div class="form-control form-control-hover" style="grid-area: wifi">
+                                <input type="checkbox" name="has-wifi" style="cursor:pointer;"/>
+                                Has Wi-Fi
+                            </div>
+                            <div class="form-control form-control-hover" style="grid-area: outlets">
+                                <input type="checkbox" name="has-sockets" style="cursor:pointer;"/>
+                                Has Sockets
+                            </div>
+                            <div class="form-control form-control-hover" style="grid-area: toilets">
+                                <input type="checkbox" name="has-toilet" style="cursor:pointer;"/>
+                                Has toilet
+                            </div>
+                            <div class="can-take-calls-wrapper" style="grid-area: calls">
+                                <div class="form-control-hover can-take-calls">
+                                    <label class="form-control"
+                                           style="border-top:0px; border-left:0px; border-right:0px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;">
+                                        <input class="call-checkbox" type="checkbox" name="can-take-calls"
+                                               style="cursor:pointer;"/>
+                                        Can take calls
+                                    </label>
+                                    <div class="d-flex" style="background-color: transparent">
+                                        <select name="country-call-code" class="phone-codes-dropdown"
+                                                id="phone-codes-dropdown"
+                                                style="border: 0px; border-top-left-radius: 0px;">
+                                            {{ country_lists("country_ph_no") }}
+                                        </select>
+                                        <input class="form-field"
+                                               style="background-color:transparent; transform: none; box-shadow: none; margin:0px; border: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; padding: 15px 0px;"
+                                               type="tel" placeholder="Call No." name="map-link">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="d-flex form-container-3">
-                <label class="form-field" style="display:grid;  grid-template-columns: 1em auto;  gap: 20px; border: 0; cursor: default;">
-                    <input type="checkbox" name="anonymous" id="anonymous"/>
-                    Be a mysterious contributor
-                </label>
-                <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: var(--contrast);">
+                    <div>
+                        <label style="position:relative; left: 2%;opacity: 70%; color:#000000; font-family: 'Reddit Mono', monospace;font-size: 12px;">
+                            Optional
+                        </label>
+                        <div class="form-container-4">
+                            <div class="upload-area" data-bs-toggle='tooltip' data-bs-placement="left"
+                                 title="Supported file format: png, jpeg, jpg">
+                                <div class="image-area" id="optional-image-area">
+                                    <img class='image image-content' hidden src="">
+                                    <div class="no-image-content">
+                                        <svg class="image-svg" xmlns="http://www.w3.org/2000/svg" version="1.0"
+                                             viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
+                                               fill="#000000" stroke="none">
+                                                <path d="M2055 8510 c-113 -9 -279 -43 -367 -76 -141 -52 -160 -60 -228 -93 -233 -112 -469 -303 -630 -513 -22 -29 -44 -58 -49 -64 -48 -59 -170 -284 -192 -354 -4 -14 -17 -50 -29 -80 -48 -124 -76 -253 -90 -426 -16 -183 -8 -4884 8 -4944 7 -25 17 -70 22 -100 12 -68 32 -138 60 -210 12 -30 25 -66 29 -80 22 -70 161 -326 190 -350 3 -3 20 -25 36 -50 17 -25 93 -108 170 -185 200 -200 378 -317 625 -410 25 -9 60 -23 78 -31 18 -8 40 -14 50 -14 9 0 37 -6 62 -14 25 -8 88 -23 140 -33 90 -17 215 -18 2555 -18 2336 0 2464 1 2545 18 210 45 304 76 470 155 316 151 566 382 767 707 23 38 102 201 116 240 54 152 76 230 101 365 14 76 16 262 16 1721 0 1603 -1 1638 -20 1681 -24 55 -78 111 -133 140 -64 34 -186 31 -247 -5 -52 -30 -87 -65 -121 -122 l-24 -40 -3 -1152 c-2 -972 -5 -1153 -16 -1153 -12 0 -85 80 -299 329 -27 31 -66 74 -86 96 -20 22 -93 105 -161 184 -286 329 -394 453 -464 531 -18 19 -77 87 -131 150 -55 63 -102 117 -105 120 -6 5 -100 113 -209 240 -198 229 -298 303 -536 392 -81 30 -243 58 -340 58 -100 0 -261 -28 -345 -61 -30 -11 -64 -23 -74 -26 -29 -9 -124 -61 -186 -102 -61 -40 -175 -149 -267 -256 -33 -38 -93 -108 -134 -154 -109 -124 -234 -268 -293 -336 -29 -33 -86 -98 -127 -144 -41 -46 -108 -123 -149 -171 -185 -213 -262 -299 -273 -303 -7 -3 -54 45 -107 111 -52 63 -111 134 -130 157 -19 23 -63 76 -98 118 -159 192 -334 304 -582 374 -94 26 -377 26 -470 -1 -177 -50 -306 -114 -421 -210 -65 -53 -139 -134 -269 -292 -36 -43 -69 -84 -75 -90 -5 -6 -35 -42 -65 -79 -30 -37 -140 -169 -243 -294 -103 -124 -204 -245 -223 -268 -69 -85 -64 -240 -64 1830 0 1597 2 1887 15 1977 17 123 52 255 84 317 40 81 52 102 70 133 11 19 24 42 27 50 11 24 115 151 164 200 49 49 176 153 200 164 8 3 31 16 50 27 31 18 52 30 133 70 45 23 191 66 277 82 34 6 669 12 1670 16 l1615 6 45 27 c51 30 87 66 121 123 20 33 23 53 23 125 0 72 -3 92 -23 125 -34 56 -78 101 -125 128 l-41 22 -1595 1 c-877 0 -1631 -2 -1675 -6z m3715 -3976 c25 -10 52 -24 61 -31 8 -7 19 -13 24 -13 17 0 98 -74 167 -153 39 -45 99 -113 133 -152 117 -133 210 -239 284 -324 40 -47 76 -88 80 -91 3 -3 35 -39 71 -80 35 -41 85 -98 110 -125 25 -28 72 -81 105 -119 57 -66 119 -138 189 -216 17 -19 76 -87 131 -150 55 -63 105 -119 111 -125 5 -5 39 -44 75 -85 35 -41 102 -118 149 -171 47 -52 99 -111 116 -131 49 -58 228 -263 234 -268 46 -43 120 -142 120 -160 0 -34 -19 -147 -37 -215 -36 -142 -114 -300 -209 -425 -73 -97 -244 -256 -304 -283 -8 -4 -31 -17 -50 -28 -139 -85 -267 -128 -450 -154 -90 -13 -429 -15 -2395 -15 -2414 0 -2405 0 -2561 44 -332 93 -615 328 -774 643 -62 121 -108 279 -112 384 l-3 64 75 90 c41 49 86 103 100 121 14 17 50 62 82 100 178 217 273 334 303 369 139 169 195 237 230 280 22 28 44 55 50 61 20 23 52 61 91 110 88 111 271 330 297 355 35 35 122 91 167 108 96 37 246 35 350 -4 43 -16 180 -110 180 -123 0 -4 15 -23 33 -43 17 -20 57 -67 87 -104 153 -187 427 -515 459 -548 56 -59 118 -87 195 -87 125 0 180 43 431 335 38 44 71 82 75 85 3 3 48 55 100 115 52 61 101 117 109 126 26 27 61 67 161 184 52 61 97 112 101 115 4 3 55 62 115 131 410 476 464 533 539 571 102 52 131 58 260 53 63 -2 117 -10 145 -21z"/>
+                                                <path d="M7045 8511 c-77 -20 -146 -77 -182 -149 l-28 -57 -3 -452 -3 -453 -439 0 c-419 0 -442 -1 -491 -21 -74 -29 -102 -51 -145 -116 -38 -57 -38 -60 -38 -148 0 -80 3 -95 26 -131 38 -59 86 -103 137 -128 45 -20 61 -21 498 -24 l452 -3 3 -452 c3 -437 4 -453 24 -498 25 -51 69 -99 128 -137 36 -23 51 -26 131 -26 80 0 95 3 131 26 59 38 103 86 128 137 20 45 21 61 24 498 l3 452 452 3 c442 3 453 3 499 25 56 26 110 79 141 137 28 55 30 184 3 236 -35 66 -77 109 -134 137 l-57 28 -450 5 -450 5 -5 450 -5 450 -29 58 c-30 58 -72 99 -134 131 -37 19 -143 29 -187 17z"/>
+                                                <path d="M2445 7381 c-183 -37 -320 -96 -445 -192 -229 -175 -353 -385 -406 -683 -41 -234 33 -537 179 -736 130 -176 334 -327 522 -385 88 -27 248 -55 316 -55 79 0 252 31 334 60 33 12 69 24 80 27 11 4 42 19 68 35 26 15 50 28 53 28 12 0 152 111 197 157 108 107 210 273 252 408 25 81 55 254 55 319 0 68 -30 245 -54 321 -62 193 -208 391 -386 522 -205 151 -523 223 -765 174z m324 -576 c89 -35 162 -86 208 -147 78 -102 103 -175 103 -294 0 -206 -138 -390 -336 -448 -82 -24 -216 -19 -296 13 -117 46 -223 152 -270 270 -33 84 -37 220 -8 305 47 143 149 249 292 302 91 33 221 33 307 -1z"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="optional-upload-img" hidden type="file" accept=".png, .jpg, .jpeg" name="img-file"
+                                       required>
+                                <a class="reset-button justify-content-evenly" hidden>
+                                    <svg style='width:29px; height:29px' xmlns="http://www.w3.org/2000/svg"
+                                         version="1.0"
+                                         width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000"
+                                         preserveAspectRatio="xMidYMid meet">
+                                        <g class='reset-icon'
+                                           transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)"
+                                           fill="var(--svg-fill)" stroke="none">
+                                            <path d="M135 2988 c-108 -39 -161 -154 -120 -256 11 -26 198 -219 613 -634 l597 -598 -597 -597 c-414 -415 -602 -609 -613 -635 -33 -80 -5 -174 68 -232 48 -38 135 -48 188 -21 19 9 303 285 632 613 l597 597 598 -597 c328 -328 612 -604 631 -613 53 -27 140 -17 188 21 73 58 101 152 68 232 -11 26 -199 220 -613 635 l-597 597 602 603 c484 485 603 609 613 641 48 150 -101 295 -248 241 -40 -15 -130 -100 -645 -614 l-597 -596 -593 592 c-325 325 -607 598 -624 607 -43 22 -111 28 -148 14z"/>
+                                        </g>
+                                    </svg>
+                                    Clear Image
+                                </a>
+                                {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
+                                {% if errors %}
+                                <ul class=flashes style="margin:0; padding:0 0;">
+                                    {% for message in errors %}
+                                    <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="upload-area" data-bs-toggle='tooltip' data-bs-placement="left"
+                                 title="Supported file format: png, jpeg, jpg">
+                                <div class="image-area" id="optional-image-area">
+                                    <img class='image image-content' hidden src="">
+                                    <div class="no-image-content">
+                                        <svg class="image-svg" xmlns="http://www.w3.org/2000/svg" version="1.0"
+                                             viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
+                                               fill="#000000" stroke="none">
+                                                <path d="M2055 8510 c-113 -9 -279 -43 -367 -76 -141 -52 -160 -60 -228 -93 -233 -112 -469 -303 -630 -513 -22 -29 -44 -58 -49 -64 -48 -59 -170 -284 -192 -354 -4 -14 -17 -50 -29 -80 -48 -124 -76 -253 -90 -426 -16 -183 -8 -4884 8 -4944 7 -25 17 -70 22 -100 12 -68 32 -138 60 -210 12 -30 25 -66 29 -80 22 -70 161 -326 190 -350 3 -3 20 -25 36 -50 17 -25 93 -108 170 -185 200 -200 378 -317 625 -410 25 -9 60 -23 78 -31 18 -8 40 -14 50 -14 9 0 37 -6 62 -14 25 -8 88 -23 140 -33 90 -17 215 -18 2555 -18 2336 0 2464 1 2545 18 210 45 304 76 470 155 316 151 566 382 767 707 23 38 102 201 116 240 54 152 76 230 101 365 14 76 16 262 16 1721 0 1603 -1 1638 -20 1681 -24 55 -78 111 -133 140 -64 34 -186 31 -247 -5 -52 -30 -87 -65 -121 -122 l-24 -40 -3 -1152 c-2 -972 -5 -1153 -16 -1153 -12 0 -85 80 -299 329 -27 31 -66 74 -86 96 -20 22 -93 105 -161 184 -286 329 -394 453 -464 531 -18 19 -77 87 -131 150 -55 63 -102 117 -105 120 -6 5 -100 113 -209 240 -198 229 -298 303 -536 392 -81 30 -243 58 -340 58 -100 0 -261 -28 -345 -61 -30 -11 -64 -23 -74 -26 -29 -9 -124 -61 -186 -102 -61 -40 -175 -149 -267 -256 -33 -38 -93 -108 -134 -154 -109 -124 -234 -268 -293 -336 -29 -33 -86 -98 -127 -144 -41 -46 -108 -123 -149 -171 -185 -213 -262 -299 -273 -303 -7 -3 -54 45 -107 111 -52 63 -111 134 -130 157 -19 23 -63 76 -98 118 -159 192 -334 304 -582 374 -94 26 -377 26 -470 -1 -177 -50 -306 -114 -421 -210 -65 -53 -139 -134 -269 -292 -36 -43 -69 -84 -75 -90 -5 -6 -35 -42 -65 -79 -30 -37 -140 -169 -243 -294 -103 -124 -204 -245 -223 -268 -69 -85 -64 -240 -64 1830 0 1597 2 1887 15 1977 17 123 52 255 84 317 40 81 52 102 70 133 11 19 24 42 27 50 11 24 115 151 164 200 49 49 176 153 200 164 8 3 31 16 50 27 31 18 52 30 133 70 45 23 191 66 277 82 34 6 669 12 1670 16 l1615 6 45 27 c51 30 87 66 121 123 20 33 23 53 23 125 0 72 -3 92 -23 125 -34 56 -78 101 -125 128 l-41 22 -1595 1 c-877 0 -1631 -2 -1675 -6z m3715 -3976 c25 -10 52 -24 61 -31 8 -7 19 -13 24 -13 17 0 98 -74 167 -153 39 -45 99 -113 133 -152 117 -133 210 -239 284 -324 40 -47 76 -88 80 -91 3 -3 35 -39 71 -80 35 -41 85 -98 110 -125 25 -28 72 -81 105 -119 57 -66 119 -138 189 -216 17 -19 76 -87 131 -150 55 -63 105 -119 111 -125 5 -5 39 -44 75 -85 35 -41 102 -118 149 -171 47 -52 99 -111 116 -131 49 -58 228 -263 234 -268 46 -43 120 -142 120 -160 0 -34 -19 -147 -37 -215 -36 -142 -114 -300 -209 -425 -73 -97 -244 -256 -304 -283 -8 -4 -31 -17 -50 -28 -139 -85 -267 -128 -450 -154 -90 -13 -429 -15 -2395 -15 -2414 0 -2405 0 -2561 44 -332 93 -615 328 -774 643 -62 121 -108 279 -112 384 l-3 64 75 90 c41 49 86 103 100 121 14 17 50 62 82 100 178 217 273 334 303 369 139 169 195 237 230 280 22 28 44 55 50 61 20 23 52 61 91 110 88 111 271 330 297 355 35 35 122 91 167 108 96 37 246 35 350 -4 43 -16 180 -110 180 -123 0 -4 15 -23 33 -43 17 -20 57 -67 87 -104 153 -187 427 -515 459 -548 56 -59 118 -87 195 -87 125 0 180 43 431 335 38 44 71 82 75 85 3 3 48 55 100 115 52 61 101 117 109 126 26 27 61 67 161 184 52 61 97 112 101 115 4 3 55 62 115 131 410 476 464 533 539 571 102 52 131 58 260 53 63 -2 117 -10 145 -21z"/>
+                                                <path d="M7045 8511 c-77 -20 -146 -77 -182 -149 l-28 -57 -3 -452 -3 -453 -439 0 c-419 0 -442 -1 -491 -21 -74 -29 -102 -51 -145 -116 -38 -57 -38 -60 -38 -148 0 -80 3 -95 26 -131 38 -59 86 -103 137 -128 45 -20 61 -21 498 -24 l452 -3 3 -452 c3 -437 4 -453 24 -498 25 -51 69 -99 128 -137 36 -23 51 -26 131 -26 80 0 95 3 131 26 59 38 103 86 128 137 20 45 21 61 24 498 l3 452 452 3 c442 3 453 3 499 25 56 26 110 79 141 137 28 55 30 184 3 236 -35 66 -77 109 -134 137 l-57 28 -450 5 -450 5 -5 450 -5 450 -29 58 c-30 58 -72 99 -134 131 -37 19 -143 29 -187 17z"/>
+                                                <path d="M2445 7381 c-183 -37 -320 -96 -445 -192 -229 -175 -353 -385 -406 -683 -41 -234 33 -537 179 -736 130 -176 334 -327 522 -385 88 -27 248 -55 316 -55 79 0 252 31 334 60 33 12 69 24 80 27 11 4 42 19 68 35 26 15 50 28 53 28 12 0 152 111 197 157 108 107 210 273 252 408 25 81 55 254 55 319 0 68 -30 245 -54 321 -62 193 -208 391 -386 522 -205 151 -523 223 -765 174z m324 -576 c89 -35 162 -86 208 -147 78 -102 103 -175 103 -294 0 -206 -138 -390 -336 -448 -82 -24 -216 -19 -296 13 -117 46 -223 152 -270 270 -33 84 -37 220 -8 305 47 143 149 249 292 302 91 33 221 33 307 -1z"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="optional-upload-img" hidden type="file" accept=".png, .jpg, .jpeg" name="img-file"
+                                       required>
+                                <a class="reset-button justify-content-evenly" hidden>
+                                    <svg style='width:29px; height:29px' xmlns="http://www.w3.org/2000/svg"
+                                         version="1.0"
+                                         width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000"
+                                         preserveAspectRatio="xMidYMid meet">
+                                        <g class='reset-icon'
+                                           transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)"
+                                           fill="var(--svg-fill)" stroke="none">
+                                            <path d="M135 2988 c-108 -39 -161 -154 -120 -256 11 -26 198 -219 613 -634 l597 -598 -597 -597 c-414 -415 -602 -609 -613 -635 -33 -80 -5 -174 68 -232 48 -38 135 -48 188 -21 19 9 303 285 632 613 l597 597 598 -597 c328 -328 612 -604 631 -613 53 -27 140 -17 188 21 73 58 101 152 68 232 -11 26 -199 220 -613 635 l-597 597 602 603 c484 485 603 609 613 641 48 150 -101 295 -248 241 -40 -15 -130 -100 -645 -614 l-597 -596 -593 592 c-325 325 -607 598 -624 607 -43 22 -111 28 -148 14z"/>
+                                        </g>
+                                    </svg>
+                                    Clear Image
+                                </a>
+                                {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
+                                {% if errors %}
+                                <ul class=flashes style="margin:0; padding:0 0;">
+                                    {% for message in errors %}
+                                    <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="upload-area" data-bs-toggle='tooltip' data-bs-placement="left"
+                                 title="Supported file format: png, jpeg, jpg">
+                                <div class="image-area" id="optional-image-area">
+                                    <img class='image image-content' hidden src="">
+                                    <div class="no-image-content">
+                                        <svg class="image-svg" xmlns="http://www.w3.org/2000/svg" version="1.0"
+                                             viewBox="0 0 900.000000 900.000000" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
+                                               fill="#000000" stroke="none">
+                                                <path d="M2055 8510 c-113 -9 -279 -43 -367 -76 -141 -52 -160 -60 -228 -93 -233 -112 -469 -303 -630 -513 -22 -29 -44 -58 -49 -64 -48 -59 -170 -284 -192 -354 -4 -14 -17 -50 -29 -80 -48 -124 -76 -253 -90 -426 -16 -183 -8 -4884 8 -4944 7 -25 17 -70 22 -100 12 -68 32 -138 60 -210 12 -30 25 -66 29 -80 22 -70 161 -326 190 -350 3 -3 20 -25 36 -50 17 -25 93 -108 170 -185 200 -200 378 -317 625 -410 25 -9 60 -23 78 -31 18 -8 40 -14 50 -14 9 0 37 -6 62 -14 25 -8 88 -23 140 -33 90 -17 215 -18 2555 -18 2336 0 2464 1 2545 18 210 45 304 76 470 155 316 151 566 382 767 707 23 38 102 201 116 240 54 152 76 230 101 365 14 76 16 262 16 1721 0 1603 -1 1638 -20 1681 -24 55 -78 111 -133 140 -64 34 -186 31 -247 -5 -52 -30 -87 -65 -121 -122 l-24 -40 -3 -1152 c-2 -972 -5 -1153 -16 -1153 -12 0 -85 80 -299 329 -27 31 -66 74 -86 96 -20 22 -93 105 -161 184 -286 329 -394 453 -464 531 -18 19 -77 87 -131 150 -55 63 -102 117 -105 120 -6 5 -100 113 -209 240 -198 229 -298 303 -536 392 -81 30 -243 58 -340 58 -100 0 -261 -28 -345 -61 -30 -11 -64 -23 -74 -26 -29 -9 -124 -61 -186 -102 -61 -40 -175 -149 -267 -256 -33 -38 -93 -108 -134 -154 -109 -124 -234 -268 -293 -336 -29 -33 -86 -98 -127 -144 -41 -46 -108 -123 -149 -171 -185 -213 -262 -299 -273 -303 -7 -3 -54 45 -107 111 -52 63 -111 134 -130 157 -19 23 -63 76 -98 118 -159 192 -334 304 -582 374 -94 26 -377 26 -470 -1 -177 -50 -306 -114 -421 -210 -65 -53 -139 -134 -269 -292 -36 -43 -69 -84 -75 -90 -5 -6 -35 -42 -65 -79 -30 -37 -140 -169 -243 -294 -103 -124 -204 -245 -223 -268 -69 -85 -64 -240 -64 1830 0 1597 2 1887 15 1977 17 123 52 255 84 317 40 81 52 102 70 133 11 19 24 42 27 50 11 24 115 151 164 200 49 49 176 153 200 164 8 3 31 16 50 27 31 18 52 30 133 70 45 23 191 66 277 82 34 6 669 12 1670 16 l1615 6 45 27 c51 30 87 66 121 123 20 33 23 53 23 125 0 72 -3 92 -23 125 -34 56 -78 101 -125 128 l-41 22 -1595 1 c-877 0 -1631 -2 -1675 -6z m3715 -3976 c25 -10 52 -24 61 -31 8 -7 19 -13 24 -13 17 0 98 -74 167 -153 39 -45 99 -113 133 -152 117 -133 210 -239 284 -324 40 -47 76 -88 80 -91 3 -3 35 -39 71 -80 35 -41 85 -98 110 -125 25 -28 72 -81 105 -119 57 -66 119 -138 189 -216 17 -19 76 -87 131 -150 55 -63 105 -119 111 -125 5 -5 39 -44 75 -85 35 -41 102 -118 149 -171 47 -52 99 -111 116 -131 49 -58 228 -263 234 -268 46 -43 120 -142 120 -160 0 -34 -19 -147 -37 -215 -36 -142 -114 -300 -209 -425 -73 -97 -244 -256 -304 -283 -8 -4 -31 -17 -50 -28 -139 -85 -267 -128 -450 -154 -90 -13 -429 -15 -2395 -15 -2414 0 -2405 0 -2561 44 -332 93 -615 328 -774 643 -62 121 -108 279 -112 384 l-3 64 75 90 c41 49 86 103 100 121 14 17 50 62 82 100 178 217 273 334 303 369 139 169 195 237 230 280 22 28 44 55 50 61 20 23 52 61 91 110 88 111 271 330 297 355 35 35 122 91 167 108 96 37 246 35 350 -4 43 -16 180 -110 180 -123 0 -4 15 -23 33 -43 17 -20 57 -67 87 -104 153 -187 427 -515 459 -548 56 -59 118 -87 195 -87 125 0 180 43 431 335 38 44 71 82 75 85 3 3 48 55 100 115 52 61 101 117 109 126 26 27 61 67 161 184 52 61 97 112 101 115 4 3 55 62 115 131 410 476 464 533 539 571 102 52 131 58 260 53 63 -2 117 -10 145 -21z"/>
+                                                <path d="M7045 8511 c-77 -20 -146 -77 -182 -149 l-28 -57 -3 -452 -3 -453 -439 0 c-419 0 -442 -1 -491 -21 -74 -29 -102 -51 -145 -116 -38 -57 -38 -60 -38 -148 0 -80 3 -95 26 -131 38 -59 86 -103 137 -128 45 -20 61 -21 498 -24 l452 -3 3 -452 c3 -437 4 -453 24 -498 25 -51 69 -99 128 -137 36 -23 51 -26 131 -26 80 0 95 3 131 26 59 38 103 86 128 137 20 45 21 61 24 498 l3 452 452 3 c442 3 453 3 499 25 56 26 110 79 141 137 28 55 30 184 3 236 -35 66 -77 109 -134 137 l-57 28 -450 5 -450 5 -5 450 -5 450 -29 58 c-30 58 -72 99 -134 131 -37 19 -143 29 -187 17z"/>
+                                                <path d="M2445 7381 c-183 -37 -320 -96 -445 -192 -229 -175 -353 -385 -406 -683 -41 -234 33 -537 179 -736 130 -176 334 -327 522 -385 88 -27 248 -55 316 -55 79 0 252 31 334 60 33 12 69 24 80 27 11 4 42 19 68 35 26 15 50 28 53 28 12 0 152 111 197 157 108 107 210 273 252 408 25 81 55 254 55 319 0 68 -30 245 -54 321 -62 193 -208 391 -386 522 -205 151 -523 223 -765 174z m324 -576 c89 -35 162 -86 208 -147 78 -102 103 -175 103 -294 0 -206 -138 -390 -336 -448 -82 -24 -216 -19 -296 13 -117 46 -223 152 -270 270 -33 84 -37 220 -8 305 47 143 149 249 292 302 91 33 221 33 307 -1z"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <input id="optional-upload-img" hidden type="file" accept=".png, .jpg, .jpeg" name="img-file"
+                                       required>
+                                <a class="reset-button justify-content-evenly" hidden>
+                                    <svg style='width:29px; height:29px' xmlns="http://www.w3.org/2000/svg"
+                                         version="1.0"
+                                         width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000"
+                                         preserveAspectRatio="xMidYMid meet">
+                                        <g class='reset-icon'
+                                           transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)"
+                                           fill="var(--svg-fill)" stroke="none">
+                                            <path d="M135 2988 c-108 -39 -161 -154 -120 -256 11 -26 198 -219 613 -634 l597 -598 -597 -597 c-414 -415 -602 -609 -613 -635 -33 -80 -5 -174 68 -232 48 -38 135 -48 188 -21 19 9 303 285 632 613 l597 597 598 -597 c328 -328 612 -604 631 -613 53 -27 140 -17 188 21 73 58 101 152 68 232 -11 26 -199 220 -613 635 l-597 597 602 603 c484 485 603 609 613 641 48 150 -101 295 -248 241 -40 -15 -130 -100 -645 -614 l-597 -596 -593 592 c-325 325 -607 598 -624 607 -43 22 -111 28 -148 14z"/>
+                                        </g>
+                                    </svg>
+                                    Clear Image
+                                </a>
+                                {% with errors = get_flashed_messages(category_filter=["file_type_error"]) %}
+                                {% if errors %}
+                                <ul class=flashes style="margin:0; padding:0 0;">
+                                    {% for message in errors %}
+                                    <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="opacity: 70%; color:red; font-family: 'Reddit Mono', monospace;font-size: 12px;">
+                            *Required*
+                        </label>
+                        <div class="form-container-5">
+                            <label class="form-field"
+                                   style="display:grid;  grid-template-columns: 1em auto;  gap: 20px; border: 0; cursor: default;">
+                                <input type="checkbox" name="anonymous" id="anonymous"/>
+                                Be a mysterious contributor
+                            </label>
+                            <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: var(--contrast);">
                 OR
             </span>
-                <input id="contributor-name" class="form-field" style="margin-right: 20px" type="text" placeholder="Your name" name="contributor-name" required>
-                <input id="contributor-email" class="form-field" type="email" placeholder="Your email" name="contributor-email" required>
-            </div>
-        </form>
+                            <input id="contributor-name" class="form-field" style="margin-right: 20px" type="text"
+                                   placeholder="Your name" name="contributor-name" required>
+                            <input id="contributor-email" class="form-field" type="email" placeholder="Your email"
+                                   name="contributor-email" required>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     {% endif %}
 </main>

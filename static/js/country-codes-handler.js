@@ -2,28 +2,33 @@ var countryFilter = document.getElementById('country-filter');
 var storedValue = sessionStorage.getItem('selectedCountry');
 
 function auto_select_inForm() {
-var country = sessionStorage.getItem('country');
-var country_code = sessionStorage.getItem('country_code');
-if (countryFilter == null) {
-//     ^^^checks if the country filter exists on the page
-    var call_num_list = document.getElementById('phone-codes-dropdown');
-    var country_list = document.getElementById('country-dropdown');
-    var j;
-    for (j = 0; j < call_num_list.length; j++) {
-        let u = call_num_list.options[j]
-        if (u.getAttribute('id') == country) {
-            u.innerText = u.getAttribute('data-display');
-            u.setAttribute('selected', true);
+    var country = sessionStorage.getItem('country');
+    var country_code = sessionStorage.getItem('country_code');
+    var currency = sessionStorage.getItem('currency');
+    var city = sessionStorage.getItem('city');
+    if (countryFilter == null) {
+    //     ^^^ checks if the country filter exists on the page
+        var call_num_list = document.getElementById('phone-codes-dropdown');
+        var country_list = document.getElementById('country-dropdown');
+
+        var j;
+        for (j = 0; j < call_num_list.length; j++) {
+            let u = call_num_list.options[j]
+            if (u.getAttribute('id') == country) {
+                u.innerText = u.getAttribute('data-display');
+                u.setAttribute('selected', true);
+            };
+        };
+        document.getElementById('located-city').value = city;
+        document.getElementById('currency').value = currency;
+        var k;
+        for (k = 0; k < country_list.length; k++) {
+            let u = country_list.options[k]
+            if (u.getAttribute('data-display') == country_code) {
+                u.setAttribute('selected', true);
+            };
         };
     };
-    var k;
-    for (k = 0; k < country_list.length; k++) {
-        let u = country_list.options[k]
-        if (u.getAttribute('data-display') == country_code) {
-            u.setAttribute('selected', true);
-        };
-    };
-};
 };
 
 function auto_select_inMain() {

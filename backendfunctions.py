@@ -133,8 +133,8 @@ def boolean_to_binary(var):
         return 0
 
 
-def seat_data_format(_seat_min, _seat_max):
-    return f"{eval(_seat_min.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}-{eval(_seat_max.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}"
+# def seat_data_format(_seat_min, _seat_max):
+#     return f"{eval(_seat_min.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}-{eval(_seat_max.replace('{', '').replace('}', '').replace('<', '').replace(' ', ''))}"
 
 # ====================== Used for cloud storage of cafe images with GOOGLE DRIVE API =========================#
 # #===================== but changed it to storing images in the database as a blob ==========================#
@@ -197,7 +197,7 @@ class CafeSubmission:
     def __init__(self):
         self.allowed_file_type = ['image/jpg', 'image/jpeg', 'image/png']
 
-    def add_cafe_data(self, img, img_size, name, country, location, map_url, currency, price, seats_min, seats_max,
+    def add_cafe_data(self, img, img_size, name, country, location, map_url, currency, price, seats,
                       wifi, sockets, toilet,
                       calls, mysterious, contributor_name, contributor_email, db, cafe):
         filename = secure_filename(img.filename)
@@ -230,7 +230,7 @@ class CafeSubmission:
                 has_toilet=has_toilets,
                 has_wifi=has_wifi,
                 can_take_calls=can_take_calls,
-                seats=seat_data_format(seats_min, seats_max),
+                seats=seats.replace("~", ""),
                 coffee_price=f'{currency}{price}',
                 contributor_name=new_contributor,
                 contributor_email=new_contributor_email,

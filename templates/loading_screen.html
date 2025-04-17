@@ -52,12 +52,16 @@
 
     permission.setAttribute("style", "display:none;");
 
-    $.getJSON('http://ip-api.com/json/', function(data) {
+    $.getJSON('http://ip-api.com/json/?fields=country,countryCode,city,currency', function(data) {
       var n = JSON.stringify(data, null, 2);
       var country = JSON.parse(n).country;
       var country_code = JSON.parse(n).countryCode;
+      var currency = JSON.parse(n).currency;
+      var city = JSON.parse(n).city;
       sessionStorage.setItem('country', country);
       sessionStorage.setItem('country_code', country_code);
+      sessionStorage.setItem('currency', currency);
+      sessionStorage.setItem('city', city);
 
       sessionStorage.setItem('shown', true);
       sessionStorage.setItem('access_inForm', true);
