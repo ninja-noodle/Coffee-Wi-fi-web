@@ -1,7 +1,7 @@
-<div class='content-div show-border'>
-    <div style="display:flex; flex-wrap: wrap; place-content: space-evenly; padding: 40px 0px">
+<div class='content-div'>
+    <div style="display:flex; flex-wrap: wrap; place-content: space-evenly; padding: 40px 30px; gap: 30px;">
         {% for cafe in all_cafes %}
-        <div class="card cafe-card" onclick="location.href='{{ url_for('show_cafe', cafe_name=cafe.name, cafe_id=cafe.id) }}';">
+        <div class="cafe-card" onclick="location.href='{{ url_for('show_cafe', cafe_name=cafe.name, cafe_id=cafe.id) }}';">
             <div class="card-img">
                 <img crossorigin="anonymous" class='image' src="data:;base64,{{cafe_images[all_cafes.index(cafe)]}}">
             </div>
@@ -30,8 +30,8 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="h-line" style="margin:0"></div>
-            <div class="card-body container" id="lower-body">
+            <div class="h-line"></div>
+            <div class="card-body" id="lower-body">
                 <div class="row">
                     <div class="col" id="price" style="display: flex;place-content:space-evenly;border-right: 2px solid var(--border-color);">
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="25px"
@@ -58,7 +58,6 @@
                         </svg>
                         <span>~{{ cafe.seats }}</span>
                     </div>
-
                     <div class="col" id="properties">
                         {% if cafe.has_wifi == 1 %}
                         <svg id="has_wifi" xmlns="http://www.w3.org/2000/svg" version="1.0" width="25px"
