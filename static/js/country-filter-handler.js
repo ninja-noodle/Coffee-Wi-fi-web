@@ -40,7 +40,6 @@ function auto_select_inMain() {
             u.setAttribute('selected', true);
         };
     };
-    sessionStorage.removeItem("access_inMain");
 };
 
 if (sessionStorage.getItem('access_inForm')) auto_select_inForm();
@@ -49,9 +48,28 @@ if (sessionStorage.getItem('access_inMain')) auto_select_inMain();
 if (storedValue) {
   countryFilter.value = storedValue;
 }
+///// TO SHOW COUNTRY NAME IN CAFE CARD IF "SHOW ALL" IS SELECTED IN COUNTRY FILER ////
+countryTags = document.getElementsByClassName('cafe-country');
+breakers = document.getElementsByClassName('breaker')
+if (countryFilter.options[countryFilter.selectedIndex].innerHTML == "All cafes") {
+  for (let tag of countryTags) {
+    tag.removeAttribute("hidden");
+  };
+  for (let br of breakers) {
+    br.removeAttribute("hidden");
+  };
+} else {
+  for (let tag of countryTags) {
+    tag.setAttributeNS(null, "hidden", true);
+  };
+  for (let br of breakers) {
+    br.setAttributeNS(null, "hidden", true);
+  };
+};
+//////////////////////////////////////////////////////////////////////////
 function countryChange(){
     sessionStorage.setItem('selectedCountry', this.value);
-    document.getElementById('bottom-form').submit();
+    document.getElementById('country-filter-form').submit();
 };
 countryFilter.addEventListener('change', countryChange);
 

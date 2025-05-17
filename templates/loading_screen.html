@@ -1,82 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <title>Coffee &amp; Wifi</title>
+    {% block styles %}
+    <!-- Load Bootstrap-Flask CSS here -->
+        {{ bootstrap.load_css() }}
+    <link
+            href="{{ url_for('static', filename='assets/light-mode-logo.png') }}"
+            rel="icon"
+            type="image/x-icon"
+            media="(prefers-color-scheme: light)"
+    />
+    <link
+            href="{{ url_for('static', filename='assets/dark-mode-logo.png') }}"
+            rel="icon"
+            type="image/x-icon"
+            media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link
+      href="{{ url_for('static', filename='css/styles.css') }}"
+      rel="stylesheet"
+    />
+    {% endblock %}
+</head>
 <body style="background: var(--primary);">
 <div class="terminal-loader d-flex flex-column">
-  <div class="terminal-header">
-    <div class="terminal-title">Coffee & Wifi.exe</div>
-    <div class="terminal-controls">
-      <div class="control close"></div>
-      <div class="control minimize"></div>
-      <div class="control maximize"></div>
+    <div class="terminal-header">
+        <div class="terminal-title">Coffee & Wifi.exe</div>
+        <div class="terminal-controls">
+            <div class="control close"></div>
+            <div class="control minimize"></div>
+            <div class="control maximize"></div>
+        </div>
     </div>
-  </div>
-  <span id="status-text" style="margin-top: 1em">Status:</span>
-  <div class="text" id="text">Loading...</div>
-  <div class="permission" id="permission" style="display:none;">
-    Allow location access for personalized data?
+    <span id="status-text" style="margin-top: 1em">Status:</span>
+    <div class="text" id="text">Loading...</div>
+    <div class="permission" id="permission" style="display:none;">
+        Allow location access for personalized data?
 
-  </div>
-  <button id="btnConfirmed" onclick="access()" style="display:none;">Yes</button>
-  <button id="btnDenied" onclick="no_access()" style="display:none;">No</button>
+    </div>
+    <button id="btnConfirmed" onclick="access()" style="display:none;">Yes</button>
+    <button id="btnDenied" onclick="no_access()" style="display:none;">No</button>
 </div>
 <script>
+    var redirect = "{{ url_for('get_all_cafes')}}";
 
-  var redirect = "{{ url_for('get_all_cafes')}}";
+    function permission() {
+        var loading_text = document.getElementById("text");
+        var status_text = document.getElementById("status-text");
+        var permission = document.getElementById("permission");
+        var confirmed = document.getElementById("btnConfirmed");
+        var denied = document.getElementById("btnDenied");
+        loading_text.setAttribute("style", "display:none;");
+        status_text.setAttribute("style", "display:none;");
+        permission.removeAttribute("style");
+        permission.setAttribute("style", "margin-top: 1em");
+        confirmed.removeAttribute("style");
+        confirmed.setAttribute("style", "margin-top: 1em");
+        denied.removeAttribute("style");
+        denied.setAttribute("style", "margin-top: 1em");
+    }
 
-  function permission() {
-    var loading_text = document.getElementById("text");
-    var status_text = document.getElementById("status-text");
-    var permission = document.getElementById("permission");
-    var confirmed = document.getElementById("btnConfirmed");
-    var denied = document.getElementById("btnDenied");
-    loading_text.setAttribute("style", "display:none;");
-    status_text.setAttribute("style", "display:none;");
-    permission.removeAttribute("style");
-    permission.setAttribute("style", "margin-top: 1em");
-    confirmed.removeAttribute("style");
-    confirmed.setAttribute("style", "margin-top: 1em");
-    denied.removeAttribute("style");
-    denied.setAttribute("style", "margin-top: 1em");
-  }
+    function initialize() {
+        setTimeout(permission, 1500);
+    }
 
-  function initialize() {
-    setTimeout(permission, 1500);
-  }
+    function access() {
 
-  function access() {
+        var loading_text = document.getElementById("text");
+        var status_text = document.getElementById("status-text");
+        var permission = document.getElementById("permission");
 
-    var loading_text = document.getElementById("text");
-    var status_text = document.getElementById("status-text");
-    var permission = document.getElementById("permission");
+        loading_text.removeAttribute("style", "display:none;");
+        status_text.removeAttribute("style", "display:none;");
 
-    loading_text.removeAttribute("style", "display:none;");
-    status_text.removeAttribute("style", "display:none;");
+        permission.setAttribute("style", "display:none;");
 
-    permission.setAttribute("style", "display:none;");
+        $.getJSON('http://ip-api.com/json/?fields=country,countryCode,city,currency', function(data) {
+          var n = JSON.stringify(data, null, 2);
+          var country = JSON.parse(n).country;
+          var country_code = JSON.parse(n).countryCode;
+          var currency = JSON.parse(n).currency;
+          var city = JSON.parse(n).city;
+          sessionStorage.setItem('country', country);
+          sessionStorage.setItem('country_code', country_code);
+          sessionStorage.setItem('currency', currency);
+          sessionStorage.setItem('city', city);
 
-    $.getJSON('http://ip-api.com/json/?fields=country,countryCode,city,currency', function(data) {
-      var n = JSON.stringify(data, null, 2);
-      var country = JSON.parse(n).country;
-      var country_code = JSON.parse(n).countryCode;
-      var currency = JSON.parse(n).currency;
-      var city = JSON.parse(n).city;
-      sessionStorage.setItem('country', country);
-      sessionStorage.setItem('country_code', country_code);
-      sessionStorage.setItem('currency', currency);
-      sessionStorage.setItem('city', city);
+          sessionStorage.setItem('shown', true);
+          sessionStorage.setItem('access_inForm', true);
+          sessionStorage.setItem('access_inMain', true);
 
-      sessionStorage.setItem('shown', true);
-      sessionStorage.setItem('access_inForm', true);
-      sessionStorage.setItem('access_inMain', true);
+          window.location.href = '{{ url_for("loader", country="COUNTRY") }}'.replace("COUNTRY", country);
+        });
+    }
 
-      window.location.href = "{{ url_for("loader", country='COUNTRY') }}".replace("COUNTRY", country);
-    });
-  }
+    function no_access() {
+        sessionStorage.setItem('shown', true);
+        window.location.href = '{{ url_for("loader", country="NA") }}';
+    }
 
-  function no_access() {
-    sessionStorage.setItem('shown', true);
-    window.location.href = "{{ url_for("loader", country='NA') }}";
-  }
 
+    initialize();
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>initialize();</script>
 </body>

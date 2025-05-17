@@ -67,22 +67,26 @@ def check_if_exists(cafe_name):
 
 handler = DataBaseHandler()
 
+hide_loader_script = 0
+
 
 @app.route('/loading', methods=['GET', 'POST'])
 def loader():
+    global hide_loader_script
     # j = db.session.execute(db.select(Cafe)).scalars().all()
     #
     # initial_handler.cafe_no = len(j)
     # initial_handler.country_code = request.args['country']
     # initial_handler.code_to_name()
     try:
-        print(request.args['load'])
         if request.args['load']:
-            return render_template("base.html", loading=1)
+            hide_loader_script += 1
+            print(f"Show loader: {request.args['load']}")
+            return render_template("loading_screen.html")
 
     except werkzeug.exceptions.BadRequestKeyError:
         country = request.args['country']
-        print(country)
+        print(f"Selected country: {country}")
         if country == 'NA' or country == 'all':
             handler.db = db.session.execute(db.select(Cafe)).scalars().all()
         else:
@@ -94,11 +98,8 @@ def loader():
 
 @app.route('/', methods=['GET', 'POST'])
 def get_all_cafes():
-    # if initial_handler.cafe_no is None:
-    #     initial_handler.data_var(db.session.execute(db.select(Cafe)).scalars().all())
-
-    # total_cafe_no = initial_handler.cafe_no
-
+    global hide_loader_script
+    hide_loader = False
     total_cafe_no = len(db.session.execute(db.select(Cafe)).scalars().all())
 
     if request.method == "POST":
@@ -110,70 +111,20 @@ def get_all_cafes():
                 return redirect(url_for('get_all_cafes'))
             elif request.form.get('search') == 'search':
                 return redirect(url_for('search_cafes', search=request.form.get('search-data')))
-            elif request.form.get('filter') == 'filter-wifi':
-                return redirect(url_for('filter_cafes', filter='has_wifi'))
-            elif request.form.get('filter') == 'filter-sockets':
-                return redirect(url_for('filter_cafes', filter='has_sockets'))
-            elif request.form.get('filter') == 'filter-toilet':
-                return redirect(url_for('filter_cafes', filter='has_toilet'))
-            elif request.form.get('filter') == 'filter-phone':
-                return redirect(url_for('filter_cafes', filter='can_take_calls'))
-            elif request.form.get('filter') == 'filter-seats':
-                return redirect(url_for('filter_cafes', filter='seats', seat_amount=request.form.get('seatAmount')))
-
-    # chunks = db.session.execute(db.select(Cafe).where(Cafe.country == initial_handler.country)).scalars().all()
-    print(handler.country_list_generator())
-    chunks = handler.db
-    cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-
-    return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
-                           filter_id=0, no_data=0,
-                           total_cafe_no=total_cafe_no,
-                           country_select=handler.country_list_generator(),
-                           )
+    else:
+        if hide_loader_script > 0:
+            hide_loader = True
+            hide_loader_script -= 1
+        print(f"Available countries: {handler.country_list_generator()}")
+        chunks = handler.db[::-1]
+        cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
+        return render_template("main.html", all_cafes=chunks, cafe_images=cafe_images,
+                               total_cafe_no=total_cafe_no, country_select=handler.country_list_generator(),
+                               hide_loader=hide_loader,
+                               )
 
 
-# @app.route('/filtered/<filter>', methods=['GET', 'POST'])
-# def filter_cafes(filter):
-#     total_cafe_no = len(db.session.execute(db.select(Cafe)).scalars().all())
-#     chunks = None
-#     filter_id = None
-#     seats = None
-#     no_data = 0
-#
-#     if request.method == "POST":
-#         if request.form.get('search') == 'search':
-#             return redirect(url_for('search_cafes', search=request.form.get('search-data')))
-#     elif filter == 'has_wifi':
-#         chunks = handler.filter('has_wifi')
-#         filter_id = 2
-#
-#     elif filter == 'has_sockets':
-#         chunks = handler.filter('has_sockets')
-#         filter_id = 3
-#
-#     elif filter == 'has_toilet':
-#         chunks = handler.filter('has_toilet')
-#         filter_id = 4
-#
-#     elif filter == 'can_take_calls':
-#         chunks = handler.filter('can_take_calls')
-#         filter_id = 5
-#
-#     elif filter == 'seats':
-#         seats = int(request.args['seat_amount'])
-#         if type(seats) is not int:
-#             seats = int(session['seat_amount'])
-#         chunks = SeatsFilter(seats, handler.db).seats_filter()
-#         filter_id = 6
-#
-#     cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
-#     return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
-#                            filter_id=filter_id, no_data=no_data,
-#                            seats=seats, total_cafe_no=total_cafe_no)
-
-
-@app.route('/search/<search>', methods=['GET', 'POST'])
+@app.route('/<search>', methods=['GET', 'POST'])
 def search_cafes(search):
     total_cafe_no = len(db.session.execute(db.select(Cafe)).scalars().all())
     if request.method == "POST":
@@ -183,18 +134,18 @@ def search_cafes(search):
     chunks = SearchAlgorithm(search_data=search, base_data=data).search()
     cafe_images = [base64.b64encode(cafe.img).decode('ascii') for cafe in chunks]
     if len(chunks) > 0:
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
+        return render_template("main.html", all_cafes=chunks, cafe_images=cafe_images,
                                filter_id='search', no_data=0,
                                total_cafe_no=total_cafe_no, searchvalue=search)
     elif len(chunks) == 0:
-        return render_template("base.html", all_cafes=chunks, cafe_images=cafe_images,
+        return render_template("main.html", all_cafes=chunks, cafe_images=cafe_images,
                                filter_id='search', no_data=1,
                                total_cafe_no=total_cafe_no, searchvalue=search)
 
 
-@app.route('/contribution/add-cafe', methods=['GET', 'POST'])
+@app.route('/add-cafe', methods=['GET', 'POST'])
 def add_cafe():
-    return render_template('base.html', form_id=1)
+    return render_template('form.html', form_id=1)
 
 
 @app.route('/contribution/success', methods=['GET', 'POST'])

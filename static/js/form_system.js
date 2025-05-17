@@ -53,7 +53,7 @@ function setValue() {
 };
 inputSlider.addEventListener('input', setValue);
 
-var uploadClick_area = document.getElementById("image-area");
+var uploadClick_area = document.getElementById("primary-image-area");
 const img = document.querySelector(".image-content");
 const fake = document.querySelector(".no-image-content");
 const upload = document.querySelector(".upload-button");

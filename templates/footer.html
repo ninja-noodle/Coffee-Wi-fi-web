@@ -1,0 +1,31 @@
+<footer>
+    <div class="footer-placeholder"></div>
+    <section class="main-footer">
+        <div class="container-fluid" style="height:100%; width:100%;box-sizing: border-box;">
+            <div class="row" style="background-color:var(--primary); width:100%;">
+                <div class="footer-main-text" id="footer-main-text"> COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp;
+                    COFFEE
+                    &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE
+                    &amp;
+                    WIFI &amp; COFFEE &amp; WIFI
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="">
+                    <span><i class="bi bi-shop"></i> {{ total_cafe_no }} cafes on site</span>
+                </div>
+                <div class="">
+                    © <span id="footer-copyright"></span> Coffee & Wifi by <a class="footer-anchor"
+                                                                              href="https://github.com/ninja-noodle"
+                                                                              target="_blank">C Tu <i
+                        class="bi bi-github"></i></a>
+                </div>
+                <div class="">
+                    <a class="footer-anchor" href="https://github.com/ninja-noodle/Coffee-Wi-fi-web" target="_blank">Source
+                        code <i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename='js/footer-scripts.js') }}" defer></script>
+</footer>

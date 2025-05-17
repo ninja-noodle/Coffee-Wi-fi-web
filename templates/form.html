@@ -1,24 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <title>Cafe Form | Coffee &amp; Wifi</title>
+    {% block styles %}
+    <!-- Load Bootstrap-Flask CSS here -->
+        {{ bootstrap.load_css() }}
+    <link
+            href="{{ url_for('static', filename='assets/light-mode-logo.png') }}"
+            rel="icon"
+            type="image/x-icon"
+            media="(prefers-color-scheme: light)"
+    />
+    <link
+            href="{{ url_for('static', filename='assets/dark-mode-logo.png') }}"
+            rel="icon"
+            type="image/x-icon"
+            media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+
+    <!-- Core theme CSS -->
+    <link
+      href="{{ url_for('static', filename='css/styles.css') }}"
+      rel="stylesheet"
+    />
+    {% endblock %}
+</head>
+<body>
 <main>
-    <nav class="main-nav-container" id="navbar">
-        <div style="display:flex;place-content: space-around;">
-            <div class="research-lab">
-                Cafe Research Lab
-            </div>
-            {% if success == 1 %}
-            <a class="button-wrapper" href="{{ url_for('add_cafe')}}" style="cursor: default;">
-                <button class="button-contribute" type="submit" name="contribute" value="contribute" disabled>Submitted!</button>
-            </a>
-            {% else %}
-            <div class="research-lab">
-                Welcome Cafe-thusiast
-            </div>
-            <a id="fake-submit" class="button-wrapper">
-                <button class="button-contribute" name="submit" value="submit" onclick="document.getElementById('real-submit').click();textContent='Submitting...'">Let's Submit</button>
-            </a>
-            {% endif %}
-        </div>
-    </nav>
-    <div class="content-wrapper">
+    <div id="contentWrapper">
         {% if success == 1 %}
         <script>
             var count = 10;
@@ -157,7 +172,8 @@
                         <div class="form-container-2">
                             <div style="display:grid;grid-template-columns:0fr 1fr;">
                                 <input id="currency" name="currency" placeholder="cur." required
-                                data-bs-toggle='tooltip' data-bs-placement="left" title="Currency symbol or name">
+                                       data-bs-toggle='tooltip' data-bs-placement="left"
+                                       title="Currency symbol or name">
                                 <input id="coffee-price-form" placeholder="Coffee price"
                                        name="coffee-price" required onfocus="placeholder='00.00'"
                                        onfocusout="placeholder='Coffee price'">
@@ -239,9 +255,7 @@
                                 <input type="checkbox" name="anonymous" id="anonymous"/>
                                 Be a mysterious contributor
                             </label>
-                            <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: var(--contrast);">
-                OR
-            </span>
+                            <span style="margin: auto; padding: 0 40px; font-family: 'Reddit Mono', monospace;font-size: 20px;color: var(--contrast);">OR</span>
                             <input id="contributor-name" class="form-field" style="margin-right: 20px" type="text"
                                    placeholder="Your name" name="contributor-name" required>
                             <input id="contributor-email" class="form-field" type="email" placeholder="Your email"
@@ -253,4 +267,6 @@
         </div>
     </div>
     {% endif %}
+    {% include "footer.html" %}
 </main>
+</body>
