@@ -23,8 +23,8 @@ html {
   scroll-behavior: smooth;
 }
 
-main {
-  padding-top: 92px;
+body {
+  margin: 0 0;
 }
 
 [type="search"]::-webkit-search-cancel-button,
@@ -129,18 +129,10 @@ option {
     blinkCursor 0.5s step-end infinite alternate;
   margin-top: .5em;
 }
-
-.nav-container{
-  padding: 16px 0px;
-  background: var(--primary);
-  position: relative;
-}
-
-.main-nav-container{
-  display:block;
-  padding: 17px 12px;
-  max-height: 92px;
-  height: 100%;
+.main-nav-container {
+  display:grid;
+  grid-template-rows: 1fr 0fr;
+  padding: 12px;
   background: var(--primary);
   position: absolute;
   top:0;
@@ -149,31 +141,38 @@ option {
   overflow:hidden;
   z-index: 1060;
 }
+.top {
+  display:grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 20px;
+}
+.nav-input {
+  display: flex;
+  place-content: center;
+  gap: 5px;
+}
 .main-nav-container-shadow {
   box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
 }
 
-@media (min-width: 992px) {
-  #navbar {
-    transition: background-color 0.2s;
-    /* Force Hardware Acceleration in WebKit */
-    transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  #navbar.is-fixed {
-    /* when the user scrolls down, we hide the header right above the viewport */
-    position: fixed;
-    top: -92px;
-    transition: transform 0.2s;
-    background-color: var(--primary);
-    opacity:98%;
-  }
-  #navbar.is-visible {
-    /* if the user changes the scrolling direction, show the header */
-    transform: translate3d(0, 100%, 0);
-  }
+#navbar {
+  transition: background-color 0.2s;
+  /* Force Hardware Acceleration in WebKit */
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
+#navbar.is-fixed {
+/* when the user scrolls down, we hide the header right above the viewport */
+  position: fixed;
+  transition: transform 0.2s;
+  background-color: var(--primary);
+}
+#navbar.is-visible {
+/* if the user changes the scrolling direction, show the header */
+  transform: translate3d(0, 100%, 0);
+}
+
 .filter-text {
   appearance: none;
   background-color: transparent;
@@ -182,50 +181,56 @@ option {
   color: #757575;
   text-decoration: none;
   margin-left: 5px;
+  white-space: wrap;
 }
 
 .button-contribute {
   appearance: none;
+  display: flex;
+  justify-items: start;
+  flex-wrap: wrap;
+  place-content:center;
   background-color: transparent;
   border: 2px solid var(--border-color);
   border-radius: 15px;
-  box-sizing: border-box;
   color: var(--contrast);
   cursor: pointer;
-  display: inline-block;
   font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 16px;
   font-weight: 600;
-  line-height: normal;
-  margin: 0;
   height: 100%;
-  min-width: 0;
-  outline: none;
-  padding: 16px 24px;
-  text-align: center;
-  text-decoration: none;
+  width: 100%;
+  min-width: 68px;
+  padding: 0px 15px;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  width: 100%;
   will-change: transform;
+}
+.contribute-text {
+  width: 120px;
+}
+.contribute-logo {
+  width: 60px;
+}
+#contribute-svg {
+  width:25px;
+  height: 25px;
 }
 
 .button-contribute:disabled {
   pointer-events: none;
 }
-
 .button-contribute:hover {
   color: var(--contrast-hover);
   background-color: var(--contrast);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
-
-.button-contribute:active {
-  box-shadow: none;
-  transform: translateY(0);
+&:has(.button-contribute:hover)
+  .contribute-svg-g {
+    fill: var(--contrast-hover);
 }
 
 .homeLogo {
@@ -258,7 +263,7 @@ option {
   border: 0;
   border-radius: 15px 0px 0px 15px;
   height: 100%;
-  width: 100%;
+  width: 200px;
   text-decoration: none;
   cursor: text;
   font-size: 16px;
@@ -338,8 +343,16 @@ option {
 
 .filters {
   display:flex;
+  background-color: transparent;
+  width:100%;
+  place-content:space-evenly;
+  gap: 5px;
+  padding: 5px 5px;
+}
+.filters-wrapper {
+  display: flex;
+  width: fit-content;
   place-content: space-evenly;
-  padding-right: 5px;
   border: 2px solid var(--border-color);
   border-radius: 15px;
   background-color: var(--primary);
@@ -348,14 +361,16 @@ option {
 .filter {
   display:flex;
   appearance: none;
-  place-items: center;
+  place-content: center;
+  align-items:center;
+  width: 100%;
   background:transparent;
   outline: none;
   cursor: pointer;
   border: 0;
   border-radius: 12px;
 }
-.filter .filter-svg {
+.filter-svg {
   width: 25px;
   height: 25px;
 }
@@ -365,9 +380,8 @@ option {
   place-items: center;
   appearance: none;
   background-color: transparent;
-  border: 15px 0px 0px 15px;
+  border-radius: 15px 0px 0px 15px;
   box-sizing: border-box;
-  outline: none;
   cursor: pointer;
   width: 100%;
   height: 100%;
@@ -380,21 +394,24 @@ option {
 }
 
 #country-filter {
+  background-position: center;
   background-color:transparent;
-  width: 80%;
-  height:100%;
   border: 0;
-  margin-right: 10px;
+  width: 100%;
+  min-width: 120px;
+  height:100%;
   font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--contrast);
-  text-decoration: none;
   cursor: pointer;
 }
 #country-filter option {
   font-size: 15px;
+  color: var(--contrast);
+  background: var(--main-bg);
 }
+
 .pattern-div:hover {
   background-color: var(--hover);
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
@@ -402,12 +419,12 @@ option {
 }
 
 .h-line {
+  position: relative;
   height:2px;
   width: 100%;
   background-color: var(--contrast);
   will-change: transform;
   transition: all 300ms;
-  margin-top: 10px;
 }
 .filter-title-text {
   text-decoration: none;
@@ -504,8 +521,11 @@ option {
   margin-top: 5px;
   margin-bottom: 3px;
 }
-.content-wrapper {
-  padding: 0px 12px;
+#contentWrapper {
+  min-height: 85vh;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 82px;
   background: var(--primary);
   z-index: 1050;
   position: relative;
@@ -513,10 +533,18 @@ option {
 .content-div {
   background-color: var(--main-bg);
   height: 100%;
+  min-height: 85vh;
   width:100%;
   border: 2px solid var(--border-color);
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
+}
+.cafes-group {
+  display:flex;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  place-content: space-evenly;
+  margin: 20px 0 20px 0;
 }
 
 .form-content-div {
@@ -526,7 +554,6 @@ option {
   width:100%;
   padding: 30px 0px;
   border: 2px solid var(--border-color);
-  border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
 }
 
@@ -537,27 +564,39 @@ option {
     object-fit: cover;
 }
 .card-img {
-    width: 100%;
-    height: 270px;
-    border-radius: 15px;
-    padding: 10px 10px;
+  width: 286px;
+  height: 216px;
+  border-radius: 15px;
+}
+.cafe-info {
+
 }
 .cafe-title {
+  display:block;
+  width: 286px;
   font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 25px;
   font-weight: 600;
   display: block;
   white-space: nowrap;
   overflow: hidden;
-  position: relative;
   text-overflow: ellipsis;
-  z-index:0;
   cursor: pointer;
 }
+
 .cafe-location {
   font-family: "Reddit Mono", monospace;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--contrast);
+}
+.cafe-country {
+  width: max-content;
+  font-family: "Reddit Mono", monospace;
+  font-size: 18px;
+  color: var(--primary);
+  background: var(--contrast);
+  border-radius: 5px;
+  padding: 0px 5px;
 }
 .grid-container {
     display: grid;
@@ -565,8 +604,8 @@ option {
     grid-gap: 20px;
 }
 .cafe-card {
-  margin-bottom: 30px;
-  width: 23rem;
+  gap: 10px;
+  padding: 5px 5px;
   border-radius: 15px;
   border: 2px solid var(--border-color);
   color: var(--contrast);
@@ -574,6 +613,53 @@ option {
   background-color: var(--primary);
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   will-change: transform;
+}
+.card-hr {
+  margin: 5px;
+}
+.upper {
+}
+.middle {
+  display:flex;
+  flex-wrap: wrap;
+  place-content: space-evenly;
+}
+.middle #price-display {
+  display:flex;
+  gap: 5px;
+  font-family: "Reddit Mono", monospace;
+  font-size: 18px;
+}
+.middle #seats-display {
+  display:flex;
+  gap: 5px;
+  font-family: "Reddit Mono", monospace;
+  font-size: 18px;
+}
+.lower .properties {
+  display:flex;
+  place-content: space-evenly;
+}
+.lower .properties .property-tag {
+  display:flex;
+  place-content: center;
+  background-color: #CDB797;
+  width:100%;
+  border-radius: 10px;
+  padding: 2px 2px;
+  margin: 0 2px 0 2px;
+}
+@media (max-width: 1305px) {
+
+}
+@media (max-width: 1215px) {
+
+}
+@media (max-width: 1125px) {
+
+}
+@media (max-width: 1035px) {
+
 }
 
 .cafe-card:hover {
