@@ -1,10 +1,63 @@
+////////////////COUNTRY FILTER AUTO-SELECT////////////////////////
+var countryFilter = document.getElementById('country-filter');
+var storedValue = sessionStorage.getItem('selectedCountry');
+
+function auto_select_inMain() {
+    var i;
+    var country = sessionStorage.getItem('country');
+    for (i = 0; i < countryFilter.length; i++) {
+        let u = countryFilter.options[i]
+        if (u.getAttribute('data-display') == country) {
+            u.setAttribute('selected', true);
+        };
+    };
+};
+
+if (sessionStorage.getItem('access_inMain')) auto_select_inMain();
+
+////////////////COUNTRY FILTER CHOOSING THE SELECTED COUNTRY (SELECTION)////////////////////////
+if (storedValue) {
+  countryFilter.value = storedValue;
+}
+
+//////////////////COUNTRY FILTER CHOOSING THE SELECTED COUNTRY (ADDING VARIABLE AND RELOAD)//////////////////////
+function countryChange(){
+    sessionStorage.setItem('selectedCountry', this.value);
+    document.getElementById('country-filter-form').submit();
+};
+countryFilter.addEventListener('change', countryChange);
+
+/////TO SHOW COUNTRY NAME IN CAFE CARD IF "SHOW ALL" IS SELECTED IN COUNTRY FILER////
+countryTags = document.getElementsByClassName('cafe-country');
+breakers = document.getElementsByClassName('breaker')
+if (countryFilter.options[countryFilter.selectedIndex].innerHTML == "All cafes") {
+  for (let tag of countryTags) {
+    tag.removeAttribute("hidden");
+  };
+  for (let br of breakers) {
+    br.removeAttribute("hidden");
+  };
+} else {
+  for (let tag of countryTags) {
+    tag.setAttributeNS(null, "hidden", true);
+  };
+  for (let br of breakers) {
+    br.setAttributeNS(null, "hidden", true);
+  };
+};
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+///////////////////////THE ACTUAL FILTERS///////////////////////
 var wifi = document.getElementById('wifi');
 var price = document.getElementById('price');
-var outlets = document.getElementById('outlets');
+var plugs = document.getElementById('plugs');
 var toilets = document.getElementById('toilets');
 var calls = document.getElementById('calls');
 var seats = document.getElementById('seats');
-//const clear = document.getElementById('clear');
 
 function filter() {
     const cafes = document.getElementsByClassName("cafe-card");
@@ -12,16 +65,16 @@ function filter() {
     var check_complete = [];
 
     if (wifi.getAttribute("style")) {
-        check_list.push("#lower-body .row #properties #has_wifi");
+        check_list.push(".lower .properties .has_wifi");
     };
-    if (outlets.getAttribute("style")) {
-        check_list.push("#lower-body .row #properties #has_outlets");
+    if (plugs.getAttribute("style")) {
+        check_list.push(".lower .properties .has_plugs");
     };
     if (toilets.getAttribute("style")) {
-        check_list.push("#lower-body .row #properties #has_toilets");
+        check_list.push(".lower .properties .has_toilets");
     };
     if (calls.getAttribute("style")) {
-        check_list.push(".card-body .grid-container #has_calls");
+        check_list.push(".lower .properties .has_calls");
     };
 
     for (let cafe of cafes) {
@@ -39,6 +92,17 @@ function filter() {
     };
 };
 
+function rearrange() {
+    const cafes = document.getElementsByClassName("cafe-card");
+    const price_list = [];
+    for (let cafe of cafes) {
+        price_list.push(cafe.querySelector("#lower .row #price #price-text").innerHTML)
+    };
+    console.log(price_list)
+
+}
+
+
 ////////////////// FOR WIFI //////////////////
 function clicked_wifi() {
     const icon = document.querySelector("#wifi span .filter-svg g");
@@ -49,39 +113,27 @@ function clicked_wifi() {
         text.style.color = "#757575";
         wifi.removeAttribute("style");
         filter();
-//        for (let cafe of cafes) {
-//            const parent = cafe.querySelectorAll("#lower-body .row #properties #has_wifi");
-//            if (parent.length == 0) {
-//                cafe.removeAttribute("hidden");
-//            };
-//        };
     } else {
         icon.setAttributeNS(null,"fill", "var(--contrast-hover)");
         text.style.color = "var(--contrast-hover)";
         wifi.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
         filter();
-//        for (let cafe of cafes) {
-//            const parent = cafe.querySelectorAll("#lower-body .row #properties #has_wifi");
-//            if (parent.length == 0) {
-//                cafe.setAttributeNS(null,"hidden", true);
-//            };
-//        }
     };
 };
 //////////////////////////////////////////////
-///////////////// FOR OUTLETS ////////////////
-function clicked_outlets() {
-    const icon = document.querySelector("#outlets span .filter-svg g");
-    const text = document.querySelector("#outlets .filter-text");
-    if (outlets.getAttribute("style")) {
+///////////////// FOR PLUGS //////////////////
+function clicked_plugs() {
+    const icon = document.querySelector("#plugs span .filter-svg g");
+    const text = document.querySelector("#plugs .filter-text");
+    if (plugs.getAttribute("style")) {
         icon.setAttributeNS(null,"fill", "#757575");
         text.style.color = "#757575";
-        outlets.removeAttribute("style");
+        plugs.removeAttribute("style");
         filter();
     } else {
         icon.setAttributeNS(null,"fill", "var(--contrast-hover)");
         text.style.color = "var(--contrast-hover)";
-        outlets.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
+        plugs.setAttributeNS(null, "style", "background-color: var(--contrast); color: var(--contrast-hover);");
         filter();
     };
 };
@@ -182,7 +234,8 @@ function clicked_seats() {
 
 wifi.addEventListener('click', clicked_wifi);
 price.addEventListener('click', clicked_price);
-outlets.addEventListener('click', clicked_outlets);
+plugs.addEventListener('click', clicked_plugs);
 toilets.addEventListener('click', clicked_toilets);
 calls.addEventListener('click', clicked_calls);
 seats.addEventListener('click', clicked_seats);
+/////////////////////////////////////////////////////////////////////

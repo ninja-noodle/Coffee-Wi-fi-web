@@ -2,15 +2,6 @@ var contributeText = document.getElementById("contribute-text");
 var contributeLogo = document.getElementById("contribute-logo");
 //var search = document.getElementById("navSearch");
 var countryFilter = document.getElementById("country-filter-form");
-////var filterList = [];
-//filterList.push(document.getElementById("wifi"));
-//filterList.push(document.getElementById("price"));
-//filterList.push(document.getElementById("plugs"));
-//filterList.push(document.getElementById("toilets"));
-//filterList.push(document.getElementById("calls"));
-//filterList.push(document.getElementById("seats"));
-//var back = document.getElementById("back");
-//var filters = document.getElementById("filters");
 
 function heightAdjust() {
     var navContainer = document.getElementById("navbar");
@@ -18,10 +9,6 @@ function heightAdjust() {
     var navHeight = document.getElementsByClassName("is-fixed");
 
     contentWrapper.setAttribute("style", "padding-top: " + navContainer.offsetHeight + "px;")
-//    for (n of navHeight) {
-//        n.setAttribute("style", "top: -" + navContainer.offsetHeight + "px;")
-//    };
-
     let scrollPos = 0;
     const headerHeight = navContainer.clientHeight;
     window.addEventListener('scroll', function() {

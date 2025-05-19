@@ -1,0 +1,281 @@
+.main-nav-container {
+  display:grid;
+  grid-template-rows: 1fr 0fr;
+  padding: 12px;
+  background: var(--primary);
+  position: absolute;
+  top:0;
+  right:0;
+  left:0;
+  overflow:hidden;
+  z-index: 1060;
+}
+.top {
+  display:grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 20px;
+}
+.nav-input {
+  display: flex;
+  place-content: center;
+  gap: 5px;
+}
+.main-nav-container-shadow {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
+}
+
+#navbar {
+  transition: background-color 0.2s;
+  /* Force Hardware Acceleration in WebKit */
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+#navbar.is-fixed {
+/* when the user scrolls down, we hide the header right above the viewport */
+  position: fixed;
+  transition: transform 0.2s;
+  background-color: var(--primary);
+}
+#navbar.is-visible {
+/* if the user changes the scrolling direction, show the header */
+  transform: translate3d(0, 100%, 0);
+}
+
+.filter-text {
+  appearance: none;
+  background-color: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: #757575;
+  text-decoration: none;
+  margin-left: 5px;
+  white-space: wrap;
+}
+
+.button-contribute {
+  appearance: none;
+  display: flex;
+  justify-items: start;
+  flex-wrap: wrap;
+  place-content:center;
+  background-color: transparent;
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  color: var(--contrast);
+  cursor: pointer;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  height: 100%;
+  width: 100%;
+  min-width: 68px;
+  padding: 0px 15px;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+.contribute-text {
+  width: 120px;
+}
+.contribute-logo {
+  width: 60px;
+}
+#contribute-svg {
+  width:25px;
+  height: 25px;
+}
+
+.button-contribute:disabled {
+  pointer-events: none;
+}
+.button-contribute:hover {
+  color: var(--contrast-hover);
+  background-color: var(--contrast);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+&:has(.button-contribute:hover)
+  .contribute-svg-g {
+    fill: var(--contrast-hover);
+}
+
+.homeLogo {
+  display:flex;
+  place-items:center;
+  background-color: transparent;
+  border-radius:15px;
+  border: 2px solid var(--border-color);
+}
+.homeText {
+  appearance: none;
+  background-color: transparent;
+  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--contrast);
+  text-decoration: none;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 6px;
+  padding: 5px 5px;
+}
+
+.search-input {
+  background-color: transparent;
+  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--contrast);
+  border: 0;
+  border-radius: 15px 0px 0px 15px;
+  height: 100%;
+  width: 200px;
+  text-decoration: none;
+  cursor: text;
+  font-size: 16px;
+  outline: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  touch-action: manipulation;
+  will-change: transform;
+}
+.search {
+  display:flex;
+  place-items: center;
+  border-radius: 15px;
+  border: 2px solid var(--border-color);
+  transition:transform .3s ease;
+  touch-action: manipulation;
+  will-change: transform;
+}
+&:has(.search-input:focus)
+  .search {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+&:has(.search-input:focus)
+  .search-input {
+}
+
+.filters-wrapper {
+  display: flex;
+  width: fit-content;
+  place-content: space-evenly;
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  background-color: var(--primary);
+}
+
+.filters {
+  display:flex;
+  background-color: transparent;
+  width:100%;
+  place-content:space-evenly;
+  gap: 5px;
+  padding: 5px 5px;
+}
+
+.filter {
+  display:flex;
+  appearance: none;
+  place-content: center;
+  align-items:center;
+  width: 100%;
+  background:transparent;
+  outline: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 12px;
+}
+
+.filter-svg {
+  width: 25px;
+  height: 25px;
+}
+
+.country-filter {
+  display: flex;
+  place-items: center;
+  appearance: none;
+  background-color: transparent;
+  border-radius: 15px 0px 0px 15px;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  touch-action: manipulation;
+  will-change: transform;
+}
+.country-filter .filter-svg {
+  width: 25px;
+  height: 25px;
+}
+
+#country-filter {
+  background-position: center;
+  background-color:transparent;
+  border: 0;
+  width: 100%;
+  min-width: 120px;
+  height:100%;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--contrast);
+  cursor: pointer;
+}
+#country-filter option {
+  font-size: 15px;
+  color: var(--contrast);
+  background: var(--main-bg);
+}
+
+.main-footer {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background-color: var(--primary);
+  background: var(--primary);
+  overflow:hidden;
+  z-index: 1030;
+  height:170px;
+  width:100%;
+}
+.footer-placeholder {
+  z-index: 1000;
+  height: 170px; /* same as footer height */
+}
+.footer-main-text{
+  padding: 0px 15px;
+  color: var(--contrast);
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 80px;
+  font-weight: 1000;
+  letter-spacing: -1px;
+  white-space: nowrap;
+  will-change: transform;
+  opacity: 90%;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+}
+
+.footer-bottom{
+  display: flex;
+  flex-wrap: wrap;
+  place-content: space-between;
+  font-family: "Reddit Mono", monospace;
+  font-size: 15px;
+  padding: 5px 10px;
+  background-color:var(--contrast-hover);
+  border-radius: 8px;
+  width:100%;
+}
+.footer-anchor{
+  text-decoration: none;
+  color: var(--contrast);
+}
+.footer-anchor:hover{
+ color: blue;
+}

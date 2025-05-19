@@ -120,7 +120,7 @@ option {
   color: #eee;
 }
 
-.text {
+.loadingText {
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
@@ -129,6 +129,7 @@ option {
     blinkCursor 0.5s step-end infinite alternate;
   margin-top: .5em;
 }
+
 .main-nav-container {
   display:grid;
   grid-template-rows: 1fr 0fr;

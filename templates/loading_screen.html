@@ -32,6 +32,7 @@
     {% endblock %}
 </head>
 <body style="background: var(--primary);">
+<main>
 <div class="terminal-loader d-flex flex-column">
     <div class="terminal-header">
         <div class="terminal-title">Coffee & Wifi.exe</div>
@@ -42,7 +43,7 @@
         </div>
     </div>
     <span id="status-text" style="margin-top: 1em">Status:</span>
-    <div class="text" id="text">Loading...</div>
+    <div class="loadingText" id="text">Loading...</div>
     <div class="permission" id="permission" style="display:none;">
         Allow location access for personalized data?
 
@@ -111,4 +112,6 @@
 
     initialize();
 </script>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>

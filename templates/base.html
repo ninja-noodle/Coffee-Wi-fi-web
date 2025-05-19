@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-    <title>Coffee &amp; Wifi</title>
+    <title>{% block title %}{% endblock %}</title>
     {% block styles %}
     <!-- Load Bootstrap-Flask CSS here -->
         {{ bootstrap.load_css() }}
@@ -27,68 +27,15 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link
-      href="{{ url_for('static', filename='css/styles.css') }}"
-      rel="stylesheet"
+        href="{{ url_for('static', filename='css/nav-and-footer-styling.css') }}"
+        rel="stylesheet"
     />
+    {% block stylesheets %}{% endblock %}
     {% endblock %}
 </head>
-{% if loading == 1 %}
-{% include "loading_screen.html" %}
-
-{% else %}
 <body>
-<!--Loading function that only shows if the site is opened for the first time-->
-<script>
-    function request() {
-        window.location.href = "{{ url_for("loader", load='true') }}";
-    }
-    if (!sessionStorage.getItem('shown')) request();
-</script>
-
-{% if form_id == 1 %}
-{% include "form.html" %}
-
-{% elif cafe == 1 %}
-{% include "cafe.html" %}
-
-{% else %}
-<main class="main">
-    {% include "navbar.html" %}
-    <div class="content-wrapper" id="contentWrapper">
-        <div class="content-div">
-            {% include "main.html" %}
-        </div>
-    </div>
-    {% endif %}
-    <div class="footer-placeholder"></div>
-    <footer class="main-footer">
-        <div class="container-fluid" style="height:100%; width:100%;box-sizing: border-box;">
-            <div class="row" style="background-color:var(--primary); width:100%;">
-                <div class="footer-main-text" id="footer-main-text">  COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI &amp; COFFEE &amp; WIFI</div>
-            </div>
-            <div class="footer-bottom">
-                <div class="">
-                    <span><i class="bi bi-shop"></i> {{ total_cafe_no }} cafes on site</span>
-                </div>
-                <div class="">
-                    © <span id="footer-copyright"></span> Coffee & Wifi by <a class="footer-anchor" href="https://github.com/ninja-noodle" target="_blank">C Tu <i class="bi bi-github"></i></a>
-                </div>
-                <div class="">
-                    <a class="footer-anchor" href="https://github.com/ninja-noodle/Coffee-Wi-fi-web" target="_blank">Source code <i class="bi bi-github"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="{{ url_for('static', filename='js/country-codes-handler.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/responsive-nav-script.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/scripts1.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/form_system.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/scripts4.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/footer-scripts.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/filters.js') }}" defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+{% block content %}{% endblock %}
+{% include "footer.html" %}
+{% block scripts %}{% endblock %}
 </body>
-{% endif %}
 </html>

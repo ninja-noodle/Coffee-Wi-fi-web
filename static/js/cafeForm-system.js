@@ -53,11 +53,10 @@ function setValue() {
 };
 inputSlider.addEventListener('input', setValue);
 
+/////////////////////////////////////////////////////////////////
 var uploadClick_area = document.getElementById("primary-image-area");
 const img = document.querySelector(".image-content");
 const fake = document.querySelector(".no-image-content");
-const upload = document.querySelector(".upload-button");
-const reset = document.querySelector(".reset-button");
 const file_input = document.querySelector('input[type=file]');
 const reader = new FileReader();
 uploadClick_area.addEventListener('click', function() {
@@ -81,3 +80,50 @@ file_input.addEventListener('change', function () {
     }
 });
 
+function showDisplayValue(e) {
+  var options = e.target.options,
+      option = e.target.selectedOptions[0],
+      i;
+
+  // reset options
+  for (i = 0; i < options.length; ++i) {
+    options[i].innerText = options[i].value;
+  }
+
+  // change the selected option's text to its `data-display` attribute value
+  option.innerText = option.getAttribute('data-display');
+}
+
+document.getElementById('phone-codes-dropdown').addEventListener('change', showDisplayValue, false);
+
+/////////////////////////////////////////////////////////////////
+function auto_select_inForm() {
+    var country = sessionStorage.getItem('country');
+    var country_code = sessionStorage.getItem('country_code');
+    var currency = sessionStorage.getItem('currency');
+    var city = sessionStorage.getItem('city');
+    if (countryFilter == null) {
+    //     ^^^ checks if the country filter exists on the page
+        var call_num_list = document.getElementById('phone-codes-dropdown');
+        var country_list = document.getElementById('country-dropdown');
+
+        var j;
+        for (j = 0; j < call_num_list.length; j++) {
+            let u = call_num_list.options[j]
+            if (u.getAttribute('id') == country) {
+                u.innerText = u.getAttribute('data-display');
+                u.setAttribute('selected', true);
+            };
+        };
+        document.getElementById('located-city').value = city;
+        document.getElementById('currency').value = currency;
+        var k;
+        for (k = 0; k < country_list.length; k++) {
+            let u = country_list.options[k]
+            if (u.getAttribute('data-display') == country_code) {
+                u.setAttribute('selected', true);
+            };
+        };
+    };
+};
+if (sessionStorage.getItem('access_inForm')) auto_select_inForm()
