@@ -11,9 +11,9 @@ function heightAdjust() {
     contentWrapper.setAttribute("style", "padding-top: " + navContainer.offsetHeight + "px;")
     let scrollPos = 0;
     const headerHeight = navContainer.clientHeight;
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const currentTop = document.body.getBoundingClientRect().top * -1;
-        if ( currentTop < scrollPos) {
+        if (currentTop < scrollPos) {
             // Scrolling Up
             if (currentTop > 0 && navContainer.classList.contains('is-fixed')) {
                 navContainer.classList.add('is-visible');
@@ -39,12 +39,14 @@ window.addEventListener('DOMContentLoaded', heightAdjust);
 var filtersForm = document.getElementById("filtersForm");
 var topNav = document.getElementById("top");
 function responsive() {
+    console.log(window.innerWidth)
     if (window.innerWidth < 1240) {
-        contributeText.setAttributeNS(null, "hidden", true);
-        contributeLogo.removeAttribute("hidden");
+        contributeText.style.display = "none";
+        contributeLogo.style.display = "flex";
+
     } else {
-        contributeText.removeAttribute("hidden");
-        contributeLogo.setAttributeNS(null, "hidden", true);
+        contributeLogo.style.display = "none";
+        contributeText.style.display = "flex";
     };
 
     if (window.innerWidth < 1120) {

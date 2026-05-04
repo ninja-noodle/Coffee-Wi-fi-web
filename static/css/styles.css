@@ -9,10 +9,11 @@
   --svg-fill: #000000;
 }
 [data-theme="light"] {
-  --primary: #F4DFC8;
-  --hover: #F4EAE0;
+  --primary: #E3CAA5;
+  --hover: #F3D2AE;
   --contrast: #3B3B3B;
-  --contrast-hover: #fff;
+  --contrast-hover: #c4b7a6;
+  --main-bg: #FFFBE9;
   --border-color: #1A1A1A;
   --slider-background: #c5c5c5;
   --slider-text-seats-color: #808080;
@@ -241,19 +242,6 @@ option {
   border-radius:15px;
   border: 2px solid var(--border-color);
 }
-.homeText {
-  appearance: none;
-  background-color: transparent;
-  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--contrast);
-  text-decoration: none;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  margin-right: 6px;
-  padding: 5px 5px;
-}
 
 .search-input {
   background-color: transparent;
@@ -291,55 +279,13 @@ option {
   .search-input {
 }
 
-.nav__cont {
-  position: fixed;
-  top:0;
-  width: 20vw;
-  height: 100%;
-  z-index: 2000;
+.filters-wrapper {
+  display: flex;
+  width: fit-content;
+  place-content: space-evenly;
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
   background-color: var(--primary);
-  transition:width .3s ease;
-  &:hover {
-    width:30vw;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    background: var(--primary)
-  }
-  &:hover .filter {
-    width:230px;
-  }
-  &:hover .logo-display {
-    width:230px;
-  }
-  &:hover .pattern-div {
-    width:230px;
-  }
-  &:hover .about-tag {
-    width:230px;
-  }
-  &:hover .filter-title {
-    width:230px;
-    margin-left:65px;
-  }
-  &:hover .thankful-title {
-    width:230px;
-    margin-left:45px;
-  }
-}
-.border-show{
-  background-image: linear-gradient(var(--border-color), var(--border-color)),
-                    linear-gradient(var(--primary), var(--primary));
-  background-repeat: no-repeat;
-  background-size: 2px 76.5%, calc(100% - 4px) 100%;
-  background-position: right 92px, 4px 0;
-}
-.nav {
-  list-style-type: none;
-  color:white;
-  &:first-child {
-    padding-top:0px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
 }
 
 .filters {
@@ -349,14 +295,6 @@ option {
   place-content:space-evenly;
   gap: 5px;
   padding: 5px 5px;
-}
-.filters-wrapper {
-  display: flex;
-  width: fit-content;
-  place-content: space-evenly;
-  border: 2px solid var(--border-color);
-  border-radius: 15px;
-  background-color: var(--primary);
 }
 
 .filter {
@@ -371,6 +309,7 @@ option {
   border: 0;
   border-radius: 12px;
 }
+
 .filter-svg {
   width: 25px;
   height: 25px;
@@ -413,29 +352,6 @@ option {
   background: var(--main-bg);
 }
 
-.pattern-div:hover {
-  background-color: var(--hover);
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-
-.h-line {
-  position: relative;
-  height:2px;
-  width: 100%;
-  background-color: var(--contrast);
-  will-change: transform;
-  transition: all 300ms;
-}
-.filter-title-text {
-  text-decoration: none;
-  appearance: none;
-  background-color: transparent;
-  font-family: "Reddit Mono", monospace;
-  font-size: 15px;
-  color: var(--contrast);
-  cursor: default;
-}
 .logo-display {
   appearance: none;
   background-color: transparent;
@@ -537,7 +453,6 @@ option {
   min-height: 85vh;
   width:100%;
   border: 2px solid var(--border-color);
-  border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.25) 0 5px 10px;
 }
 .cafes-group {
@@ -569,9 +484,7 @@ option {
   height: 216px;
   border-radius: 15px;
 }
-.cafe-info {
 
-}
 .cafe-title {
   display:block;
   width: 286px;
@@ -846,7 +759,7 @@ option {
   text-decoration: none;
   outline: none;
 }
-.form-area {
+.basicInfo-form-area {
   display:grid;
   gap: 10px;
   grid-template-rows: 1fr 1fr 1.5fr;
@@ -855,88 +768,15 @@ option {
   outline: none;
   cursor: default;
 }
-.upload-button {
-  display:flex;
-  place-content: center;
-  cursor: pointer;
-  background-color: transparent;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
-  color: var(--contrast);
-  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 16px;
-  font-weight: 600;
-  align-items: center;
-  padding: 10px 10px;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  will-change: transform;
-}
-.reset-button {
-  display:flex;
-  cursor: pointer;
-  background-color: transparent;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
-  text-decoration:none;
-  width: 100%;
-  color: var(--contrast);
-  font-family:Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 16px;
-  font-weight: 600;
-  align-items: center;
-  padding: 10px 10px;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  will-change: transform;
-}
-.reset-button:disabled {
-  pointer-events: none;
-}
-
-.upload-button:disabled {
-  pointer-events: none;
-}
-.reset-button:hover {
-  color: var(--contrast-hover);
-  background-color: var(--contrast);
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-.upload-button:hover {
-  color: var(--contrast-hover);
-  background-color: var(--contrast);
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-&:has(.upload-button:hover)
-  .plus-icon {
-    fill: var(--contrast-hover);
-}
-&:has(.reset-button:hover)
-  .reset-icon {
-    fill: var(--contrast-hover);
-}
-.upload-button:active {
-  box-shadow: none;
-  transform: translateY(0);
-}
-.reset-button:active {
-  box-shadow: none;
-  transform: translateY(0);
-}
 
 .primary-image-area {
   display:flex;
   place-content: center;
+  flex-wrap: wrap;
   background-color: transparent;
   border: 2px solid var(--border-color);
   border-radius: 15px;
-  height: 250px;
+  height: 230px;
   width: 300px;
   color: var(--contrast);
   align-items: center;
@@ -956,36 +796,6 @@ option {
 }
 &:has(.primary-image-area:hover)
   primary-image-svg {
-    width: 60px;
-    height: 60px;
-  };
-
-.primary-image-area {
-  display:flex;
-  place-content: center;
-  background-color: transparent;
-  border: 2px solid var(--border-color);
-  border-radius: 15px;
-  height: 250px;
-  width: 300px;
-  color: var(--contrast);
-  align-items: center;
-  cursor: pointer;
-  padding: 5px 5px;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-}
-.primary-image-area:hover {
-  background-color: var(--hover);
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-.primary-image-svg {
-  width: 50px;
-  height: 50px;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-}
-&:has(.primary-image-area:hover)
-  .primary-image-svg {
     width: 60px;
     height: 60px;
   }
@@ -1055,8 +865,7 @@ option {
   opacity: 0;
   z-index:4;
 }
-.slider-input::-webkit-slider-thumb
-{
+.slider-input::-webkit-slider-thumb {
   pointer-events:all;
   width:20px;
   height:20px;
@@ -1065,8 +874,7 @@ option {
   display:block;
   background-color: red;
 }
-.slider-input::-moz-range-thumb
-{
+.slider-input::-moz-range-thumb {
   pointer-events:all;
   width:20px;
   height:20px;
@@ -1075,8 +883,7 @@ option {
   display:block;
   background-color: red;
 }
-.slider-input::-ms-thumb
-{
+.slider-input::-ms-thumb {
   pointer-events:all;
   width:20px;
   height:20px;
@@ -1085,8 +892,7 @@ option {
   display:block;
   background-color: red;
 }
-.slider-input::-webkit-slider-runnable-track
-{
+.slider-input::-webkit-slider-runnable-track {
   pointer-events: none;
 }
 .slider-track {
@@ -1166,12 +972,6 @@ option {
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-
-}
 
 .form-control {
   display:flex;
@@ -1189,6 +989,8 @@ option {
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
   will-change: transform;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .form-control-hover:hover {
   background-color: var(--hover);
@@ -1285,46 +1087,7 @@ input[type="checkbox"]:focus {
   color: var(--contrast);
   text-decoration: none;
 }
-#formRange {
-  appearance: none;
-  height: 10px;
-  background: linear-gradient(to right, var(--slider-background) 40%, var(--slider-background) 40%);
-  outline: none;
-  border-radius: 15px;
-  margin-top: 3px;
-  margin-left: 5px;
-}
-#formRange::-webkit-slider-thumb {
-  appearance:none;
-  width:20px;
-  height:20px;
-  background:var(--border-color);
-  border-radius: 50%;
-  cursor:pointer;
-}
-#formRange::-moz-range-thumb {
-  appearance:none;
-  width:20px;
-  height:20px;
-  background:var(--border-color);
-  border-radius: 50%;
-  cursor:pointer;
-}
-.rangeValue {
-  appearance: none;
-  background-color: transparent;
-  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--contrast);
-  border: 0;
-  width: 30px;
-  cursor: default;
-  margin-left: 15px;
-}
-#seatFilter {
-  cursor:default;
-}
+
 .pattern-div {
  appearance: none;
   border-left: 2px solid var(--border-color);
@@ -1374,6 +1137,7 @@ input[type="checkbox"]:focus {
 }
 .footer-main-text{
   padding: 0px 15px;
+  color: var(--contrast);
   font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   font-size: 80px;
   font-weight: 1000;

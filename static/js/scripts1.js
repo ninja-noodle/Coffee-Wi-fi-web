@@ -1,42 +1,42 @@
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-window.addEventListener('DOMContentLoaded', () => {
-    let scrollPos = 0;
-    const mainNav = document.getElementById('navbar');
-    const headerHeight = mainNav.clientHeight;
-    window.addEventListener('scroll', function() {
-        const currentTop = document.body.getBoundingClientRect().top * -1;
-        if ( currentTop < scrollPos) {
-            // Scrolling Up
-            if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
-                mainNav.classList.add('is-visible');
-                mainNav.classList.add('main-nav-container-shadow');
-            } else {
-                mainNav.classList.remove('is-visible', 'is-fixed', 'main-nav-container-shadow');
-            }
-        } else {
-            // Scrolling Down
-            mainNav.classList.remove(['is-visible']);
-            if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
-                mainNav.classList.add('is-fixed');
-            }
-        }
-        scrollPos = currentTop;
-    });
-})
+//window.addEventListener('DOMContentLoaded', () => {
+//    let scrollPos = 0;
+//    const mainNav = document.getElementById('navbar');
+//    const headerHeight = mainNav.clientHeight;
+//    window.addEventListener('scroll', function() {
+//        const currentTop = document.body.getBoundingClientRect().top * -1;
+//        if ( currentTop < scrollPos) {
+//            // Scrolling Up
+//            if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
+//                mainNav.classList.add('is-visible');
+//                mainNav.classList.add('main-nav-container-shadow');
+//            } else {
+//                mainNav.classList.remove('is-visible', 'is-fixed', 'main-nav-container-shadow');
+//            }
+//        } else {
+//            // Scrolling Down
+//            mainNav.classList.remove(['is-visible']);
+//            if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
+//                mainNav.classList.add('is-fixed');
+//            }
+//        }
+//        scrollPos = currentTop;
+//    });
+//})
 
-const menuBtn = document.getElementById('menu');
-const sideMenu = document.getElementById("side-menu");
-const hitBox = document.getElementById("hitBox");
-menuBtn.addEventListener("click", (event) => {
-  sideMenu.style.width='20em';
-  hitBox.style.display='block';
-});
-hitBox.addEventListener("click", (event) => {
-  sideMenu.style.width='0';
-  hitBox.style.display='none';
-});
+//const menuBtn = document.getElementById('menu');
+//const sideMenu = document.getElementById("side-menu");
+//const hitBox = document.getElementById("hitBox");
+//menuBtn.addEventListener("click", (event) => {
+//  sideMenu.style.width='20em';
+//  hitBox.style.display='block';
+//});
+//hitBox.addEventListener("click", (event) => {
+//  sideMenu.style.width='0';
+//  hitBox.style.display='none';
+//});
 
 const sortableList = document.querySelector(".sortable-list");
 const items = sortableList.querySelectorAll(".item");

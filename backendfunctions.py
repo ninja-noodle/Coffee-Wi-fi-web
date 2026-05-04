@@ -116,6 +116,7 @@ class SearchAlgorithm:
             return self.response_data
         elif len(data_index) == 0:
             return self.response_data
+        return None
 
 
 # Used to check if the uploaded img is in the allowed file in which manipulates the filename which is not a proper way

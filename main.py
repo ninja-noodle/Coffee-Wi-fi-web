@@ -1,8 +1,8 @@
 import base64  # for image processing
-import werkzeug  # for data and exception handling
+from werkzeug import exceptions  # for data and exception handling
 from decouple import config  # for retrieving secrets from .env
 from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 # from Google import Create_Service
 from backendfunctions import SearchAlgorithm, CafeSubmission, DataBaseHandler
@@ -26,7 +26,7 @@ from backendfunctions import SearchAlgorithm, CafeSubmission, DataBaseHandler
 # ====== FLASK APP CONFIG =======
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config('SECRET_KEY')
-Bootstrap5(app)
+Bootstrap(app)
 
 # ====== DATABASE CONNECTION =======
 app.config['SQLALCHEMY_DATABASE_URI'] = config('DB_URI')
@@ -63,6 +63,7 @@ def check_if_exists(cafe_name):
         return False
     elif db.session.execute(db.select(Cafe).where(Cafe.name == cafe_name)).first() is not None:
         return True
+    return None
 
 
 handler = DataBaseHandler()
@@ -83,8 +84,9 @@ def loader():
             hide_loader_script += 1
             print(f"Show loader: {request.args['load']}")
             return render_template("loading_screen.html")
+        return None
 
-    except werkzeug.exceptions.BadRequestKeyError:
+    except exceptions.BadRequestKeyError:
         country = request.args['country']
         print(f"Selected country: {country}")
         if country == 'NA' or country == 'all':
@@ -111,6 +113,7 @@ def get_all_cafes():
                 return redirect(url_for('get_all_cafes'))
             elif request.form.get('search') == 'search':
                 return redirect(url_for('search_cafes', search=request.form.get('search-data')))
+            return None
     else:
         if hide_loader_script > 0:
             hide_loader = True
@@ -141,6 +144,7 @@ def search_cafes(search):
         return render_template("main.html", all_cafes=chunks, cafe_images=cafe_images,
                                filter_id='search', no_data=1,
                                total_cafe_no=total_cafe_no, searchvalue=search)
+    return None
 
 
 @app.route('/add-cafe', methods=['GET', 'POST'])
@@ -181,6 +185,8 @@ def cafe_added():
             else:
                 flash("The file type is not allowed >:(", "file_type_error")
                 return redirect(url_for('add_cafe'))
+        return None
+    return None
 
 
 @app.route('/cafes/<cafe_name>', methods=['GET', 'POST'])
