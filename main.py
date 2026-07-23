@@ -26,10 +26,11 @@ from backendfunctions import SearchAlgorithm, CafeSubmission, DataBaseHandler
 # ====== FLASK APP CONFIG =======
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config('SECRET_KEY')
+# create .env file and write SECRET_KEY = "[some secret key]"
 Bootstrap(app)
 
 # ====== DATABASE CONNECTION =======
-app.config['SQLALCHEMY_DATABASE_URI'] = config('DB_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = config('DB_URI', default="sqlite:///main.db")
 db = SQLAlchemy()
 db.init_app(app)
 
